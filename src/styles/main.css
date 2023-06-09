@@ -1,0 +1,28 @@
+:root {
+    --brand-color: #0051a2;
+}
+
+html,
+body {
+    min-height: 100vh;
+    font-family: "Manrope";
+    font-weight: normal;
+    color: #484343;
+    background-color: #f6f5f3;
+}
+
+#root {
+    min-height: 100vh;
+}
+
+.App {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
