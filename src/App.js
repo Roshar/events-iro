@@ -15,8 +15,8 @@ function App() {
 
             <div className="filters__category-list filter-category">
               <ul className="filters-category__list list-reset">
-                <li className="filters-category__item"> <button className=" btn reset-btn filters-category__btn">Период</button></li>
-                <li className="filters-category__item"> <button className="filters-category__btn btn reset-btn">Категория</button></li>
+                <li className="filters-category__item"> <button className="filters-category__btn btn  ">Период</button></li>
+                <li className="filters-category__item"> <button className="filters-category__btn btn ">Категория</button></li>
               </ul>
             </div>
 
@@ -35,56 +35,56 @@ function App() {
               <div className="filters__tabs-container">
                 <ul className="filters__tabs list-reset">
                   <li className="filters__item">
-                    <button className="filters__btn btn reset-btn">2023</button>
+                    <button className="filters__btn btn">2023</button>
                   </li>
                   <li className="filters__item">
-                    <button className="filters__btn btn reset-btn">2022</button>
+                    <button className="filters__btn btn">2022</button>
                   </li>
                 </ul>
               </div>
               <div className="filters__list-container">
                 <ul className="filters__list list-reset">
                   <li className="filters__item">
-                    <button className="filters__btn btn btn-outline reset-btn">2023</button>
+                    <button className="filters__btn btn btn-outline">2023</button>
                   </li>
                   <li className="filters__item">
-                    <button className="filters__btn btn btn-outline reset-btn">Январь</button>
+                    <button className="filters__btn btn btn-outline">Январь</button>
                   </li>
                   <li className="filters__item">
-                    <button className="filters__btn btn btn-outline reset-btn">Февраль</button>
+                    <button className="filters__btn btn btn-outline">Февраль</button>
                   </li>
                   <li className="filters__item">
-                    <button className="filters__btn btn btn-outline reset-btn">Март</button>
+                    <button className="filters__btn btn btn-outline">Март</button>
                   </li>
                   <li className="filters__item">
-                    <button className="filters__btn btn btn-outline reset-btn">Апрель</button>
+                    <button className="filters__btn btn btn-outline">Апрель</button>
                   </li>
                   <li className="filters__item">
-                    <button className="filters__btn btn btn-outline reset-btn">Май</button>
+                    <button className="filters__btn btn btn-outline">Май</button>
                   </li>
                   <li className="filters__item">
-                    <button className="filters__btn btn btn-outline reset-btn">Июнь</button>
+                    <button className="filters__btn btn btn-outline">Июнь</button>
                   </li>
                   <li className="filters__item">
-                    <button className="filters__btn btn btn-outline reset-btn">Июль</button>
+                    <button className="filters__btn btn btn-outline">Июль</button>
                   </li>
                   <li className="filters__item">
-                    <button className="filters__btn btn btn-outline reset-btn">Август</button>
+                    <button className="filters__btn btn btn-outline">Август</button>
                   </li>
                   <li className="filters__item">
-                    <button className="filters__btn btn btn-outline reset-btn">Сентабрь</button>
+                    <button className="filters__btn btn btn-outline">Сентабрь</button>
                   </li>
                   <li className="filters__item">
-                    <button className="filters__btn btn btn-outline reset-btn">Октябрь</button>
+                    <button className="filters__btn btn btn-outline">Октябрь</button>
                   </li>
                   <li className="filters__item">
-                    <button className="filters__btn btn btn-outline reset-btn">Ноябрь</button>
+                    <button className="filters__btn btn btn-outline">Ноябрь</button>
                   </li>
                   <li className="filters__item">
-                    <button className="filters__btn btn btn-outline reset-btn">Декабрь</button>
+                    <button className="filters__btn btn btn-outline">Декабрь</button>
                   </li>
                   <li className="filters__item">
-                    <button className="filters__btn btn btn-outline soon-events reset-btn">Ближайшие</button>
+                    <button className="filters__btn btn btn-outline soon-events">Ближайшие</button>
                   </li>
                 </ul>
               </div>

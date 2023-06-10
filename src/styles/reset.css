@@ -87,7 +87,7 @@ input::-ms-clear {
     display: none;
 }
 
-.reset-btn {
+button {
     border: none;
     margin: 0;
     padding: 0;
