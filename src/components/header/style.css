@@ -4,6 +4,7 @@
     padding: 15px 0;
     position: relative;
     background-color: #fff;
+    margin-bottom: 20px;
 }
 
 .header::after {
