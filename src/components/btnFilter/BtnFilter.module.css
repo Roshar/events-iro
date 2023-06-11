@@ -1,0 +1,19 @@
+/* btn */
+
+.btn {
+    border-radius: 5px;
+    padding: 7px 34px 7px 24px;
+    cursor: pointer;
+    position: relative;
+    background-color: #e2e2e2;
+}
+
+.btn::after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    right: 9px;
+    width: 20px;
+    height: 20px;
+    background: url('./../../img/icons/arrow-1.svg') no-repeat;
+}

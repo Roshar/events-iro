@@ -1,0 +1,24 @@
+.btn {
+    border-radius: 5px;
+    padding: 7px 24px 7px 24px;
+    cursor: pointer;
+    background-color: #e2e2e2;
+}
+
+.outline {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 7px 24px 7px 24px;
+    cursor: pointer;
+    background-color: #e2e2e2;
+}
+
+.soon {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 7px 24px 7px 24px;
+    cursor: pointer;
+    background-color: #e2e2e2;
+    background: #ffd800;
+
+}
