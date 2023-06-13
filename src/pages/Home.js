@@ -1,9 +1,17 @@
-import img1 from './../img/event_bg.jpg'
 
+import Event from "./../components/event/Event";
+import Filters from './../components/filter/Filter';
+import Header from './../components/header/Header';
+import { events } from '../helpers/eventListActual';
+import { eventsLast } from '../helpers/eventListLast';
+
+import img1 from './../img/event_bg.jpg'
 
 const Home = () => {
     return (
         <>
+            <Header />
+            <Filters />
             <main className="main">
 
                 <h1 className="visually-hidden">Мероприятия</h1>
@@ -12,98 +20,9 @@ const Home = () => {
                 </h2>
                 <div className="events">
                     <div className="events__container">
-                        <div className="event-card">
-                            <div className="event-card__header">
-                                <div className="event-card__category-box">
-                                    <p className='event-card__category-title'>Стратегическая сессия</p>
-                                </div>
-                                <a href="" className="event-card__link">
-                                    <img src={img1} alt="" className="event-card__img" />
-                                </a>
-                            </div>
-                            <div className="event-card__body">
-                                <span className="event-card__date">
-                                    чт, 15 июня
-                                </span>
-                                <a className="event-card__title" href=''>
-                                    Региональная олимпиада для учителей предметов естественнонаучного цикла общеобразовательных организаций Чеченской Республики
-                                </a>
-                                <span className="event-card__registration event-card__registration--opened">
-                                    Регистрация открыта
-                                </span>
-                            </div>
-
-                        </div>
-
-                        <div className="event-card">
-                            <div className="event-card__header">
-                                <div className="event-card__category-box">
-                                    <p className='event-card__category-title'>Стратегическая сессия</p>
-                                </div>
-                                <a href="" className="event-card__link">
-                                    <img src={img1} alt="" className="event-card__img" />
-                                </a>
-                            </div>
-                            <div className="event-card__body">
-                                <span className="event-card__date">
-                                    чт, 15 июня
-                                </span>
-                                <a className="event-card__title" href=''>
-                                    Региональная олимпиада для учителей предметов естественнонаучного цикла общеобразовательных организаций Чеченской Республики
-                                </a>
-                                <span className="event-card__registration event-card__registration--opened">
-                                    Регистрация открыта
-                                </span>
-                            </div>
-
-                        </div>
-
-                        <div className="event-card">
-                            <div className="event-card__header">
-                                <div className="event-card__category-box">
-                                    <p className='event-card__category-title'>Семинар</p>
-                                </div>
-                                <a href="" className="event-card__link">
-                                    <img src={img1} alt="" className="event-card__img" />
-                                </a>
-                            </div>
-                            <div className="event-card__body">
-                                <span className="event-card__date">
-                                    чт, 15 июня
-                                </span>
-                                <a className="event-card__title" href=''>
-                                    Геймификация педагогической повседневности
-                                </a>
-                                <span className="event-card__registration event-card__registration--opened">
-                                    Регистрация открыта
-                                </span>
-                            </div>
-
-                        </div>
-
-                        <div className="event-card">
-                            <div className="event-card__header">
-                                <div className="event-card__category-box">
-                                    <p className='event-card__category-title'>Стратегическая сессия</p>
-                                </div>
-                                <a href="" className="event-card__link">
-                                    <img src={img1} alt="" className="event-card__img" />
-                                </a>
-                            </div>
-                            <div className="event-card__body">
-                                <span className="event-card__date">
-                                    чт, 15 июня
-                                </span>
-                                <a className="event-card__title" href=''>
-                                    Уроки на сцене
-                                </a>
-                                <span className="event-card__registration event-card__registration--opened">
-                                    Регистрация открыта
-                                </span>
-                            </div>
-
-                        </div>
-
+                        {events.map((event) => {
+                            return <Event key={event.id} id={event.id} category_name={event.category_name} statusText={event.statusText} title={event.title} img={event.img} date_event={event.date_event} />
+                        })}
                     </div>
                 </div>
 
@@ -112,94 +31,9 @@ const Home = () => {
                 </h2>
                 <div className="events">
                     <div className="events__container">
-                        <div className="event-card">
-                            <div className="event-card__header">
-                                <div className="event-card__category-box">
-                                    <p className='event-card__category-title'>Стратегическая сессия</p>
-                                </div>
-                                <a href="" className="event-card__link">
-                                    <img src={img1} alt="" className="event-card__img event-card__img--last" />
-                                </a>
-                            </div>
-                            <div className="event-card__body">
-                                <span className="event-card__date">
-                                    чт, 15 июня
-                                </span>
-                                <a className="event-card__title" href=''>
-                                    Региональная олимпиада для учителей предметов естественнонаучного цикла общеобразовательных организаций Чеченской Республики
-                                </a>
-                                <span className="event-card__registration event-card__registration--close">
-                                    Закрыто
-                                </span>
-                            </div>
-                        </div>
-
-                        <div className="event-card">
-                            <div className="event-card__header">
-                                <div className="event-card__category-box">
-                                    <p className='event-card__category-title'>Стратегическая сессия</p>
-                                </div>
-                                <a href="" className="event-card__link">
-                                    <img src={img1} alt="" className="event-card__img event-card__img--last" />
-                                </a>
-                            </div>
-                            <div className="event-card__body">
-                                <span className="event-card__date">
-                                    чт, 15 июня
-                                </span>
-                                <a className="event-card__title" href=''>
-                                    Региональная олимпиада для учителей предметов естественнонаучного цикла общеобразовательных организаций Чеченской Республики
-                                </a>
-                                <span className="event-card__registration event-card__registration--close">
-                                    Закрыто
-                                </span>
-                            </div>
-                        </div>
-
-                        <div className="event-card">
-                            <div className="event-card__header">
-                                <div className="event-card__category-box">
-                                    <p className='event-card__category-title'>Стратегическая сессия</p>
-                                </div>
-                                <a href="" className="event-card__link">
-                                    <img src={img1} alt="" className="event-card__img event-card__img--last" />
-                                </a>
-                            </div>
-                            <div className="event-card__body">
-                                <span className="event-card__date">
-                                    чт, 15 июня
-                                </span>
-                                <a className="event-card__title" href=''>
-                                    Региональная олимпиада для учителей предметов естественнонаучного цикла общеобразовательных организаций Чеченской Республики
-                                </a>
-                                <span className="event-card__registration event-card__registration--close">
-                                    Закрыто
-                                </span>
-                            </div>
-                        </div>
-
-                        <div className="event-card">
-                            <div className="event-card__header">
-                                <div className="event-card__category-box">
-                                    <p className='event-card__category-title'>Стратегическая сессия</p>
-                                </div>
-                                <a href="" className="event-card__link">
-                                    <img src={img1} alt="" className="event-card__img event-card__img--last" />
-                                </a>
-                            </div>
-                            <div className="event-card__body">
-                                <span className="event-card__date">
-                                    чт, 15 июня
-                                </span>
-                                <a className="event-card__title" href=''>
-                                    Региональная олимпиада для учителей предметов естественнонаучного цикла общеобразовательных организаций Чеченской Республики
-                                </a>
-                                <span className="event-card__registration event-card__registration--close">
-                                    Закрыто
-                                </span>
-                            </div>
-                        </div>
-
+                        {eventsLast.map((event) => {
+                            return <Event key={event.id} id={event.id} category_name={event.category_name} statusText={event.statusText} title={event.title} img={event.img} date_event={event.date_event} status_event='last' />
+                        })}
                     </div>
                 </div>
 
