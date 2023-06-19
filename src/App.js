@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Footer from './components/footer/Footer'
 
 import Home from './pages/Home';
-import Event from './pages/Event'
+import EventPage from './pages/EventPage'
+import RegisterPage from './pages/RegisterPage'
 import './styles/reset.css';
 import './styles/normalize.css';
 import './styles/main.css';
@@ -13,7 +14,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/event/:id" element={<Event />} />
+          <Route path="/event/:id" element={<EventPage />} />
+          <Route path="/register/:id" element={<RegisterPage />} />
         </Routes>
       </Router>
       <Footer />

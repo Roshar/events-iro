@@ -1,5 +1,5 @@
 
-import Event from "./../components/event/Event";
+import Events from "../components/events/Events";
 import Filters from './../components/filter/Filter';
 import Header from './../components/header/Header';
 import { events } from '../helpers/eventListActual';
@@ -21,7 +21,7 @@ const Home = () => {
                 <div className="events">
                     <div className="events__container">
                         {events.map((event) => {
-                            return <Event key={event.id} id={event.id} category_name={event.category_name} statusText={event.statusText} title={event.title} img={event.img} date_event={event.date_event} />
+                            return <Events key={event.id} id={event.id} category_name={event.category_name} statusText={event.statusText} title={event.title} img={event.img} date_event={event.date_event} />
                         })}
                     </div>
                 </div>
@@ -32,7 +32,7 @@ const Home = () => {
                 <div className="events">
                     <div className="events__container">
                         {eventsLast.map((event) => {
-                            return <Event key={event.id} id={event.id} category_name={event.category_name} statusText={event.statusText} title={event.title} img={event.img} date_event={event.date_event} status_event='last' />
+                            return <Events key={event.id} id={event.id} category_name={event.category_name} statusText={event.statusText} title={event.title} img={event.img} date_event={event.date_event} status_event='last' />
                         })}
                     </div>
                 </div>
