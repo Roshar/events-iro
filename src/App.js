@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Footer from './components/footer/Footer'
 
 import Home from './pages/Home';
 import Event from './pages/Event'
@@ -15,6 +16,7 @@ function App() {
           <Route path="/event/:id" element={<Event />} />
         </Routes>
       </Router>
+      <Footer />
     </div >
   );
 }
