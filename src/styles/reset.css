@@ -152,6 +152,8 @@ legend {
 
 .txt-danger {
     display: none;
+    font-size: 12px;
+    color: tomato;
 }
 
 .visually-hidden {
