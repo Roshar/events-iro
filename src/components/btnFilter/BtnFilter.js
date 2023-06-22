@@ -1,8 +1,9 @@
 import classes from './BtnFilter.module.css'
 
 const Btn = ({ title }) => {
+    console.log('btnFilter')
     return (
-        <button className={classes.btn}>{title}</button>
+        <button id="btnFilter" className={classes.btn}>{title}</button>
     );
 }
 
