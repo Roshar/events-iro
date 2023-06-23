@@ -8,7 +8,7 @@ import time from "./../../img/icons/full_info/clock-line-icon.svg";
 import location from "./../../img/icons/full_info/accurate-icon.svg";
 import people from "./../../img/icons/full_info/business-communication-icon.svg";
 
-const Event = () => {
+const Event = ({ id }) => {
   return (
     <section className="event">
       <div className="event__header">
@@ -18,7 +18,7 @@ const Event = () => {
             <NavLink
               className="event__register"
               aria-label="button"
-              to="/register/:id"
+              to={`/register/${id}`}
             >
               Зарегистрироваться
             </NavLink>

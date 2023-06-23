@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import "./style.css";
 
-const Event = ({
+const Events = ({
   id,
   category_name,
   title,
@@ -43,4 +43,4 @@ const Event = ({
   );
 };
 
-export default Event;
+export default Events;

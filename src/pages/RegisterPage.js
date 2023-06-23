@@ -1,6 +1,7 @@
 import Header from "../components/header/Header";
 import Registration from "../components/registration/Registration";
 
+
 const RegisnterPage = () => {
   return (
     <>
