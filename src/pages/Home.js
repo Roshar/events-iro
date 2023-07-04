@@ -8,7 +8,8 @@ import { events } from "../helpers/eventListActual";
 import { eventsLast } from "../helpers/eventListLast";
 
 const Home = () => {
-  const [APIData, setAPIData] = useState([]);
+  const [APIDataSoon, setAPIDataSoon] = useState([]);
+  const [APIDataLast, setAPIDataLast] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [selectOption, setSelectOption] = useState("");
@@ -16,8 +17,9 @@ const Home = () => {
 
   const state = useEffect(() => {
     const getAllEvents = async () => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}events`).then((response) => {
-        setAPIData(response.data);
+      axios.get(`${process.env.REACT_APP_BASE_URL}/events`).then((response) => {
+        setAPIDataSoon(response.data.soon);
+        setAPIDataLast(response.data.last);
       });
     };
 
@@ -27,7 +29,7 @@ const Home = () => {
   const filterSelect = (category) => {
     setSelectOption(category);
     if (category !== "") {
-      const selectResult = APIData.filter((item) => {
+      const selectResult = APIDataSoon.filter((item) => {
         if (item.id === parseInt(category)) {
           return item;
         }
@@ -37,7 +39,7 @@ const Home = () => {
       setFilteredResults(selectResult);
       console.log("after");
     } else {
-      setFilteredResults(APIData);
+      setFilteredResults(APIDataSoon);
     }
   };
 
@@ -53,7 +55,7 @@ const Home = () => {
       });
       setFilteredResults(filteredData);
     } else {
-      setFilteredResults(APIData);
+      setFilteredResults(APIDataSoon);
     }
   };
 
@@ -73,43 +75,46 @@ const Home = () => {
         <h2 className="home-content__title">Скоро</h2>
         <div className="events">
           <div className="events__container">
-            {events.map((event) => {
+            {APIDataSoon.map((event) => {
               return (
                 <Events
                   key={event.id}
                   id={event.id}
-                  category_name={event.category_name}
-                  statusText={event.statusText}
+                  category_name={event.cat_name}
+                  statusText={event.status}
                   title={event.title}
-                  img={event.img}
+                  // img={event.img}
+                  img={`${process.env.REACT_APP_BASE_IMG_URL}/${event.picture_name}`}
                   date_event={event.date_event}
                 />
               );
             })}
 
-            {searchInput.length > 1 || selectOption.length > 0
+
+            {/* {searchInput.length > 1 || selectOption.length > 0
               ? filteredResults.map((elem) => {
-                  return elem.title;
-                })
+                return elem.title;
+              })
               : APIData.map((elem) => {
-                  return elem.title;
-                })}
+                return elem.title;
+              })} */}
           </div>
-          {APIData.length === 0}
+          {/* {APIData.length === 0} */}
         </div>
 
         <h2 className="home-content__title">Прошедшие мероприятия</h2>
         <div className="events">
           <div className="events__container">
-            {eventsLast.map((event) => {
+            {APIDataLast.map((event) => {
               return (
                 <Events
                   key={event.id}
                   id={event.id}
-                  category_name={event.category_name}
-                  statusText={event.statusText}
+                  category_name={event.cat_name}
+                  statusText={event.status}
                   title={event.title}
-                  img={event.img}
+                  // img={event.img}
+                  img={`${process.env.REACT_APP_BASE_IMG_URL}/${event.picture_name}`}
                   date_event={event.date_event}
                   status_event="last"
                 />
