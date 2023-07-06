@@ -1,20 +1,46 @@
 import "./style.css";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 
 import avatar from "./../../img/avatars/orig.jpeg";
 import calendar from "./../../img/icons/full_info/calendar-line-icon.svg";
 import time from "./../../img/icons/full_info/clock-line-icon.svg";
 import location from "./../../img/icons/full_info/accurate-icon.svg";
 import people from "./../../img/icons/full_info/business-communication-icon.svg";
+import generationDate from './../../utils/generationDate'
+import generationTime from './../../utils/generationTime'
 
-const Event = ({ id }) => {
+
+const Event = () => {
+  const { id } = useParams();
+  const [APIData, setAPIData] = useState([])
+
+  const state = useEffect(() => {
+
+    try {
+      console.log('useEffect')
+      axios.get(`${process.env.REACT_APP_BASE_URL}/event/${id}`).then((response) => {
+        setAPIData(response.data[0])
+      })
+    } catch (e) {
+      console.log(e.message);
+    }
+  }, [])
+
+  console.log(APIData)
+
+
   return (
     <section className="event">
       <div className="event__header">
         <div className="container">
           <div className="event__short-info">
-            <span className="event__date"> 12 Августа 2023, 15:00 </span>
+            <span className="event__date">{generationDate(APIData.date_event, true)}, {generationTime(APIData.date_event)}</span>
+
+
             <NavLink
               className="event__register"
               aria-label="button"
@@ -22,7 +48,8 @@ const Event = ({ id }) => {
             >
               Зарегистрироваться
             </NavLink>
-            <span className="event__members">Количество участников: 20</span>
+            <span className="event__members">Количество участников: {APIData.participants_number} </span>
+
           </div>
         </div>
       </div>
@@ -30,9 +57,7 @@ const Event = ({ id }) => {
         <div className="container">
           <h2 className="event-content__title">Описание мероприятия</h2>
           <section className="event__description">
-            Игрофикация и геймификации в образовательном процессе. Практические
-            способы геймифицировать обучение. Как сделать обучение более
-            инновационным. Основные аспекты игрофикации.
+            {APIData.description}
           </section>
 
           <h2 className="event-content__title">Спикеры</h2>
@@ -74,7 +99,7 @@ const Event = ({ id }) => {
                 </div>
                 <div className="full-info__description">
                   <div className="full-info__head"> Дата проведения:</div>
-                  <div className="full-info__body"> 29 августа, 2022</div>
+                  <div className="full-info__body"> {generationDate(APIData.date_event, true)}</div>
                 </div>
               </li>
               <li className="full-info__item">
@@ -83,7 +108,7 @@ const Event = ({ id }) => {
                 </div>
                 <div className="full-info__description">
                   <div className="full-info__head"> Время проведения:</div>
-                  <div className="full-info__body"> 15:00</div>
+                  <div className="full-info__body">  {generationTime(APIData.date_event)}</div>
                 </div>
               </li>
 
@@ -98,8 +123,7 @@ const Event = ({ id }) => {
                 <div className="full-info__description">
                   <div className="full-info__head"> Локация:</div>
                   <div className="full-info__body">
-                    {" "}
-                    ГБУ ДПО "ИРО ЧР"; ул. Лермонтова,2
+                    {APIData.location}
                   </div>
                 </div>
               </li>
@@ -111,9 +135,7 @@ const Event = ({ id }) => {
                 <div className="full-info__description">
                   <div className="full-info__head"> Целевая аудитория:</div>
                   <div className="full-info__body">
-                    {" "}
-                    педагогические работники общеобразовательных организаций и
-                    обучающиеся
+                    {APIData.target_audience}
                   </div>
                 </div>
               </li>
