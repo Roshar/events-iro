@@ -10,27 +10,14 @@ import calendar from "./../../img/icons/full_info/calendar-line-icon.svg";
 import time from "./../../img/icons/full_info/clock-line-icon.svg";
 import location from "./../../img/icons/full_info/accurate-icon.svg";
 import people from "./../../img/icons/full_info/business-communication-icon.svg";
-import generationDate from './../../utils/generationDate'
-import generationTime from './../../utils/generationTime'
 
 
-const Event = () => {
-  const { id } = useParams();
-  const [APIData, setAPIData] = useState([])
 
-  const state = useEffect(() => {
+const Event = ({ id, date, hour, description, participants_number, location1, target_audience }) => {
 
-    try {
-      console.log('useEffect')
-      axios.get(`${process.env.REACT_APP_BASE_URL}/event/${id}`).then((response) => {
-        setAPIData(response.data[0])
-      })
-    } catch (e) {
-      console.log(e.message);
-    }
-  }, [])
 
-  console.log(APIData)
+
+
 
 
   return (
@@ -38,7 +25,8 @@ const Event = () => {
       <div className="event__header">
         <div className="container">
           <div className="event__short-info">
-            <span className="event__date">{generationDate(APIData.date_event, true)}, {generationTime(APIData.date_event)}</span>
+            <span className="event__date">{date}, {hour}</span>
+            {/* {generationDate(date_event, true)}, {generationTime(date_event)} */}
 
 
             <NavLink
@@ -48,7 +36,7 @@ const Event = () => {
             >
               Зарегистрироваться
             </NavLink>
-            <span className="event__members">Количество участников: {APIData.participants_number} </span>
+            <span className="event__members">Количество участников: {participants_number ?? 0} </span>
 
           </div>
         </div>
@@ -57,7 +45,7 @@ const Event = () => {
         <div className="container">
           <h2 className="event-content__title">Описание мероприятия</h2>
           <section className="event__description">
-            {APIData.description}
+            {description}
           </section>
 
           <h2 className="event-content__title">Спикеры</h2>
@@ -99,7 +87,8 @@ const Event = () => {
                 </div>
                 <div className="full-info__description">
                   <div className="full-info__head"> Дата проведения:</div>
-                  <div className="full-info__body"> {generationDate(APIData.date_event, true)}</div>
+                  <div className="full-info__body"> {date}</div>
+                  {/* <div className="full-info__body"> {generationDate(date_event, true)}</div> */}
                 </div>
               </li>
               <li className="full-info__item">
@@ -108,7 +97,8 @@ const Event = () => {
                 </div>
                 <div className="full-info__description">
                   <div className="full-info__head"> Время проведения:</div>
-                  <div className="full-info__body">  {generationTime(APIData.date_event)}</div>
+                  <div className="full-info__body"> {hour} </div>
+                  {/* <div className="full-info__body">  {generationTime(date_event)}</div> */}
                 </div>
               </li>
 
@@ -123,7 +113,7 @@ const Event = () => {
                 <div className="full-info__description">
                   <div className="full-info__head"> Локация:</div>
                   <div className="full-info__body">
-                    {APIData.location}
+                    {location1}
                   </div>
                 </div>
               </li>
@@ -135,7 +125,7 @@ const Event = () => {
                 <div className="full-info__description">
                   <div className="full-info__head"> Целевая аудитория:</div>
                   <div className="full-info__body">
-                    {APIData.target_audience}
+                    {target_audience}
                   </div>
                 </div>
               </li>
