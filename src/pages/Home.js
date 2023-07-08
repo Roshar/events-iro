@@ -83,8 +83,8 @@ const Home = () => {
             {APIDataSoon.map((event) => {
               return (
                 <Events
-                  key={event.id}
-                  id={event.id}
+                  key={event.id_uniq}
+                  id={event.id_uniq}
                   category_name={event.cat_name}
                   statusText={event.status}
                   title={event.title}
@@ -113,8 +113,8 @@ const Home = () => {
             {APIDataLast.map((event) => {
               return (
                 <Events
-                  key={event.id}
-                  id={event.id}
+                  key={event.id_uniq}
+                  id={event.id_uniq}
                   category_name={event.cat_name}
                   statusText={event.status}
                   title={event.title}

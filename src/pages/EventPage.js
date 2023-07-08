@@ -10,15 +10,19 @@ import Event from '../components/event/Event';
 const EventPage = () => {
   const { id } = useParams()
 
-  const [APIData, setAPIData] = useState([])
+  const [EventData, setEventData] = useState([])
+  const [SpeakersData, setSpeakersData] = useState([])
   const [APIdt, setAPIdt] = useState('');
   const [APIhour, setAPIhour] = useState('');
 
   const getAPIData = async (id) => {
     const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/event/${id}`);
-    setAPIData(data[0])
-    setAPIdt(generationDate(data[0].date_event, true))
-    setAPIhour(generationTime(data[0].date_event))
+    console.log(data)
+    setEventData(data['event'][0])
+    setSpeakersData(data['speakers'])
+    console.log(SpeakersData)
+    setAPIdt(generationDate(data['event'][0].date_event, true))
+    setAPIhour(generationTime(data['event'][0].date_event))
   }
 
   useEffect(() => {
@@ -35,10 +39,12 @@ const EventPage = () => {
         <Event id={id}
           hour={APIhour}
           date={APIdt}
-          description={APIData.description}
-          participants_number={APIData.participants_number}
-          location1={APIData.location}
-          target_audience={APIData.target_audience}
+          description={EventData.description}
+          participants_number={EventData.participants_number}
+          location1={EventData.location}
+          target_audience={EventData.target_audience}
+          event_status={EventData.event_status}
+          speakers={SpeakersData}
         />
       </main>
     </>

@@ -1,11 +1,8 @@
 import "./style.css";
 
 import { NavLink, useParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 
-import avatar from "./../../img/avatars/orig.jpeg";
 import calendar from "./../../img/icons/full_info/calendar-line-icon.svg";
 import time from "./../../img/icons/full_info/clock-line-icon.svg";
 import location from "./../../img/icons/full_info/accurate-icon.svg";
@@ -13,29 +10,36 @@ import people from "./../../img/icons/full_info/business-communication-icon.svg"
 
 
 
-const Event = ({ id, date, hour, description, participants_number, location1, target_audience }) => {
+const Event = ({ id, date, hour, participants_number, description, speakers, event_status, location1, target_audience }) => {
 
-
-
-
-
-
+  const setBtnStatus = (status) => {
+    if (status === 1) {
+      return <NavLink
+        className="event__register"
+        aria-label="button"
+        to={`/register/${id}`}
+      >
+        Зарегистрироваться
+      </NavLink>
+    } else {
+      return <button
+        className="event__register"
+        aria-label="button"
+        disabled
+      >
+        Регистрация закрыта
+      </button>
+    }
+  }
   return (
     <section className="event">
       <div className="event__header">
         <div className="container">
           <div className="event__short-info">
             <span className="event__date">{date}, {hour}</span>
-            {/* {generationDate(date_event, true)}, {generationTime(date_event)} */}
 
+            {setBtnStatus(event_status)}
 
-            <NavLink
-              className="event__register"
-              aria-label="button"
-              to={`/register/${id}`}
-            >
-              Зарегистрироваться
-            </NavLink>
             <span className="event__members">Количество участников: {participants_number ?? 0} </span>
 
           </div>
@@ -51,26 +55,29 @@ const Event = ({ id, date, hour, description, participants_number, location1, ta
           <h2 className="event-content__title">Спикеры</h2>
           <section className="event__speakers speaker">
             <ul className="speaker__list list-reset">
-              <li className="speaker__item">
-                <div className="speaker__img-container">
-                  <img src={avatar} alt="" className="speaker__avatar" />
-                </div>
-                <div className="speaker__text">
-                  <div className="speaker__name">
-                    Богданова Елена Владимировна,{" "}
-                  </div>
-                  <div className="speaker__company">
-                    ФГБОУ ВО «Новосибирский государственный педагогический
-                    университет"
-                  </div>
-                  <div className="speaker__position">
-                    кандидат педагогических наук, доцент, заведующая кафедрой
-                    педагогики и психологии детского отдыха методолог, тренер по
-                    геймификации, автор образовательных проектов отдыха
-                    методолог
-                  </div>
-                </div>
-              </li>
+
+              {speakers.map((speaker) => {
+                return (
+                  <li key={speaker.id} className="speaker__item">
+                    <div className="speaker__img-container">
+                      <img src={`${process.env.REACT_APP_BASE_IMG_URL}/avatars/${speaker.avatar}`} alt="" className="speaker__avatar" />
+                    </div>
+                    <div className="speaker__text">
+                      <div className="speaker__name">
+                        {`${speaker.surname} ${speaker.firstname} ${speaker.patronymic}`}
+                      </div>
+                      <div className="speaker__company">
+                        {speaker.company}
+                      </div>
+                      <div className="speaker__position">
+                        {speaker.position}
+                      </div>
+                    </div>
+                  </li>
+                )
+              })}
+
+
             </ul>
           </section>
 
@@ -88,7 +95,7 @@ const Event = ({ id, date, hour, description, participants_number, location1, ta
                 <div className="full-info__description">
                   <div className="full-info__head"> Дата проведения:</div>
                   <div className="full-info__body"> {date}</div>
-                  {/* <div className="full-info__body"> {generationDate(date_event, true)}</div> */}
+
                 </div>
               </li>
               <li className="full-info__item">
@@ -98,7 +105,7 @@ const Event = ({ id, date, hour, description, participants_number, location1, ta
                 <div className="full-info__description">
                   <div className="full-info__head"> Время проведения:</div>
                   <div className="full-info__body"> {hour} </div>
-                  {/* <div className="full-info__body">  {generationTime(date_event)}</div> */}
+
                 </div>
               </li>
 

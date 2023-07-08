@@ -3,6 +3,7 @@ import Registration from "../components/registration/Registration";
 
 
 const RegisnterPage = () => {
+
   return (
     <>
       <Header />

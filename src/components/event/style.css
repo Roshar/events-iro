@@ -48,7 +48,9 @@
   font-size: 18px;
 }
 
-.speaker__item {
+
+.speaker__item,
+.speaker__list {
   display: flex;
   column-gap: 20px;
 }
