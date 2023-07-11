@@ -64,6 +64,16 @@ const Home = () => {
     }
   };
 
+
+
+  const empryData = () => {
+
+    return (
+      <h3>Нет записей</h3>
+    )
+
+  }
+
   return (
     <>
       <Header />
@@ -80,20 +90,24 @@ const Home = () => {
         <h2 className="home-content__title">Скоро</h2>
         <div className="events">
           <div className="events__container">
-            {APIDataSoon.map((event) => {
-              return (
-                <Events
-                  key={event.id_uniq}
-                  id={event.id_uniq}
-                  category_name={event.cat_name}
-                  statusText={event.status}
-                  title={event.title}
-                  // img={event.img}
-                  img={`${process.env.REACT_APP_BASE_IMG_URL}/${event.picture_name}`}
-                  date_event={event.date_event}
-                />
-              );
-            })}
+            {
+              APIDataSoon.length !== 0 ? APIDataSoon.map((event) => {
+                return (
+                  <Events
+                    key={event.id_uniq}
+                    id={event.id_uniq}
+                    category_name={event.cat_name}
+                    statusText={event.status}
+                    title={event.title}
+                    // img={event.img}
+                    img={`${process.env.REACT_APP_BASE_IMG_URL}/${event.picture_name}`}
+                    date_event={event.date_event}
+                  />
+                );
+              }) :
+                empryData()
+            }
+
 
 
             {/* {searchInput.length > 1 || selectOption.length > 0
@@ -110,7 +124,7 @@ const Home = () => {
         <h2 className="home-content__title">Прошедшие мероприятия</h2>
         <div className="events">
           <div className="events__container">
-            {APIDataLast.map((event) => {
+            {APIDataLast.length !== 0 ? APIDataLast.map((event) => {
               return (
                 <Events
                   key={event.id_uniq}
@@ -124,7 +138,9 @@ const Home = () => {
                   status_event="last"
                 />
               );
-            })}
+            }) :
+              empryData()
+            }
           </div>
         </div>
       </main>

@@ -34,7 +34,17 @@
   cursor: pointer;
 }
 
-.event__register:hover {
+.event__register--close {
+  background-color: tomato;
+  color: #fff;
+  padding: 15px 20px;
+  font-size: 26px;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+event__register--close .event__register:hover {
   box-shadow: 1px 1px 1px 1px rgba(255, 255, 86, 0.3);
   cursor: pointer;
 }

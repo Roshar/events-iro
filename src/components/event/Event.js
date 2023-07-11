@@ -23,7 +23,7 @@ const Event = ({ id, date, hour, participants_number, description, speakers, eve
       </NavLink>
     } else {
       return <button
-        className="event__register"
+        className="event__register event__register--close"
         aria-label="button"
         disabled
       >
