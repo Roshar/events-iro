@@ -10,8 +10,9 @@ import people from "./../../img/icons/full_info/business-communication-icon.svg"
 
 
 
-const Event = ({ id, date, hour, participants_number, description, speakers, event_status, location1, target_audience }) => {
+const Event = ({ id, date, hour, participants_number, description, speakers, event_status, location1, target_audience, enrollers }) => {
 
+  console.log(enrollers.amount);
   const setBtnStatus = (status) => {
     if (status === 1) {
       return <NavLink
@@ -40,7 +41,7 @@ const Event = ({ id, date, hour, participants_number, description, speakers, eve
 
             {setBtnStatus(event_status)}
 
-            <span className="event__members">Количество участников: {participants_number ?? 0} </span>
+            <span className="event__members">Количество участников: {enrollers.amount}</span>
 
           </div>
         </div>

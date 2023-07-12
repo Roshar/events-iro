@@ -12,15 +12,17 @@ const EventPage = () => {
 
   const [EventData, setEventData] = useState([])
   const [SpeakersData, setSpeakersData] = useState([])
+  const [EnrollersData, setEnrollersData] = useState([])
   const [APIdt, setAPIdt] = useState('');
   const [APIhour, setAPIhour] = useState('');
 
   const getAPIData = async (id) => {
     const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/event/${id}`);
-    console.log(data)
+
     setEventData(data['event'][0])
     setSpeakersData(data['speakers'])
-    console.log(SpeakersData)
+    setEnrollersData(data['enrollers'][0])
+
     setAPIdt(generationDate(data['event'][0].date_event, true))
     setAPIhour(generationTime(data['event'][0].date_event))
   }
@@ -45,6 +47,7 @@ const EventPage = () => {
           target_audience={EventData.target_audience}
           event_status={EventData.event_status}
           speakers={SpeakersData}
+          enrollers={EnrollersData}
         />
       </main>
     </>

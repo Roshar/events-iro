@@ -29,6 +29,20 @@ body {
   padding: 0 30px;
 }
 
+.title-2 {
+  font-size: 48px;
+  margin: 0;
+  padding: 0;
+  line-height: 1.3em;
+}
+
+.title-3 {
+  font-size: 32px;
+  margin: 0;
+  padding: 0;
+  line-height: 1.3em;
+}
+
 .border {
   border: 1px solid red;
 }
@@ -58,6 +72,24 @@ body {
   padding: 0;
   row-gap: 20px;
   column-gap: 20px;
+}
+
+.notification {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notification__msg {
+  padding-top: 120px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.notification__link {
+  color: var(--brand-color);
 }
 
 

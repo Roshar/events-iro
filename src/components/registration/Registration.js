@@ -2,13 +2,13 @@
 
 import axios from 'axios';
 import './styles.css';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const Registration = ({ id }) => {
+const Registration = ({ id, title }) => {
     const navigate = useNavigate()
 
     const [event, setEvent] = useState({
@@ -26,15 +26,27 @@ const Registration = ({ id }) => {
     const [result, setResult] = useState({});
 
 
+
     const handleChange = (e) => {
         setEvent(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
     }
 
+    const checkForm = () => {
+        const name_i = document.getElementById("name_i").value;
+        const surname_i = document.getElementById("name_i").value;
+        const patronymic_i = document.getElementById("name_i").value;
+
+
+    }
+
     const onClick = async (e) => {
+        checkForm()
         e.preventDefault()
+
         try {
             const resObj = await axios.post(`${process.env.REACT_APP_BASE_URL}/register`, event)
+            resObj.event_id = id;
             setEvent(resObj);
             navigate(`/registered/${resObj.data.user_id_link}`)
             localStorage.setItem(resObj.data.user_id_link, JSON.stringify(resObj))
@@ -42,6 +54,7 @@ const Registration = ({ id }) => {
             console.log(err.message)
         }
     }
+
 
 
     return (
@@ -60,7 +73,13 @@ const Registration = ({ id }) => {
             />
             <div className="container">
                 <div className="registration_content__title">
-                    Регистрация
+                    <h1 className="title-2">
+                        Регистрация
+                    </h1>
+                    <h1 className="title-3">
+                        {title}
+                    </h1>
+
                 </div>
 
                 <div className="registration__form register">
