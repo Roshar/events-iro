@@ -28,6 +28,21 @@
 
 }
 
+.success input,
+.success select {
+    border-color: #09c372;
+}
+
+.error input,
+.error select {
+    border-color: #ff3860;
+}
+
+.message__text {
+    font-size: 13px;
+    color: tomato;
+}
+
 
 
 .register__block {
