@@ -16,15 +16,6 @@ const Home = () => {
   console.log(process.env.REACT_APP_BASE_URL);
 
   const state = useEffect(() => {
-    // const getAllEvents = async () => {
-    //   axios.get(`${process.env.REACT_APP_BASE_URL}/events`).then((response) => {
-    //     setAPIDataSoon(response.data.soon);
-    //     setAPIDataLast(response.data.last);
-    //   });
-    // };
-
-    // getAllEvents();
-
     axios.get(`${process.env.REACT_APP_BASE_URL}/events`).then((response) => {
       setAPIDataSoon(response.data.soon);
       setAPIDataLast(response.data.last);

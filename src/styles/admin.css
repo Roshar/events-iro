@@ -1,0 +1,79 @@
+.aside {
+    max-width: 200px;
+    padding: 10px 14px;
+    margin-top: 30px;
+}
+
+.enrollers {
+    margin-bottom: 30px;
+}
+
+.enrollers__table {
+    width: 100%;
+}
+
+table,
+th,
+td {
+    border: 1px solid #484343;
+}
+
+tr:hover {
+    background-color: #e5e5e4;
+}
+
+table {
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.table-tr-first {
+    width: 50%;
+}
+
+.table-tr-second {
+    width: 15%;
+}
+
+.enrollers__table {}
+
+.enrollers__table-tr:first-child {
+    width: 5%;
+}
+
+.enrollers__link {
+    display: flex;
+    padding: 5px;
+    color: var(--brand-color);
+    cursor: pointer;
+}
+
+
+
+.enrollers__icon {
+    max-width: 35px;
+    padding: 5px;
+}
+
+
+.enrollers__table-tr {
+    text-align: center;
+}
+
+.subnav-list__link {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    padding: 4px 3px;
+    color: #484343;
+}
+
+.subnav-list__link:hover {
+    color: #484343;
+    background-color: #e5e5e4;
+    border-radius: 5px;
+}
+
+.subnav-list__icon {
+    max-width: 20px;
+}

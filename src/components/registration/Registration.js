@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const Registration = ({ id, title }) => {
+const Registration = ({ id, title, areaList }) => {
     const navigate = useNavigate()
 
     const [event, setEvent] = useState({
@@ -22,6 +22,8 @@ const Registration = ({ id, title }) => {
         position: "",
         area_id: ""
     })
+
+
 
     const [result, setResult] = useState({});
     const [messageNot, setMessageNot] = useState('');
@@ -248,7 +250,13 @@ const Registration = ({ id, title }) => {
                             <span className="register__required">*</span> Город/район: </label>
                         <select className="register__select" name="area_id" id="area_id" onChange={handleChange}>
                             <option value="" className="register__option">Выбрать</option>
-                            <option value="1" className="register__option">город Аргун</option>
+                            {areaList.map((el) => {
+                                return (
+                                    <option key={el.id_area} value={el.id_area} className="register__option">{el.title_area}</option>
+                                )
+                            })}
+
+
                         </select>
                         <span className="notif" id="danger-position"></span>
                     </div>

@@ -8,10 +8,12 @@ import axios from 'axios';
 const RegisnterPage = () => {
   const { id } = useParams()
   const [title, setTitle] = useState('')
+  const [areaList, setAreaList] = useState([])
 
   const getTitle = async () => {
     const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/register/${id}`)
-    setTitle(data[0].title)
+    setTitle(data.reg_form[0].title)
+    setAreaList(data.list)
   }
 
   useEffect(() => {
@@ -26,7 +28,7 @@ const RegisnterPage = () => {
     <>
       <Header />
       <main className="main">
-        <Registration id={id} title={title} />
+        <Registration id={id} title={title} areaList={areaList} />
       </main>
     </>
   );
