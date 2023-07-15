@@ -1,7 +1,24 @@
+.main {
+    position: relative;
+}
+
+.main--admin {
+    padding-top: 40px;
+}
+
+
+
+/* .admin__wrapper {
+    display: flex;
+    justify-content: center;
+} */
+
 .aside {
+    position: fixed;
+    left: 0;
     max-width: 200px;
     padding: 10px 14px;
-    margin-top: 30px;
+
 }
 
 .enrollers {
@@ -76,4 +93,58 @@ table {
 
 .subnav-list__icon {
     max-width: 20px;
+}
+
+/* EDIT EVENT*/
+
+.admin_event {
+
+    margin-bottom: 30px;
+}
+
+.admin_event__form {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.admin_event__input,
+.admin_event__area {
+    border-radius: 3px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #484343;
+}
+
+
+
+.admin_event__label {
+    display: inline-block;
+    margin: 10px 0px;
+}
+
+.admin_event__select {
+    overflow: hidden;
+    max-width: 100%;
+
+    padding: 7px;
+    border-radius: 3px;
+}
+
+.admin_event__item {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 2px;
+}
+
+.admin_event__item:hover {
+    background-color: rgba(240, 204, 0, .3);
+}
+
+.admin_event__list {
+    max-width: 400px;
+}
+
+.admin_event__item {
+    border-bottom: dotted 1px #484343;
+    margin: 2px 0px;
 }
