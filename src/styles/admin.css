@@ -141,10 +141,19 @@ table {
 }
 
 .admin_event__list {
-    max-width: 400px;
+    width: 45%;
+
+
 }
 
 .admin_event__item {
     border-bottom: dotted 1px #484343;
     margin: 2px 0px;
+
+}
+
+.admin_event__list-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
 }
