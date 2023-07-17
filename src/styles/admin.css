@@ -6,6 +6,19 @@
     padding-top: 40px;
 }
 
+.btn--admin-add {
+    padding: 5px 7px;
+    color: #fff;
+    background: #0051a2;
+}
+
+.btn--admin-del {
+    padding: 5px 7px;
+    color: #fff;
+    background: tomato;
+}
+
+
 
 
 /* .admin__wrapper {
@@ -133,11 +146,18 @@ table {
 .admin_event__item {
     display: flex;
     justify-content: space-between;
-    padding: 3px 2px;
+    padding: 3px 5px;
+    border-radius: 3px;
 }
 
-.admin_event__item:hover {
-    background-color: rgba(240, 204, 0, .3);
+
+
+.admin_event__item--active:hover {
+    background-color: rgba(175, 211, 248, .3);
+}
+
+.admin_event__item--disable:hover {
+    background-color: rgba(242, 193, 184, .3);
 }
 
 .admin_event__list {

@@ -37,25 +37,91 @@ const EventPageEdit = () => {
   const changeSpeakers = (e) => {
     e.preventDefault();
 
-    const speakerId = e.target.getAttribute("data-speaker-id");
+    const speakerId = parseInt(e.target.getAttribute("data-speaker-id"));
     const category = e.target.id;
 
-    if (category === "notAssigned") {
-    } else if (category === "assigned") {
-      console.log("sdsd");
-      const res = speakersCurrent.filter((el) => {
-        return speakerId !== el["speakers_id"];
-      });
+    if (category === 'notAssigned') {
 
-      setSpeakersCurrent(res);
-      const test = speakersList[speakerId];
-      console.log(test);
-      //   const res1 = filterSpeakers.push(test);
-      //   setFilterSpeakers(res1);
+      const newFillter = filterSpeakers.filter((el) => {
+        return el['id'] !== speakerId
+      })
+
+      const newCurrent = speakersList.filter((e) => {
+        return e['id'] === speakerId
+      })
+
+      newCurrent[0]['speakers_id'] = speakerId;
+
+      speakersCurrent.push(newCurrent[0])
+
+      setFilterSpeakers(newFillter)
+
+    } else if (category === 'assigned') {
+
+
+      const newCurrent = speakersCurrent.filter((el) => {
+        return el['speakers_id'] !== speakerId
+      })
+      const newFillter = speakersList.filter((e) => {
+        return e['id'] === speakerId
+      })
+
+      filterSpeakers.push(newFillter[0])
+
+      setSpeakersCurrent(newCurrent)
+      setFilterSpeakers(filterSpeakers)
+
+
     }
+
+
+
+    //   const res2 = filterSpeakers.filter((e) => {
+    //     return e['id'] !== speakerId
+    //   })
+
+    //   console.log('общий список')
+    //   console.log(res2)
+
+    //   setFilterSpeakers(res2)
+
+    //   const res = speakersList.filter((e) => {
+    //     return e['id'] === speakerId
+    //   })
+
+    //   speakersCurrent.push(res[0]);
+    //   setSpeakersCurrent(speakersCurrent)
+
+
+    // } else if (category === "assigned") {
+
+    //   const res = speakersCurrent.filter((el) => {
+
+    //     if (el["speakers_id"] === speakerId) {
+    //       return speakerId !== el["speakers_id"];
+    //     }
+
+    //   });
+    //   console.log('назначенный список')
+    //   console.log(res)
+
+
+    //   setSpeakersCurrent(res);
+
+    //   const res2 = speakersList.filter((e) => {
+    //     return e['id'] === speakerId
+    //   })
+    //   filterSpeakers.push(res2[0])
+    //   setFilterSpeakers(filterSpeakers)
+
+    // }
 
     // getAllSpeakers();
   };
+
+  const submitFunc = () => {
+    console.log('change');
+  }
 
   useEffect(() => {
     axios
@@ -87,7 +153,7 @@ const EventPageEdit = () => {
       });
   }, []);
 
-  const handleChange = (e) => {};
+  const handleChange = (e) => { };
 
   return (
     <>
@@ -262,12 +328,12 @@ const EventPageEdit = () => {
                   <ul className="admin_event__list list-reset">
                     {filterSpeakers.map((el) => {
                       return (
-                        <li className="admin_event__item" key={el.id}>
+                        <li className="admin_event__item admin_event__item--active" key={el.id}>
                           <div className="admin_event__item-data">
                             {el.surname} {el.firstname}
                           </div>
                           <button
-                            className="admin_event__btn btn btn--admin"
+                            className="admin_event__btn btn btn--admin-add "
                             data-speaker-id={el.id}
                             type="button"
                             id="notAssigned"
@@ -283,13 +349,13 @@ const EventPageEdit = () => {
                   <ul className="admin_event__list list-reset">
                     {speakersCurrent.map((el) => {
                       return (
-                        <li className="admin_event__item" key={el.id}>
+                        <li className="admin_event__item admin_event__item--disable" key={el['speakers_id']}>
                           <div className="admin_event__item-data">
                             {el.surname} {el.firstname}
                           </div>
                           <button
-                            className="admin_event__btn btn btn--admin"
-                            data-speaker-id={el.id}
+                            className="admin_event__btn btn btn--admin-del"
+                            data-speaker-id={el['speakers_id']}
                             type="button"
                             id="assigned"
                             onClick={changeSpeakers}
@@ -333,6 +399,10 @@ const EventPageEdit = () => {
                   </option>
                 </select>
               </div>
+
+              <button className="admin_event__submit" onclick={submitFunc} type="button">
+                Обновить
+              </button>
             </form>
           </div>
         </div>

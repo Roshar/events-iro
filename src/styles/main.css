@@ -92,9 +92,15 @@ body {
   color: var(--brand-color);
 }
 
-.btn--admin {
+.btn--admin-add {
   padding: 5px 7px;
   color: #484343;
+}
+
+.btn--admin-del {
+  padding: 5px 7px;
+  color: #fff;
+  background: tomato;
 }
 
 
