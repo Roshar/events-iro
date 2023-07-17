@@ -65,8 +65,6 @@ table {
     width: 15%;
 }
 
-.enrollers__table {}
-
 .enrollers__table-tr:first-child {
     width: 5%;
 }
@@ -78,13 +76,10 @@ table {
     cursor: pointer;
 }
 
-
-
 .enrollers__icon {
     max-width: 35px;
     padding: 5px;
 }
-
 
 .enrollers__table-tr {
     text-align: center;
@@ -111,13 +106,15 @@ table {
 /* EDIT EVENT*/
 
 .admin_event {
-
     margin-bottom: 30px;
 }
 
 .admin_event__form {
     max-width: 900px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
 }
 
 .admin_event__input,
@@ -128,8 +125,6 @@ table {
     border: 1px solid #484343;
 }
 
-
-
 .admin_event__label {
     display: inline-block;
     margin: 10px 0px;
@@ -138,7 +133,6 @@ table {
 .admin_event__select {
     overflow: hidden;
     max-width: 100%;
-
     padding: 7px;
     border-radius: 3px;
 }
@@ -150,8 +144,6 @@ table {
     border-radius: 3px;
 }
 
-
-
 .admin_event__item--active:hover {
     background-color: rgba(175, 211, 248, .3);
 }
@@ -162,18 +154,30 @@ table {
 
 .admin_event__list {
     width: 45%;
-
-
 }
 
 .admin_event__item {
     border-bottom: dotted 1px #484343;
     margin: 2px 0px;
-
 }
 
 .admin_event__list-wrapper {
     display: flex;
     justify-content: space-between;
     flex-grow: 1;
+}
+
+.admin_event__form-control-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin_event__submit {
+    max-width: 300px;
+    flex-grow: 1;
+}
+
+.admin_event__submit {
+    text-align: center;
 }

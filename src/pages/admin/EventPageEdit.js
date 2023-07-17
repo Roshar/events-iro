@@ -120,7 +120,7 @@ const EventPageEdit = () => {
   };
 
   const submitFunc = () => {
-    console.log('change');
+
   }
 
   useEffect(() => {
@@ -153,7 +153,10 @@ const EventPageEdit = () => {
       });
   }, []);
 
-  const handleChange = (e) => { };
+  const handleChange = (e) => {
+
+    console.log(e.target.value);
+  };
 
   return (
     <>
@@ -173,7 +176,7 @@ const EventPageEdit = () => {
                   type="text"
                   id="title"
                   name="title"
-                  onChange={handleChange}
+                  onChange={e => setTitle(e.target.value)}
                   value={title}
                 />
               </div>
@@ -187,20 +190,20 @@ const EventPageEdit = () => {
                   id="description"
                   name="description"
                   rows="9"
-                  onChange={handleChange}
+                  onChange={e => setDescription(e.target.value)}
                   value={description}
                 />
               </div>
 
               <div className="admin_event__form-control">
-                <label className="admin_event__label" htmlFor="description">
+                <label className="admin_event__label" htmlFor="category_id">
                   Категория мероприятия:{" "}
                 </label>
                 <select
                   className="admin_event__select"
                   name="category_id"
                   id="category_id"
-                  onChange={handleChange}
+                  onChange={e => setDescription(e.target.value)}
                 >
                   {catList.map((el) => {
                     return (
@@ -219,15 +222,15 @@ const EventPageEdit = () => {
               </div>
 
               <div className="admin_event__form-control">
-                <label className="admin_event__label" htmlFor="description">
+                <label className="admin_event__label" htmlFor="organization_id">
                   {" "}
                   Организация:{" "}
                 </label>
                 <select
                   className="admin_event__select"
-                  name="category_id"
-                  id="category_id"
-                  onChange={handleChange}
+                  name="organization_id"
+                  id="organization_id"
+                  onChange={e => setOrgId(e.target.value)}
                 >
                   {organizationsList.map((el) => {
                     return (
@@ -257,7 +260,7 @@ const EventPageEdit = () => {
                   value={dateEvent}
                   min="2023-01-01"
                   max="2024-12-31"
-                  onChange={handleChange}
+                  onChange={e => setDateEvent(e.target.value)}
                 />
               </div>
 
@@ -270,7 +273,7 @@ const EventPageEdit = () => {
                   type="time"
                   id="time_event"
                   name="time_event"
-                  onChange={handleChange}
+                  onChange={e => setTime(e.target.value)}
                   value={time}
                 />
               </div>
@@ -284,7 +287,7 @@ const EventPageEdit = () => {
                   type="text"
                   id="location"
                   name="location"
-                  onChange={handleChange}
+                  onChange={e => setLocation(e.target.value)}
                   value={location}
                 />
               </div>
@@ -298,7 +301,7 @@ const EventPageEdit = () => {
                   type="text"
                   id="target_audience"
                   name="target_audience"
-                  onChange={handleChange}
+                  onChange={e => setTarget(e.target.value)}
                   value={target}
                 />
               </div>
@@ -315,7 +318,7 @@ const EventPageEdit = () => {
                   type="text"
                   id="participants_number"
                   name="participants_number"
-                  onChange={handleChange}
+                  onChange={e => setParNumber(e.target.value)}
                   value={parNumber}
                 />
               </div>
@@ -337,6 +340,7 @@ const EventPageEdit = () => {
                             data-speaker-id={el.id}
                             type="button"
                             id="notAssigned"
+                            onChange={handleChange}
                             onClick={changeSpeakers}
                           >
                             Добавить
@@ -358,6 +362,7 @@ const EventPageEdit = () => {
                             data-speaker-id={el['speakers_id']}
                             type="button"
                             id="assigned"
+                            onChange={handleChange}
                             onClick={changeSpeakers}
                           >
                             Удалить
@@ -400,9 +405,11 @@ const EventPageEdit = () => {
                 </select>
               </div>
 
-              <button className="admin_event__submit" onclick={submitFunc} type="button">
-                Обновить
-              </button>
+              <div className="admin_event__form-control-submit">
+                <button className="admin_event__submit btn" onClick={submitFunc} type="button">
+                  Обновить
+                </button>
+              </div>
             </form>
           </div>
         </div>
