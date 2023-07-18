@@ -3,15 +3,33 @@ import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AdminMenu from "../../components/adminMenu/AdminMenu";
+import Notification from "../../components/notification/Notification";
+
 
 const Main = () => {
   const [events, setEvents] = useState([]);
+  const [notificationMsg, setNotificationMsg] = useState('')
+  const [vissibleNotif, setVissibleNotif] = useState('none')
+  const [vissibleStatus, setVissibleStatus] = useState('')
+  const [IDNotification, setIDNotification] = useState('')
   let counter = 0;
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_BASE_URL}/admin/`).then((response) => {
       setEvents(response.data);
     });
+
+    const notification = JSON.parse(localStorage.getItem('update'))
+
+    if (notification) {
+      setNotificationMsg(notification.msg)
+      setVissibleNotif('')
+      setVissibleStatus(notification.status)
+      setIDNotification('update')
+    }
+
+
+
   }, []);
 
   return (
@@ -28,6 +46,9 @@ const Main = () => {
         <AdminMenu />
         <div className="container">
           <article className="enrollers">
+
+            <Notification msg={notificationMsg} display={vissibleNotif} status={vissibleStatus} id={IDNotification} />
+
             <table className="enrollers__table">
               <thead>
                 <tr>
@@ -55,7 +76,7 @@ const Main = () => {
                     Дата публикации{" "}
                   </th>
                   <th className="enrollers__table-tr" scope="col">
-                     Автор
+                    Автор
                   </th>
                   <th className="enrollers__table-tr" scope="col">
                     Просмотр

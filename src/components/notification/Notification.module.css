@@ -1,0 +1,30 @@
+.notification {
+    display: flex;
+    position: relative;
+    justify-content: center;
+
+}
+
+.success {
+    text-align: center;
+    color: #fff;
+    position: absolute;
+    top: -50px;
+    width: 50%;
+    background-color: #0051a2;
+    padding: 4px;
+    border-radius: 3px;
+    opacity: .8;
+}
+
+
+
+.danger {
+    text-align: center;
+    color: #fff;
+    position: absolute;
+    top: -50px;
+    width: 100%;
+    background-color: tomato;
+    opacity: .8;
+}

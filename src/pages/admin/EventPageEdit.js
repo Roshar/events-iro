@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
 import Header from "../../components/header/Header";
 import AdminMenu from "../../components/adminMenu/AdminMenu";
 
 const EventPageEdit = () => {
+
+  const navigate = useNavigate()
   const { id } = useParams();
 
+  const [notification, setNotification] = useState({})
   const [event, setEvent] = useState([]);
   const [catList, setCatList] = useState([]);
   const [organizationsList, setOrganizationsList] = useState([]);
@@ -14,7 +18,6 @@ const EventPageEdit = () => {
 
   const [filterSpeakers, setFilterSpeakers] = useState([]);
   const [filterCurrentSpeakers, setFilterCurrentSpeakers] = useState([]);
-
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState("");
@@ -35,6 +38,7 @@ const EventPageEdit = () => {
   };
 
   const changeSpeakers = (e) => {
+
     e.preventDefault();
 
     const speakerId = parseInt(e.target.getAttribute("data-speaker-id"));
@@ -58,7 +62,6 @@ const EventPageEdit = () => {
 
     } else if (category === 'assigned') {
 
-
       const newCurrent = speakersCurrent.filter((el) => {
         return el['speakers_id'] !== speakerId
       })
@@ -70,7 +73,6 @@ const EventPageEdit = () => {
 
       setSpeakersCurrent(newCurrent)
       setFilterSpeakers(filterSpeakers)
-
 
     }
 
@@ -119,7 +121,25 @@ const EventPageEdit = () => {
     // getAllSpeakers();
   };
 
-  const submitFunc = () => {
+  const submitFunc = async () => {
+    const formData = {}
+    formData.title = title;
+    formData.description = description;
+    formData['category_id'] = categoryId;
+    formData['organization_id'] = orgId;
+    formData['date_event'] = dateEvent;
+    formData['date_time'] = time;
+    formData['location'] = location;
+    formData['target_audience'] = target;
+    formData['participants_number'] = parNumber;
+    formData['event_status'] = statusPub;
+    formData['speakersCurrent'] = speakersCurrent;
+    formData['id'] = id;
+
+    const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/event/edit/${id}`, formData);
+    navigate(`/admin`)
+
+    localStorage.setItem('update', JSON.stringify(data))
 
   }
 
@@ -150,6 +170,7 @@ const EventPageEdit = () => {
         );
 
         setSpeakersCurrent(response.data.speakersForEvent);
+
       });
   }, []);
 
@@ -166,7 +187,9 @@ const EventPageEdit = () => {
         <AdminMenu />
         <div className="container">
           <div className="admin_event">
+
             <form className="admin_event__form">
+
               <div className="admin_event__form-control">
                 <label className="admin_event__label" htmlFor="title">
                   Наименование мероприятия:
@@ -203,7 +226,7 @@ const EventPageEdit = () => {
                   className="admin_event__select"
                   name="category_id"
                   id="category_id"
-                  onChange={e => setDescription(e.target.value)}
+                  onChange={e => setCategoryId(e.target.value)}
                 >
                   {catList.map((el) => {
                     return (

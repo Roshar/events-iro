@@ -36,6 +36,7 @@
 
 .enrollers {
     margin-bottom: 30px;
+    position: relative;
 }
 
 .enrollers__table {
