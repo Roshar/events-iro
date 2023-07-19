@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import fileImg from '../../img/icons/upload-to-cloud-svgrepo-com.svg'
 
 import Header from "../../components/header/Header";
 import AdminMenu from "../../components/adminMenu/AdminMenu";
@@ -16,6 +17,7 @@ const EventPageEdit = () => {
   const [organizationsList, setOrganizationsList] = useState([]);
   const [speakersList, setSpeakersList] = useState([]);
 
+
   const [filterSpeakers, setFilterSpeakers] = useState([]);
   const [filterCurrentSpeakers, setFilterCurrentSpeakers] = useState([]);
   const [title, setTitle] = useState("");
@@ -28,6 +30,7 @@ const EventPageEdit = () => {
   const [target, setTarget] = useState("");
   const [parNumber, setParNumber] = useState("");
   const [statusPub, setStatusPub] = useState("");
+  const [file, setFile] = useState(fileImg);
   const [speakersCurrent, setSpeakersCurrent] = useState([]);
 
   const getAllSpeakers = (allList, currentList) => {
@@ -135,12 +138,20 @@ const EventPageEdit = () => {
     formData['event_status'] = statusPub;
     formData['speakersCurrent'] = speakersCurrent;
     formData['id'] = id;
+    formData['file'] = file
+
 
     const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/event/edit/${id}`, formData);
     navigate(`/admin`)
-
+    data.display = 'vissible'
+    data.displayText = 'X'
     localStorage.setItem('update', JSON.stringify(data))
 
+
+  }
+
+  const imgClick = () => {
+    document.querySelector('#fileBtn').click();
   }
 
   useEffect(() => {
@@ -174,10 +185,14 @@ const EventPageEdit = () => {
       });
   }, []);
 
-  const handleChange = (e) => {
 
-    console.log(e.target.value);
-  };
+  // document.querySelector('[name="ms2_action"]').click();
+
+
+  function handleChange(e) {
+    console.log(e.target.files);
+    setFile(URL.createObjectURL(e.target.files[0]));
+  }
 
   return (
     <>
@@ -188,7 +203,7 @@ const EventPageEdit = () => {
         <div className="container">
           <div className="admin_event">
 
-            <form className="admin_event__form">
+            <form className="admin_event__form" enctype="multipart/form-data">
 
               <div className="admin_event__form-control">
                 <label className="admin_event__label" htmlFor="title">
@@ -426,6 +441,18 @@ const EventPageEdit = () => {
                     Неопубликовано{" "}
                   </option>
                 </select>
+              </div>
+
+              <div className="admin_event__form-control">
+                <div className="admin_event__img img_event">
+                  <div className="img_event__text">
+                    <h2>Добавить изображение:</h2>
+                    <input className="img_event__input" id="fileBtn" type="file" name="file" onChange={handleChange} />
+                    <span className="img_event__span">Если не добавить изображение, фон будет выбран по умолчанию</span>
+                  </div>
+                  <img className='img_event__box' onClick={imgClick} src={file} />
+                </div>
+
               </div>
 
               <div className="admin_event__form-control-submit">

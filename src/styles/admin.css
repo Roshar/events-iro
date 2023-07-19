@@ -182,3 +182,25 @@ table {
 .admin_event__submit {
     text-align: center;
 }
+
+.img_event {
+    display: flex;
+    column-gap: 20px;
+}
+
+.img_event__span {
+    font-size: 11px;
+}
+
+.img_event__text {
+    max-width: 30%;
+    overflow: hidden;
+}
+
+.img_event__box {
+    max-height: 300px;
+    width: 100%;
+    border: 2px dotted var(--brand-color);
+
+
+}

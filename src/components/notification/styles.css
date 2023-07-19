@@ -5,6 +5,23 @@
 
 }
 
+.p_box {
+    position: relative;
+}
+
+.vissible_btn {
+    position: absolute;
+    right: 10px;
+}
+
+.none {
+    display: none;
+}
+
+.vissible {
+    display: inline;
+}
+
 .success {
     text-align: center;
     color: #fff;

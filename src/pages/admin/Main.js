@@ -10,8 +10,10 @@ const Main = () => {
   const [events, setEvents] = useState([]);
   const [notificationMsg, setNotificationMsg] = useState('')
   const [vissibleNotif, setVissibleNotif] = useState('none')
+  const [vissibleNotifText, setVissibleNotifText] = useState('')
   const [vissibleStatus, setVissibleStatus] = useState('')
   const [IDNotification, setIDNotification] = useState('')
+
   let counter = 0;
 
   useEffect(() => {
@@ -21,24 +23,23 @@ const Main = () => {
 
     const notification = JSON.parse(localStorage.getItem('update'))
 
+    console.log(notification)
+
     if (notification) {
       setNotificationMsg(notification.msg)
-      setVissibleNotif('')
+      setVissibleNotif(notification.display)
+      setVissibleNotifText(notification.displayText)
       setVissibleStatus(notification.status)
       setIDNotification('update')
     }
 
-
-
   }, []);
+
+
 
   return (
     <>
-      {/* <div className="enrollers__btn-box">
-                <img className="enrollers__icon" src={changeIcon} alt="" />
-                <img className="enrollers__icon" src={offIcon} alt="" />
-                <img className="enrollers__icon" src={deleteIcon} alt="" />
-            </div> */}
+
 
       <Header />
 
@@ -47,7 +48,7 @@ const Main = () => {
         <div className="container">
           <article className="enrollers">
 
-            <Notification msg={notificationMsg} display={vissibleNotif} status={vissibleStatus} id={IDNotification} />
+            <Notification msg={notificationMsg} display={vissibleNotif} displayText={vissibleNotifText} status={vissibleStatus} id={IDNotification} />
 
             <table className="enrollers__table">
               <thead>

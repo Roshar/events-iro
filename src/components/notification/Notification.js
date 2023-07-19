@@ -1,19 +1,31 @@
 
 import { useEffect, useState } from 'react';
-import classes from './Notification.module.css'
+import './styles.css'
 
-const Notification = ({ msg, status, display, id }) => {
+const Notification = ({ msg, status, display, id, displayText }) => {
 
+
+    const [show, setShow] = useState('')
 
 
     localStorage.removeItem(id);
-    setTimeout(function () { notification.close() }, 2000);
+
+    console.log(displayText)
+    const changeMsg = (e) => {
+        setShow('none')
+    }
+
+    const classes = `p_box ${status} ${show} `
+    const classes2 = `vissible_btn ${show}`
+
+
     return (
-        <div className={classes.notification}>
-            <p className={classes[status]}  >
-                {msg}
+        <div className='notification'>
+            <p className={classes}  >
+                <span className={show}> {msg} </span>
+                <button type='button' className={classes2} onClick={changeMsg}>{displayText}</button>
             </p>
-        </div>
+        </div >
     );
 
 }
