@@ -16,8 +16,6 @@ const EventPageEdit = () => {
   const [catList, setCatList] = useState([]);
   const [organizationsList, setOrganizationsList] = useState([]);
   const [speakersList, setSpeakersList] = useState([]);
-
-
   const [filterSpeakers, setFilterSpeakers] = useState([]);
   const [filterCurrentSpeakers, setFilterCurrentSpeakers] = useState([]);
   const [title, setTitle] = useState("");
@@ -30,7 +28,10 @@ const EventPageEdit = () => {
   const [target, setTarget] = useState("");
   const [parNumber, setParNumber] = useState("");
   const [statusPub, setStatusPub] = useState("");
-  const [file, setFile] = useState(fileImg);
+  const [file, setFile] = useState({
+    preview: fileImg,
+    data: ''
+  });
   const [speakersCurrent, setSpeakersCurrent] = useState([]);
 
   const getAllSpeakers = (allList, currentList) => {
@@ -124,31 +125,38 @@ const EventPageEdit = () => {
     // getAllSpeakers();
   };
 
-  const submitFunc = async () => {
-    const formData = {}
-    formData.title = title;
-    formData.description = description;
-    formData['category_id'] = categoryId;
-    formData['organization_id'] = orgId;
-    formData['date_event'] = dateEvent;
-    formData['date_time'] = time;
-    formData['location'] = location;
-    formData['target_audience'] = target;
-    formData['participants_number'] = parNumber;
-    formData['event_status'] = statusPub;
-    formData['speakersCurrent'] = speakersCurrent;
-    formData['id'] = id;
-    formData['file'] = file
+  const submitFunc = async (e) => {
+    e.preventDefault()
 
+    const formData = new FormData()
+    formData.append('id', id)
+    formData.append('title', title)
+    formData.append('description', description)
+    formData.append('category_id', categoryId)
+    formData.append('organization_id', orgId)
+    formData.append('date_event', dateEvent)
+    formData.append('date_time', time)
+    formData.append('location', location)
+    formData.append('target_audience', target)
+    formData.append('participants_number', parNumber)
+    formData.append('event_status', statusPub)
+    formData.append('speakersCurrent', speakersCurrent)
 
-    const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/event/edit/${id}`, formData);
+    formData.append('file', file.data)
+
+    const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/event/edit/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
     navigate(`/admin`)
+    console.log(data);
     data.display = 'vissible'
     data.displayText = 'X'
     localStorage.setItem('update', JSON.stringify(data))
 
-
   }
+
 
   const imgClick = () => {
     document.querySelector('#fileBtn').click();
@@ -189,9 +197,17 @@ const EventPageEdit = () => {
   // document.querySelector('[name="ms2_action"]').click();
 
 
+  // function handleChange(e) {
+  //   console.log(e.target.files);
+  //   setFile(e.target.files[0]);
+  // }
+
   function handleChange(e) {
-    console.log(e.target.files);
-    setFile(URL.createObjectURL(e.target.files[0]));
+    const img = {
+      preview: URL.createObjectURL(e.target.files[0]),
+      data: e.target.files[0],
+    }
+    setFile(img);
   }
 
   return (
@@ -203,7 +219,7 @@ const EventPageEdit = () => {
         <div className="container">
           <div className="admin_event">
 
-            <form className="admin_event__form" enctype="multipart/form-data">
+            <form className="admin_event__form" encType="multipart/form-data">
 
               <div className="admin_event__form-control">
                 <label className="admin_event__label" htmlFor="title">
@@ -450,13 +466,13 @@ const EventPageEdit = () => {
                     <input className="img_event__input" id="fileBtn" type="file" name="file" onChange={handleChange} />
                     <span className="img_event__span">Если не добавить изображение, фон будет выбран по умолчанию</span>
                   </div>
-                  <img className='img_event__box' onClick={imgClick} src={file} />
+                  <img className='img_event__box' onClick={imgClick} src={file.preview} />
                 </div>
 
               </div>
 
               <div className="admin_event__form-control-submit">
-                <button className="admin_event__submit btn" onClick={submitFunc} type="button">
+                <button className="admin_event__submit btn" onClick={submitFunc} type="submit">
                   Обновить
                 </button>
               </div>
