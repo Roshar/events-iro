@@ -48,6 +48,7 @@ const EventPage = () => {
           event_status={EventData.event_status}
           speakers={SpeakersData}
           enrollers={EnrollersData}
+          picture_name={EventData.picture_name}
         />
       </main>
     </>

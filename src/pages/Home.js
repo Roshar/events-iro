@@ -91,7 +91,7 @@ const Home = () => {
                     statusText={event.status}
                     title={event.title}
                     // img={event.img}
-                    img={`${process.env.REACT_APP_BASE_IMG_URL}/${event.picture_name}`}
+                    img={`${process.env.REACT_APP_BASE_IMG_URL}/event_images/${event.picture_name}`}
                     date_event={event.date_event}
                   />
                 );
@@ -124,7 +124,7 @@ const Home = () => {
                   statusText={event.status}
                   title={event.title}
                   // img={event.img}
-                  img={`${process.env.REACT_APP_BASE_IMG_URL}/${event.picture_name}`}
+                  img={`${process.env.REACT_APP_BASE_IMG_URL}/event_images/${event.picture_name}`}
                   date_event={event.date_event}
                   status_event="last"
                 />

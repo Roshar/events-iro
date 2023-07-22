@@ -27,7 +27,8 @@ const EventPageEdit = () => {
   const [location, setLocation] = useState("");
   const [target, setTarget] = useState("");
   const [parNumber, setParNumber] = useState("");
-  const [statusPub, setStatusPub] = useState("");
+  const [published, setPublished] = useState("");
+  const [statusReg, setStatusReg] = useState("");
   const [file, setFile] = useState({
     preview: fileImg,
     data: ''
@@ -139,7 +140,8 @@ const EventPageEdit = () => {
     formData.append('location', location)
     formData.append('target_audience', target)
     formData.append('participants_number', parNumber)
-    formData.append('event_status', statusPub)
+    formData.append('event_status', statusReg)
+    formData.append('published', published)
     formData.append('speakersCurrent', speakersCurrent)
 
     formData.append('file', file.data)
@@ -170,7 +172,6 @@ const EventPageEdit = () => {
         setCatList(response.data.list);
         setOrganizationsList(response.data.listOrg);
         setSpeakersList(response.data.speakersList);
-
         setTitle(response.data.events[0].title);
         setDescription(response.data.events[0].description);
         setCategoryId(response.data.events[0].category_id);
@@ -181,7 +182,8 @@ const EventPageEdit = () => {
         setLocation(response.data.events[0].location);
         setTarget(response.data.events[0].target_audience);
         setParNumber(response.data.events[0].participants_number);
-        setStatusPub(response.data.events[0].event_status);
+        setStatusReg(response.data.events[0].event_status);
+        setPublished(response.data.events[0].published);
 
         getAllSpeakers(
           response.data.speakersList,
@@ -429,34 +431,69 @@ const EventPageEdit = () => {
               </div>
 
               <div className="admin_event__form-control">
-                <label className="admin_event__label" htmlFor="event_status">
-                  Статус публикации:{" "}
-                </label>
-                <select
-                  className="admin_event__select"
-                  name="event_status"
-                  id="event_status"
-                  onChange={handleChange}
-                >
-                  <option
-                    className="admin_event__option"
-                    value="1"
-                    key={1}
-                    selected={1 == statusPub}
-                  >
-                    {" "}
-                    Опубликованно{" "}
-                  </option>
-                  <option
-                    className="admin_event__option"
-                    value="2"
-                    key={2}
-                    selected={2 == statusPub}
-                  >
-                    {" "}
-                    Неопубликовано{" "}
-                  </option>
-                </select>
+                <div className="admin_event__twice_element-container">
+                  <div className="admin_event__twice_element">
+                    <label className="admin_event__label" htmlFor="event_status">
+                      Статус публикации:{" "}
+                    </label>
+                    <select
+                      className="admin_event__select"
+                      name="event_status"
+                      id="event_status"
+                      onChange={e => setStatusReg(e.target.value)}
+                    >
+                      <option
+                        className="admin_event__option"
+                        value="1"
+                        key={1}
+                        selected={1 == statusReg}
+                      >
+                        {" "}
+                        Регистрация открыта{" "}
+                      </option>
+                      <option
+                        className="admin_event__option"
+                        value="2"
+                        key={2}
+                        selected={2 == statusReg}
+                      >
+                        {" "}
+                        Регистрация закрыта{" "}
+                      </option>
+                    </select>
+                  </div>
+                  <div className="admin_event__twice_element">
+                    <label className="admin_event__label" htmlFor="event_status">
+                      Статус публикации:{" "}
+                    </label>
+                    <select
+                      className="admin_event__select"
+                      name="published"
+                      id="published"
+                      onChange={e => setPublished(e.target.value)}
+                    >
+                      <option
+                        className="admin_event__option"
+                        value="1"
+                        key={1}
+                        selected={1 == published}
+                      >
+                        {" "}
+                        Опубликованно{" "}
+                      </option>
+                      <option
+                        className="admin_event__option"
+                        value="2"
+                        key={2}
+                        selected={2 == published}
+                      >
+                        {" "}
+                        Снято с публикации{" "}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
               </div>
 
               <div className="admin_event__form-control">

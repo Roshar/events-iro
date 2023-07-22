@@ -1,51 +1,17 @@
 import "./style.css";
 
-import { NavLink, useParams } from "react-router-dom";
-
 
 import calendar from "./../../img/icons/full_info/calendar-line-icon.svg";
 import time from "./../../img/icons/full_info/clock-line-icon.svg";
 import location from "./../../img/icons/full_info/accurate-icon.svg";
 import people from "./../../img/icons/full_info/business-communication-icon.svg";
+import EventHeader from './../../components/eventHeader/EventHeader'
 
+const Event = ({ id, date, hour, participants_number, description, speakers, event_status, location1, target_audience, enrollers, picture_name }) => {
 
-
-const Event = ({ id, date, hour, participants_number, description, speakers, event_status, location1, target_audience, enrollers }) => {
-
-  console.log(enrollers.amount);
-  const setBtnStatus = (status) => {
-    if (status === 1) {
-      return <NavLink
-        className="event__register"
-        aria-label="button"
-        to={`/register/${id}`}
-      >
-        Зарегистрироваться
-      </NavLink>
-    } else {
-      return <button
-        className="event__register event__register--close"
-        aria-label="button"
-        disabled
-      >
-        Регистрация закрыта
-      </button>
-    }
-  }
   return (
     <section className="event">
-      <div className="event__header">
-        <div className="container">
-          <div className="event__short-info">
-            <span className="event__date">{date}, {hour}</span>
-
-            {setBtnStatus(event_status)}
-
-            <span className="event__members">Количество участников: {enrollers.amount}</span>
-
-          </div>
-        </div>
-      </div>
+      <EventHeader picture_name={picture_name} status={event_status} id={id} date={date} hour={hour} enrollers={enrollers} />
       <div className="event__body">
         <div className="container">
           <h2 className="event-content__title">Описание мероприятия</h2>

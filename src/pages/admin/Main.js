@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AdminMenu from "../../components/adminMenu/AdminMenu";
 import Notification from "../../components/notification/Notification";
+import add from './../../img/icons/plus-round-line-icon.svg'
 
 
 const Main = () => {
@@ -35,6 +36,10 @@ const Main = () => {
 
   }, []);
 
+  const setStatus = (status) => {
+    return (status === 1) ? 'да' : 'нет'
+  }
+
 
 
   return (
@@ -44,11 +49,26 @@ const Main = () => {
       <Header />
 
       <main className="main main--admin">
-        <AdminMenu />
-        <div className="container">
-          <article className="enrollers">
 
-            <Notification msg={notificationMsg} display={vissibleNotif} displayText={vissibleNotifText} status={vissibleStatus} id={IDNotification} />
+        <div className="container">
+          <Notification msg={notificationMsg} display={vissibleNotif} displayText={vissibleNotifText} status={vissibleStatus} id={IDNotification} />
+
+          <AdminMenu />
+          <div className="new_event">
+            <div className="new_event__icon">
+              <NavLink
+                className="new_event__link"
+                to={`/admin/event/add`}
+              >  <img src={add} alt="" />
+              </NavLink>
+
+            </div>
+            <NavLink
+              className="new_event__link"
+              to={`/admin/event/add`}
+            > Добавить новое событие </NavLink>
+          </div>
+          <article className="enrollers">
 
             <table className="enrollers__table">
               <thead>
@@ -80,7 +100,10 @@ const Main = () => {
                     Автор
                   </th>
                   <th className="enrollers__table-tr" scope="col">
-                    Просмотр
+                    Операции
+                  </th>
+                  <th className="enrollers__table-tr" scope="col">
+                    Опубликовано
                   </th>
                 </tr>
               </thead>
@@ -102,12 +125,23 @@ const Main = () => {
                       <td className="enrollers__table-td">{elem.dc}</td>
                       <td className="enrollers__table-td">{elem.author}</td>
                       <td className="enrollers__table-td">
+
+                        <NavLink
+                          className="enrollers__link"
+                          to={`/admin/event/edit/${elem.id_uniq}`}
+                        >
+                          Изменить
+                        </NavLink>
+
                         <NavLink
                           className="enrollers__link"
                           to={`/event/${elem.id_uniq}`}
                         >
-                          Псмотреть
+                          Посмотреть
                         </NavLink>{" "}
+                      </td>
+                      <td className="enrollers__table-td">
+                        {setStatus(elem.published)}
                       </td>
                     </tr>
                   );

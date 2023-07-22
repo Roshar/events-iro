@@ -18,20 +18,54 @@
     background: tomato;
 }
 
-
-
-
-/* .admin__wrapper {
+.new_event {
     display: flex;
-    justify-content: center;
-} */
+    column-gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+
+
+.new_event__icon {
+    max-width: 25px;
+}
+
 
 .aside {
-    position: fixed;
-    left: 0;
-    max-width: 200px;
+    display: flex;
+    max-width: 300 px;
     padding: 10px 14px;
+}
 
+.subnav-list {
+    display: flex;
+    column-gap: 30px;
+}
+
+.subnav-list__link {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    padding: 4px 3px;
+    color: #484343;
+
+}
+
+.subnav-list__link:hover {
+    color: #484343;
+    background-color: #e5e5e4;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.subnav-list__icon {
+    max-width: 20px;
+}
+
+.aside__subnav {
+    margin: 0 auto;
+    text-align: center;
 }
 
 .enrollers {
@@ -84,25 +118,21 @@ table {
 
 .enrollers__table-tr {
     text-align: center;
+    padding: 5px;
 }
 
-.subnav-list__link {
+.admin_event__twice_element-container {
     display: flex;
-    align-items: center;
-    column-gap: 10px;
-    padding: 4px 3px;
-    color: #484343;
+    column-gap: 20px;
+    justify-content: space-between;
 }
 
-.subnav-list__link:hover {
-    color: #484343;
-    background-color: #e5e5e4;
-    border-radius: 5px;
+.admin_event__twice_element {
+    display: flex;
+    column-gap: 5px;
 }
 
-.subnav-list__icon {
-    max-width: 20px;
-}
+
 
 /* EDIT EVENT*/
 

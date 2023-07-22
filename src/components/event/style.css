@@ -7,14 +7,14 @@
   font-size: 60px;
 }
 
-.event__header {
+/* .event__header {
   background: url("../../img/event_bg.jpg") no-repeat center center fixed;
   background-size: cover;
   width: 100%;
   min-height: 520px;
   position: relative;
   align-items: flex-end;
-}
+} */
 
 .event__short-info {
   position: absolute;
