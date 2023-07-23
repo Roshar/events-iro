@@ -196,14 +196,6 @@ const EventPageEdit = () => {
   }, []);
 
 
-  // document.querySelector('[name="ms2_action"]').click();
-
-
-  // function handleChange(e) {
-  //   console.log(e.target.files);
-  //   setFile(e.target.files[0]);
-  // }
-
   function handleChange(e) {
     const img = {
       preview: URL.createObjectURL(e.target.files[0]),
@@ -380,53 +372,60 @@ const EventPageEdit = () => {
               </div>
 
               <div className="admin_event__form-control">
-                <label className="admin_event__label" htmlFor="event_status">
-                  Выбрать спикеров:{" "}
-                </label>
-                <div className="admin_event__list-wrapper">
-                  <ul className="admin_event__list list-reset">
-                    {filterSpeakers.map((el) => {
-                      return (
-                        <li className="admin_event__item admin_event__item--active" key={el.id}>
-                          <div className="admin_event__item-data">
-                            {el.surname} {el.firstname}
-                          </div>
-                          <button
-                            className="admin_event__btn btn btn--admin-add "
-                            data-speaker-id={el.id}
-                            type="button"
-                            id="notAssigned"
-                            onChange={handleChange}
-                            onClick={changeSpeakers}
-                          >
-                            Добавить
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
 
-                  <ul className="admin_event__list list-reset">
-                    {speakersCurrent.map((el) => {
-                      return (
-                        <li className="admin_event__item admin_event__item--disable" key={el['speakers_id']}>
-                          <div className="admin_event__item-data">
-                            {el.surname} {el.firstname}
-                          </div>
-                          <button
-                            className="admin_event__btn btn btn--admin-del"
-                            data-speaker-id={el['speakers_id']}
-                            type="button"
-                            id="assigned"
-                            onChange={handleChange}
-                            onClick={changeSpeakers}
-                          >
-                            Удалить
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                <div className="admin_event__list-wrapper">
+                  <div className="admin_event__list-side">
+                    <label className="admin_event__label" htmlFor="event_status">
+                      Общий список спикеро <span className="little_description">( Выбрать спикера)</span> :{" "}
+                    </label>
+                    <ul className="admin_event__list list-reset">
+                      {filterSpeakers.map((el) => {
+                        return (
+                          <li className="admin_event__item admin_event__item--active" key={el.id}>
+                            <div className="admin_event__item-data">
+                              {el.surname} {el.firstname}
+                            </div>
+                            <button
+                              className="admin_event__btn btn btn--admin-add "
+                              data-speaker-id={el.id}
+                              type="button"
+                              id="notAssigned"
+                              onChange={handleChange}
+                              onClick={changeSpeakers}
+                            >
+                              Добавить
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                  <div className="admin_event__list-side">
+                    <label className="admin_event__label" htmlFor="event_status">
+                      Добавлены <span className="little_description">( спикеры, назначенные на мероприятия )</span>:  {" "}
+                    </label>
+                    <ul className="admin_event__list list-reset">
+                      {speakersCurrent.map((el) => {
+                        return (
+                          <li className="admin_event__item admin_event__item--disable" key={el['speakers_id']}>
+                            <div className="admin_event__item-data">
+                              {el.surname} {el.firstname}
+                            </div>
+                            <button
+                              className="admin_event__btn btn btn--admin-del"
+                              data-speaker-id={el['speakers_id']}
+                              type="button"
+                              id="assigned"
+                              onChange={handleChange}
+                              onClick={changeSpeakers}
+                            >
+                              Удалить
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
                 </div>
               </div>
 

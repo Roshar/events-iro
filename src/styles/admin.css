@@ -25,6 +25,14 @@
     margin-bottom: 10px;
 }
 
+.new_event__link {
+    color: var(--brand-colors);
+}
+
+.little_description {
+    font-size: 11px;
+}
+
 
 
 .new_event__icon {
@@ -183,8 +191,12 @@ table {
     background-color: rgba(242, 193, 184, .3);
 }
 
-.admin_event__list {
+.admin_event__list-side {
     width: 45%;
+}
+
+.admin_event__list {
+    width: 100%
 }
 
 .admin_event__item {

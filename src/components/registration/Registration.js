@@ -241,7 +241,7 @@ const Registration = ({ id, title, areaList }) => {
                             <span className="register__required">*</span>  Должность: </label>
                         <input className="register__input" id="position" type="text" name="position" aria-labelledby="position_i"
                             aria-describedby="danger-position" aria-required="true" required onChange={handleChange} />
-                        <span className="notif" id="danger-position">Заполните поле</span>
+                        <span className="notif" id="danger-position"> </span>
                     </div>
 
 

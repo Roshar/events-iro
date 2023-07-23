@@ -43,6 +43,10 @@ body {
   line-height: 1.3em;
 }
 
+.notif {
+  font-size: 11px;
+}
+
 .border {
   border: 1px solid red;
 }

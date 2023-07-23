@@ -24,7 +24,7 @@ function App() {
           <Route path="/registered/:id" element={<RegisteredPage />} />
           {/* Admin routes */}
           <Route path="/admin/event/edit/:id" element={<EventPageEdit />} />
-          <Route path="/admin/event/add/" element={<EventPageAdd />} />
+          <Route path="/admin/event/add" element={<EventPageAdd />} />
           <Route path="/admin" element={<HomeAdminPage />} />
 
         </Routes>
