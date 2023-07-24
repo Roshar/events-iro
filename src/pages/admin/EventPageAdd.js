@@ -12,6 +12,8 @@ const EventPageAdd = () => {
     const { id } = useParams();
 
     const [notification, setNotification] = useState({})
+    const [result, setResult] = useState({});
+    const [messageNot, setMessageNot] = useState('');
 
     const [catList, setCatList] = useState([]);
     const [organizationsList, setOrganizationsList] = useState([]);
@@ -38,6 +40,29 @@ const EventPageAdd = () => {
         preview: fileImg,
         data: ''
     });
+
+    const checkError = () => {
+        return document.querySelectorAll('.error');
+    }
+
+    const setError = (el, msg) => {
+        const inputControl = el.parentElement;
+        const errorDisplay = inputControl.querySelector('.notif');
+
+        errorDisplay.innerText = msg;
+        inputControl.classList.add('error');
+        inputControl.classList.remove('success-i')
+
+    }
+
+    const setSuccess = el => {
+        const inputControl = el.parentElement;
+        const errorDisplay = inputControl.querySelector('.notif');
+
+        errorDisplay.innerText = '';
+        inputControl.classList.add('success-i');
+        inputControl.classList.remove('error')
+    }
 
 
     const changeSpeakersList = (e) => {
@@ -97,26 +122,142 @@ const EventPageAdd = () => {
 
     }
 
+    const title_i = document.getElementById('title');
+    const desc_i = document.getElementById('description');
+    const cat_i = document.getElementById('category_id');
+    const org_i = document.getElementById('organization_id');
+    const date_i = document.getElementById('date_event');
+    const time_i = document.getElementById('time_event');
+    const location_i = document.getElementById('location');
+    const target_i = document.getElementById('target_audience');
+    const par_i = document.getElementById('participants_number');
+    const speakers = document.getElementById('current_speakers');
+
+
+
+    const validateInputs = () => {
+
+        // const inputControl = speakers.parentElement;
+        // console.log(inputControl)
+        // const errorDisplay = inputControl.querySelector('.notif');
+
+        // console.log(errorDisplay)
+        // console.log(speakersCurrent.length)
+
+        // return
+
+
+        const titleVal = title_i.value.trim();
+        const desckVal = desc_i.value.trim();
+        const catVal = cat_i.value;
+        const orgVal = org_i.value;
+        const dateVal = date_i.value;
+        const timeVal = time_i.value;
+        const locationVal = location_i.value.trim();
+        const targetVal = target_i.value;
+        const parVal = par_i.value;
+
+
+
+
+        if (titleVal === '') {
+            setError(title_i, 'Поле необходимо заполнить')
+        } else {
+            setSuccess(title_i)
+        }
+
+        if (desckVal === '') {
+            setError(desc_i, 'Поле необходимо заполнить')
+        } else {
+            setSuccess(desc_i)
+        }
+
+        if (catVal === '') {
+            setError(cat_i, 'Необходимо выбрать категорию')
+        } else {
+            setSuccess(cat_i)
+        }
+
+        if (orgVal === '') {
+            setError(org_i, 'Поле необходимо заполнить');
+        } else {
+            setSuccess(org_i);
+        }
+
+        if (dateVal === '') {
+            setError(date_i, 'Поле необходимо заполнить');
+        } else {
+            setSuccess(date_i);
+        }
+
+        if (timeVal === '') {
+            setError(time_i, 'Поле необходимо заполнить');
+        } else {
+            setSuccess(time_i);
+        }
+
+        if (locationVal === '') {
+            setError(location_i, 'Поле необходимо заполнить');
+        } else {
+            setSuccess(location_i);
+        }
+
+        if (targetVal === '') {
+            setError(target_i, 'Поле необходимо заполнить');
+        } else {
+            setSuccess(target_i);
+        }
+
+        if (parVal === '') {
+            setError(par_i, 'Поле необходимо заполнить');
+        } else {
+            setSuccess(par_i);
+        }
+
+        if (speakersCurrent.length < 1) {
+            setError(speakers, 'Необходимо добавить хотя бы одного спикера ');
+        } else {
+            setSuccess(speakers);
+        }
+
+    }
+
 
     const submitFunc1 = async (e) => {
 
         e.preventDefault()
+        validateInputs()
+        const errorCount = checkError()
+        console.log(errorCount.length)
 
-        const formData = new FormData()
+        if (errorCount.length < 1) {
 
-        formData.append('event', JSON.stringify(event))
-        formData.append('file', file.data)
+            try {
+                const formData = new FormData()
+                formData.append('event', JSON.stringify(event))
+                formData.append('file', file.data)
 
-        const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/event/add`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
+                const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/event/add`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                navigate(`/admin`)
+                console.log(data);
+                data.display = 'vissible'
+                data.displayText = 'X'
+                localStorage.setItem('update', JSON.stringify(data))
+
+
+            } catch (err) {
+                console.log(err.message)
             }
-        });
-        navigate(`/admin`)
-        console.log(data);
-        data.display = 'vissible'
-        data.displayText = 'X'
-        localStorage.setItem('update', JSON.stringify(data))
+
+
+        }
+
+
 
     }
 
@@ -124,6 +265,8 @@ const EventPageAdd = () => {
     const imgClick = () => {
         document.querySelector('#fileBtn').click();
     }
+
+
 
     useEffect(() => {
         axios
@@ -380,7 +523,7 @@ const EventPageAdd = () => {
                                         Выбрано:{" "}
                                     </label>
 
-                                    <ul className="admin_event__list list-reset">
+                                    <ul className="admin_event__list list-reset" id="current_speakers">
                                         {speakersCurrent.map((el) => {
                                             return (
                                                 <li className="admin_event__item admin_event__item--disable" key={el['speakers_id']}>
@@ -401,10 +544,11 @@ const EventPageAdd = () => {
                                             );
                                         })}
                                     </ul>
+                                    <span className="notif" id="danger-position"></span>
                                 </div>
 
                             </div>
-                            <span className="notif" id="danger-position"></span>
+
                         </div>
 
                         <div className="admin_event__form-control">

@@ -28,14 +28,19 @@
 
 }
 
-.success input,
-.success select {
+.success-i input,
+.success-i textarea,
+.success-i ul,
+.success-i select {
     border-color: #09c372;
 }
 
 .error input,
+.error textarea,
+.error ul,
 .error select {
-    border-color: #ff3860;
+    /* border-color: #ff3860; */
+    border: 1px solid #ff3860;
 }
 
 .message__text {
