@@ -1,5 +1,6 @@
 import logo from './img/logo.png';
 import './style.css';
+import { useParams, NavLink } from 'react-router-dom'
 
 
 const Header = () => {
@@ -18,10 +19,17 @@ const Header = () => {
                     </a>
                     <ul className="header__menu-top menu-top list-reset">
                         <li className="menu-top__item">
-                            <a href="#!" className="menu-list__link">Помощь</a>
+                            <NavLink to='/#' className="menu-list__link" >
+                                Помощь
+                            </NavLink>
+
+
                         </li>
                         <li className="menu-top__item">
-                            <a href="#!" className="menu-list__link">Войти</a>
+                            <NavLink to='/login' className="menu-list__link" >
+                                Войти
+                            </NavLink>
+
                         </li>
                     </ul>
                 </nav>

@@ -1,7 +1,7 @@
 import Header from "../components/header/Header";
 import Registration from "../components/registration/Registration";
-import { useParams } from 'react-router-dom'
-import { NavLink } from "react-router-dom";
+import { useParams, NavLink } from 'react-router-dom'
+
 
 
 const ResultPage = () => {

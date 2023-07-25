@@ -34,6 +34,7 @@ const EventPageAdd = () => {
         participants_number: "",
         event_status: "",
         published: "",
+        speakers: speakersCurrent
     })
 
     const [file, setFile] = useState({
