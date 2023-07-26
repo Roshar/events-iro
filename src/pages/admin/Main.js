@@ -1,13 +1,15 @@
 import Header from "../../components/header/Header";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AdminMenu from "../../components/adminMenu/AdminMenu";
 import Notification from "../../components/notification/Notification";
 import add from './../../img/icons/plus-round-line-icon.svg'
+import checkAdminRole from './../../utils/sendHeaders'
 
 
 const Main = () => {
+  const navigate = useNavigate()
   const [events, setEvents] = useState([]);
   const [notificationMsg, setNotificationMsg] = useState('')
   const [vissibleNotif, setVissibleNotif] = useState('none')
@@ -17,10 +19,29 @@ const Main = () => {
 
   let counter = 0;
 
+  const getAdminPage = async () => {
+    try {
+      const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/`, checkAdminRole())
+      if (data.code === 403) {
+        navigate(`/login`)
+      } else {
+        setEvents(data);
+      }
+
+      console.log(data)
+    } catch (e) {
+      console.log(`dfdfdfd ${e.message}`)
+    }
+
+
+
+
+
+  }
+
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_BASE_URL}/admin/`).then((response) => {
-      setEvents(response.data);
-    });
+
+    getAdminPage()
 
     const notification = JSON.parse(localStorage.getItem('update'))
 

@@ -6,10 +6,18 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Notification from '../notification/Notification';
+import checkAdminRole from './../../utils/sendHeaders'
 
 
 const Login = () => {
     const navigate = useNavigate()
+    const [notificationMsg, setNotificationMsg] = useState('')
+    const [vissibleNotif, setVissibleNotif] = useState('none')
+    const [vissibleNotifText, setVissibleNotifText] = useState('')
+    const [vissibleStatus, setVissibleStatus] = useState('')
+    const [IDNotification, setIDNotification] = useState('')
+
 
     const [event, setEvent] = useState({
         login: "",
@@ -81,8 +89,16 @@ const Login = () => {
 
         if (errorCount.length < 1) {
             try {
-                const data = await axios.post(`${process.env.REACT_APP_BASE_URL}/login`, event);
-                console.log(event)
+                const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/login`, event);
+                if (data.token) {
+                    navigate('/admin')
+                    data.display = 'vissible'
+                    data.displayText = 'X'
+                    localStorage.setItem('token_statipkro', data.token)
+                    localStorage.setItem('update', JSON.stringify(data))
+                } else {
+                    setNotificationMsg(data.msg)
+                }
 
             } catch (err) {
                 console.log(err.message)
@@ -92,12 +108,14 @@ const Login = () => {
 
     }
 
+    const getLoginPage = async () => {
+        const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/login`, checkAdminRole())
+        console.log(data)
+        if (data.code === 301) navigate('/admin')
+    }
+
     useEffect(() => {
-
-        axios.get(`${process.env.REACT_APP_BASE_URL}/login`).then((response) => {
-            console.log(response.data)
-        })
-
+        getLoginPage()
     }, [])
 
 
@@ -106,12 +124,13 @@ const Login = () => {
         <div className="registration">
 
             <div className="container">
+
                 <div className="registration_content__title">
                     <h1 className="title-2">
                         Войти
                     </h1>
-
                 </div>
+
 
                 <div className="registration__form register">
 
@@ -137,7 +156,9 @@ const Login = () => {
 
                     <div className="message">
 
-                        <p className="message__text">{messageNot}</p>
+                        <p className="message__text">{notificationMsg}</p>
+
+
                     </div>
                 </div>
 

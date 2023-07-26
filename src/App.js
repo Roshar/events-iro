@@ -14,6 +14,8 @@ import './styles/main.css';
 import './styles/admin.css';
 import EventPageAdd from './pages/admin/EventPageAdd';
 import LoginPage from './pages/LoginPage';
+import SpeakersPage from './pages/admin/SpeakersPage';
+import SpeakerPage from './pages/admin/SpeakerPage';
 
 function App() {
   return (
@@ -29,6 +31,10 @@ function App() {
           <Route path="/admin/event/edit/:id" element={<EventPageEdit />} />
           <Route path="/admin/event/add" element={<EventPageAdd />} />
           <Route path="/admin" element={<HomeAdminPage />} />
+
+          <Route path="/admin/speaker/:id" element={<SpeakerPage />} />
+          <Route path="/admin/speakers" element={<SpeakersPage />} />
+          <Route path="/admin/speaker/edit/:id" element={<SpeakerPage />} />
 
         </Routes>
       </Router>

@@ -5,6 +5,8 @@ import fileImg from '../../img/icons/upload-to-cloud-svgrepo-com.svg'
 
 import Header from "../../components/header/Header";
 import AdminMenu from "../../components/adminMenu/AdminMenu";
+import checkAdminRole from './../../utils/sendHeaders'
+
 
 
 const EventPageAdd = () => {
@@ -138,15 +140,6 @@ const EventPageAdd = () => {
 
     const validateInputs = () => {
 
-        // const inputControl = speakers.parentElement;
-        // console.log(inputControl)
-        // const errorDisplay = inputControl.querySelector('.notif');
-
-        // console.log(errorDisplay)
-        // console.log(speakersCurrent.length)
-
-        // return
-
 
         const titleVal = title_i.value.trim();
         const desckVal = desc_i.value.trim();
@@ -240,7 +233,8 @@ const EventPageAdd = () => {
 
                 const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/event/add`, formData, {
                     headers: {
-                        'Content-Type': 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token_statipkro'),
                     }
                 });
 
@@ -254,12 +248,7 @@ const EventPageAdd = () => {
             } catch (err) {
                 console.log(err.message)
             }
-
-
         }
-
-
-
     }
 
 
@@ -267,22 +256,26 @@ const EventPageAdd = () => {
         document.querySelector('#fileBtn').click();
     }
 
+    const getEventPageAdd = async () => {
+        const response = await
+            axios.get(`${process.env.REACT_APP_BASE_URL}/admin/event/add`, checkAdminRole())
+        if (response.data.code === 403) {
+            navigate('/login')
+        } else {
+            setSpeakersListStable(
+                response.data.speakers
+            );
+            setSpeakersList(
+                response.data.speakers
+            );
+            setOrganizationsList(response.data.organizations)
+            setCatList(response.data.cat)
+        }
+    }
 
 
     useEffect(() => {
-        axios
-            .get(`${process.env.REACT_APP_BASE_URL}/admin/event/add`)
-            .then((response) => {
-                setSpeakersListStable(
-                    response.data.speakers
-                );
-                setSpeakersList(
-                    response.data.speakers
-                );
-                setOrganizationsList(response.data.organizations)
-                setCatList(response.data.cat)
-
-            });
+        getEventPageAdd()
     }, []);
 
 

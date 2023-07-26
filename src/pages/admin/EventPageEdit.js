@@ -5,6 +5,7 @@ import fileImg from '../../img/icons/upload-to-cloud-svgrepo-com.svg'
 
 import Header from "../../components/header/Header";
 import AdminMenu from "../../components/adminMenu/AdminMenu";
+import checkAdminRole from './../../utils/sendHeaders';
 
 const EventPageEdit = () => {
 
@@ -265,11 +266,12 @@ const EventPageEdit = () => {
 
       const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/event/edit/${id}`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
+          'Authorization': 'Bearer ' + localStorage.getItem('token_statipkro'),
         }
       });
       navigate(`/admin`)
-      console.log(data);
+
       data.display = 'vissible'
       data.displayText = 'X'
       localStorage.setItem('update', JSON.stringify(data))
@@ -289,35 +291,43 @@ const EventPageEdit = () => {
     document.querySelector('#fileBtn').click();
   }
 
+  const getEventPageEdit = async () => {
+    const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/event/edit/${id}`, checkAdminRole())
+
+    if (response.data.code === 403) {
+      navigate('/login')
+    } else {
+      setEvent(response.data.events);
+      setCatList(response.data.list);
+      setOrganizationsList(response.data.listOrg);
+      setSpeakersList(response.data.speakersList);
+      setTitle(response.data.events[0].title);
+      setDescription(response.data.events[0].description);
+      setCategoryId(response.data.events[0].category_id);
+      setCategoryId(response.data.events[0].category_id);
+      setOrgId(response.data.events[0].organization_id);
+      setDateEvent(response.data.events[0].date_event);
+      setTime(response.data.events[0].time_event);
+      setLocation(response.data.events[0].location);
+      setTarget(response.data.events[0].target_audience);
+      setParNumber(response.data.events[0].participants_number);
+      setStatusReg(response.data.events[0].event_status);
+      setPublished(response.data.events[0].published);
+
+      getAllSpeakers(
+        response.data.speakersList,
+        response.data.speakersForEvent
+      );
+
+      setSpeakersCurrent(response.data.speakersForEvent);
+    }
+
+  }
+
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/admin/event/edit/${id}`)
-      .then((response) => {
-        setEvent(response.data.events);
-        setCatList(response.data.list);
-        setOrganizationsList(response.data.listOrg);
-        setSpeakersList(response.data.speakersList);
-        setTitle(response.data.events[0].title);
-        setDescription(response.data.events[0].description);
-        setCategoryId(response.data.events[0].category_id);
-        setCategoryId(response.data.events[0].category_id);
-        setOrgId(response.data.events[0].organization_id);
-        setDateEvent(response.data.events[0].date_event);
-        setTime(response.data.events[0].time_event);
-        setLocation(response.data.events[0].location);
-        setTarget(response.data.events[0].target_audience);
-        setParNumber(response.data.events[0].participants_number);
-        setStatusReg(response.data.events[0].event_status);
-        setPublished(response.data.events[0].published);
 
-        getAllSpeakers(
-          response.data.speakersList,
-          response.data.speakersForEvent
-        );
+    getEventPageEdit()
 
-        setSpeakersCurrent(response.data.speakersForEvent);
-
-      });
   }, []);
 
 

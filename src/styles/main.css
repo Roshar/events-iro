@@ -29,6 +29,12 @@ body {
   padding: 0 30px;
 }
 
+.container--personal-card {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
 .title-2 {
   font-size: 48px;
   margin: 0;
