@@ -14,8 +14,10 @@ import './styles/main.css';
 import './styles/admin.css';
 import EventPageAdd from './pages/admin/EventPageAdd';
 import LoginPage from './pages/LoginPage';
-import SpeakersPage from './pages/admin/SpeakersPage';
-import SpeakerPage from './pages/admin/SpeakerPage';
+import SpeakersPage from './pages/admin/speaker/SpeakersPage';
+import SpeakerPage from './pages/admin/speaker/SpeakerPage';
+import SpeakerPageEdit from './pages/admin/speaker/SpeakerPageEdit';
+import SpeakerPageAdd from './pages/admin/speaker/SpeakerPageAdd';
 
 function App() {
   return (
@@ -33,8 +35,11 @@ function App() {
           <Route path="/admin" element={<HomeAdminPage />} />
 
           <Route path="/admin/speaker/:id" element={<SpeakerPage />} />
+          <Route path="/admin/speaker/edit/:id" element={<SpeakerPageEdit />} />
+          <Route path="/admin/speaker/add" element={<SpeakerPageAdd />} />
           <Route path="/admin/speakers" element={<SpeakersPage />} />
-          <Route path="/admin/speaker/edit/:id" element={<SpeakerPage />} />
+
+
 
         </Routes>
       </Router>

@@ -45,7 +45,7 @@ const Main = () => {
 
     const notification = JSON.parse(localStorage.getItem('update'))
 
-    console.log(notification)
+
 
     if (notification) {
       setNotificationMsg(notification.msg)

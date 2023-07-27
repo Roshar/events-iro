@@ -6,6 +6,8 @@ import fileImg from '../../img/icons/upload-to-cloud-svgrepo-com.svg'
 import Header from "../../components/header/Header";
 import AdminMenu from "../../components/adminMenu/AdminMenu";
 import checkAdminRole from './../../utils/sendHeaders';
+import getCookie from './../../utils/getCookies'
+
 
 const EventPageEdit = () => {
 
@@ -78,8 +80,6 @@ const EventPageEdit = () => {
   }
 
   const validateInputs = () => {
-
-
 
     const titleVal = title_i.value.trim();
     const desckVal = desc_i.value.trim();
@@ -263,11 +263,12 @@ const EventPageEdit = () => {
       formData.append('speakersCurrent', JSON.stringify(speakersCurrent))
 
       formData.append('file', file.data)
+      const cookies = getCookie()
 
       const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/event/edit/${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': 'Bearer ' + localStorage.getItem('token_statipkro'),
+          'Authorization': 'Bearer ' + cookies['token_statipkro'],
         }
       });
       navigate(`/admin`)

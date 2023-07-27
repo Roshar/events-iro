@@ -8,6 +8,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Notification from '../notification/Notification';
 import checkAdminRole from './../../utils/sendHeaders'
+import getCookies from "../../utils/getCookies";
+import setCookies from "../../utils/setCookies";
 
 
 const Login = () => {
@@ -94,7 +96,8 @@ const Login = () => {
                     navigate('/admin')
                     data.display = 'vissible'
                     data.displayText = 'X'
-                    localStorage.setItem('token_statipkro', data.token)
+
+                    setCookies('token_statipkro', data.token)
                     localStorage.setItem('update', JSON.stringify(data))
                 } else {
                     setNotificationMsg(data.msg)

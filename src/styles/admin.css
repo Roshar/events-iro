@@ -157,6 +157,7 @@ table {
 }
 
 .admin_event__input,
+.personal_card__input,
 .admin_event__area {
     border-radius: 3px;
     width: 100%;
@@ -164,10 +165,17 @@ table {
     border: 1px solid #484343;
 }
 
-.admin_event__label {
+.personal_card__label {
+    color: #838383;
+}
+
+.admin_event__label,
+.personal_card__label {
     display: inline-block;
     margin: 10px 0px;
 }
+
+
 
 .admin_event__select {
     overflow: hidden;
@@ -222,6 +230,11 @@ table {
 }
 
 .admin_event__submit {
+    max-width: 300px;
+    flex-grow: 1;
+}
+
+.admin_event__submit {
     text-align: center;
 }
 
@@ -245,4 +258,27 @@ table {
     border: 2px dotted var(--brand-color);
 
 
+}
+
+/*** speaker ***/
+
+.personal_card__img {
+    height: 100%;
+    min-height: 200px;
+    width: 350px;
+}
+
+.personal_card__block_submit {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.personal_card__btn {
+    width: 100%;
+}
+
+.img_event__input--hidden {
+    display: none;
 }

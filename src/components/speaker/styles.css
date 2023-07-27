@@ -17,7 +17,8 @@
     right: 15px;
     bottom: 4px;
     max-width: 64px;
-
+    box-shadow: 2px 2px 2px 1px rgba(23, 33, 140, 0.2);
+    cursor: pointer;
 }
 
 .personal_card__img-box {

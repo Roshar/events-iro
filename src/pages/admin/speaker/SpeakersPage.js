@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, NavLink, useNavigate } from "react-router-dom";
 
-import Header from "../../components/header/Header";
-import checkAdminRole from '../../utils/sendHeaders'
-import add from './../../img/icons/plus-round-line-icon.svg'
-import AdminMenu from "../../components/adminMenu/AdminMenu";
-import Notification from "../../components/notification/Notification";
+import Header from "../../../components/header/Header";
+import checkAdminRole from '../../../utils/sendHeaders'
+import add from './../../../img/icons/plus-round-line-icon.svg'
+import AdminMenu from "../../../components/adminMenu/AdminMenu";
+import Notification from "../../../components/notification/Notification";
+
 
 const SpeakersPage = () => {
 
@@ -22,9 +23,9 @@ const SpeakersPage = () => {
     let counter = 0;
 
     const getSpeakerPage = async () => {
-        const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/speakers`, checkAdminRole());
+        const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/speakers`, checkAdminRole());
         console.log(data);
-        if (data === 403) {
+        if (data.code === 403) {
             navigate('/login')
         } else {
             setSpeakerList(data)
@@ -32,6 +33,15 @@ const SpeakersPage = () => {
     }
     useEffect(() => {
         getSpeakerPage()
+        const notification = JSON.parse(localStorage.getItem('update'))
+
+        if (notification) {
+            setNotificationMsg(notification.msg)
+            setVissibleNotif(notification.display)
+            setVissibleNotifText(notification.displayText)
+            setVissibleStatus(notification.status)
+            setIDNotification('update')
+        }
     }, [])
     return (
         <>
@@ -51,7 +61,7 @@ const SpeakersPage = () => {
                         </div>
                         <NavLink
                             className="new_event__link"
-                            to={`/admin/speaker/create`}
+                            to={`/admin/speaker/add`}
                         > Добавить новое событие </NavLink>
                     </div>
                     <article className="enrollers">

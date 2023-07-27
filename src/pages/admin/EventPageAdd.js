@@ -67,7 +67,6 @@ const EventPageAdd = () => {
         inputControl.classList.remove('error')
     }
 
-
     const changeSpeakersList = (e) => {
         e.preventDefault();
 

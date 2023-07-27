@@ -7,8 +7,12 @@ import AdminMenu from "../../components/adminMenu/AdminMenu";
 import Notification from "../../components/notification/Notification";
 import Edit from './../../img/icons/7879684661673670599.svg'
 import './styles.css'
+import getCookies from "../../utils/getCookies";
+import setCookies from "../../utils/setCookies";
 
 const Speaker = ({ id }) => {
+
+
 
     const navigate = useNavigate()
     const [speaker, setSpeaker] = useState([])
@@ -19,10 +23,12 @@ const Speaker = ({ id }) => {
     const [company, setCompany] = useState([])
     const [avatar, setAvatar] = useState([])
 
-    const getSpeaker = async () => {
-        const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/speaker/${id}`, checkAdminRole())
 
-        console.log(data)
+
+    console.log(getCookies());
+
+    const getSpeaker = async () => {
+        const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/speaker/${id}`, checkAdminRole())
         if (data.code === 403) {
             navigate('/login')
         } else {
@@ -46,10 +52,10 @@ const Speaker = ({ id }) => {
         <div className="personal_card">
             <div className="personal_card__img-box">
                 <img src={`${process.env.REACT_APP_BASE_IMG_URL}/avatars/${avatar}`} alt="" className="personal_card__img" />
-                <img src={Edit} className="personal_card__icon_edit" alt="" />
+                <NavLink to={`/admin/speaker/edit/${id}`}><img src={Edit} className="personal_card__icon_edit" alt="" /></NavLink>
             </div>
 
-            <div className="personal_card__main_info ">
+            <div className="personal_card__main_info">
                 <h4 className="perosnal_card__main_fio heading-reset">
                     {surname} {firstname} {patronymic}
                 </h4>
@@ -62,11 +68,6 @@ const Speaker = ({ id }) => {
                 </h4>
 
             </div>
-
-
-
-
-
         </div>
     );
 }
