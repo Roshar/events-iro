@@ -221,7 +221,7 @@ const EventPageAdd = () => {
         e.preventDefault()
         validateInputs()
         const errorCount = checkError()
-        console.log(errorCount.length)
+
 
         if (errorCount.length < 1) {
 

@@ -4,6 +4,7 @@ import { useParams, NavLink, useNavigate } from "react-router-dom";
 
 import Header from "./../../../components/header/Header";
 import Speaker from "./../../../components/speaker/Speaker";
+import AdminMenu from "../../../components/adminMenu/AdminMenu";
 
 
 const SpeakerPageAdd = () => {
@@ -16,6 +17,7 @@ const SpeakerPageAdd = () => {
         <Header />
         <main className="main">
             <div className="container--personal-card">
+                <AdminMenu />
                 <Speaker id={id} />
             </div>
         </main>

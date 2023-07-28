@@ -12,8 +12,6 @@ import setCookies from "../../utils/setCookies";
 
 const Speaker = ({ id }) => {
 
-
-
     const navigate = useNavigate()
     const [speaker, setSpeaker] = useState([])
     const [firstname, setFirstname] = useState([])
@@ -24,14 +22,17 @@ const Speaker = ({ id }) => {
     const [avatar, setAvatar] = useState([])
 
 
-
-    console.log(getCookies());
-
     const getSpeaker = async () => {
         const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/speaker/${id}`, checkAdminRole())
+        console.log(data)
         if (data.code === 403) {
             navigate('/login')
-        } else {
+        } else if (data.code === 204) {
+            console.log('204')
+            navigate('/admin/speakers')
+        }
+
+        else {
             setFirstname(data[0]['firstname'])
             setSurname(data[0]['surname'])
             setPatronymic(data[0]['patronymic'])

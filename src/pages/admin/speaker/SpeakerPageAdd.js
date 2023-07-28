@@ -7,11 +7,19 @@ import uploadIcon from './../../../img/icons/412975601606261173.svg'
 import getCookie from './../../../utils/getCookies'
 
 import Header from "../../../components/header/Header";
+import checkImgSize from "../../../utils/checkImgSize"
+import ImgBlockError from "../../../components/imgBlockError/ImgBlockError";
+import setSuccess from '../../../utils/setSucces'
+import setError from '../../../utils/setError'
+import AdminMenu from "../../../components/adminMenu/AdminMenu";
+
 
 
 const SpeakerPageAdd = ({ id }) => {
     const navigate = useNavigate()
 
+
+    const [showBlock, setShowBlock] = useState('none')
     const [genderList, setGenderList] = useState([]);
     const [speaker, setSpeaker] = useState({
         firstname: "",
@@ -28,41 +36,27 @@ const SpeakerPageAdd = ({ id }) => {
         return document.querySelectorAll('.error');
     }
 
-    const setError = (el, msg) => {
-        const inputControl = el.parentElement;
-        const errorDisplay = inputControl.querySelector('.notif');
-        errorDisplay.innerText = msg;
-        inputControl.classList.add('error');
-        inputControl.classList.remove('success-i')
-    }
 
     const firstname_i = document.getElementById('firstname')
     const surname_i = document.getElementById('surname')
     const position_i = document.getElementById('position')
     const company_i = document.getElementById('company')
 
-    const setSuccess = el => {
-        const inputControl = el.parentElement;
-        const errorDisplay = inputControl.querySelector('.notif');
-        errorDisplay.innerText = '';
-        inputControl.classList.add('success-i');
-        inputControl.classList.remove('error')
-    }
 
     const validateInputs = () => {
 
-        const surname = firstname_i.value.trim();
-        const firstnameVal = surname_i.value.trim();
+        const firstnameVal = firstname_i.value.trim();
+        const surnameVal = surname_i.value.trim();
         const positionVal = position_i.value.trim();
         const companyVal = company_i.value.trim();
 
-        if (surname === '') {
+        if (firstnameVal === '') {
             setError(firstname_i, 'Поле необходимо заполнить')
         } else {
             setSuccess(firstname_i)
         }
 
-        if (firstnameVal === '') {
+        if (surnameVal === '') {
             setError(surname_i, 'Поле необходимо заполнить')
         } else {
             setSuccess(surname_i)
@@ -86,7 +80,6 @@ const SpeakerPageAdd = ({ id }) => {
         document.querySelector('#fileBtn').click();
     }
 
-
     const getSpeakerPageAdd = async () => {
         const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/speaker/add`, checkAdminRole())
         if (data.code === 403) {
@@ -99,11 +92,22 @@ const SpeakerPageAdd = ({ id }) => {
 
     useEffect(() => {
         getSpeakerPageAdd()
+
     }, [])
 
     function handleChange2(e) {
-        setFile(URL.createObjectURL(e.target.files[0]));
-        setAvatar(e.target.files[0])
+        if (e.target.files.length > 0) {
+            if (checkImgSize(e.target.files[0].size)) {
+                setFile(URL.createObjectURL(e.target.files[0]));
+                setAvatar(e.target.files[0])
+                setShowBlock('none')
+            } else {
+                setShowBlock('block')
+            }
+        }
+
+
+
     }
 
     const handleChange = (e) => {
@@ -121,9 +125,9 @@ const SpeakerPageAdd = ({ id }) => {
         if (errorCount.length < 1) {
             const formData = new FormData()
             formData.append('speaker', JSON.stringify(speaker))
-            formData.append('file', file)
 
             formData.append('file', avatar)
+
 
             const cookies = getCookie()
             const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/speaker/add`, formData, {
@@ -146,16 +150,17 @@ const SpeakerPageAdd = ({ id }) => {
             <Header />
             <main className="main">
                 <div className="container--personal-card">
+                    <AdminMenu />
+                    <ImgBlockError status={showBlock} />
                     <div className="personal_card">
                         <div className="personal_card__img-box">
-                            <input className="img_event__input--hidden" id="fileBtn" type="file" name="file" onChange={handleChange2} />
                             <img src={file} alt="" className="personal_card__img" />
                             <img src={uploadIcon} className="personal_card__icon_edit" alt="" onClick={imgClick} />
                         </div>
 
                         <div className="personal_card__main_info">
-                            <form action="" className="personal_card__form">
-
+                            <form action="" className="personal_card__form" id="form">
+                                <input className="img_event__input--hidden" id="fileBtn" type="file" name="file" form="test" onChange={handleChange2} accept=".jpg, .jpeg, .png" />
                                 <div className="personal_card__block">
                                     <label className="personal_card__label" htmlFor="surname">
                                         Фамилия:

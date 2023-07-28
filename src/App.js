@@ -36,7 +36,9 @@ function App() {
 
           <Route path="/admin/speaker/:id" element={<SpeakerPage />} />
           <Route path="/admin/speaker/edit/:id" element={<SpeakerPageEdit />} />
+          <Route path="/admin/speaker/delete/:id" element={<SpeakerPageEdit />} />
           <Route path="/admin/speaker/add" element={<SpeakerPageAdd />} />
+
           <Route path="/admin/speakers" element={<SpeakersPage />} />
 
 

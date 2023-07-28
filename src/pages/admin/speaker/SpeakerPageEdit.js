@@ -3,15 +3,17 @@ import axios from "axios";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import Header from "./../../../components/header/Header";
 import checkAdminRole from "../../../utils/sendHeaders"
-
+import checkImgSize from "../../../utils/checkImgSize"
+import ImgBlockError from "../../../components/imgBlockError/ImgBlockError";
 import uploadIcon from './../../../img/icons/412975601606261173.svg'
 import getCookie from './../../../utils/getCookies'
+import AdminMenu from "../../../components/adminMenu/AdminMenu";
 
 
 const SpeakerPageEdit = () => {
 
     const { id } = useParams();
-
+    const [showBlock, setShowBlock] = useState('none')
     const navigate = useNavigate()
     const [speaker, setSpeaker] = useState([])
     const [firstname, setFirstname] = useState([])
@@ -99,6 +101,7 @@ const SpeakerPageEdit = () => {
             formData.append('position', position)
             formData.append('company', company)
             formData.append('gender_id', genderId)
+            formData.append('avatar', avatar)
 
             formData.append('file', avatar)
 
@@ -121,17 +124,33 @@ const SpeakerPageEdit = () => {
         }
 
     }
+    const submitFuncDel = async (e) => {
+        e.preventDefault();
+        const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/speaker/delete/${id}`, checkAdminRole())
+
+        if (data.code === 403) {
+            navigate('/login')
+        } else {
+            navigate(`/admin/speakers`)
+
+            data.display = 'vissible'
+            data.displayText = 'X'
+            localStorage.setItem('update', JSON.stringify(data))
+        }
+
+    }
     const imgClick = () => {
         document.querySelector('#fileBtn').click();
     }
 
     const getSpeakerPageEdit = async () => {
         const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/speaker/edit/${id}`, checkAdminRole())
-
-        console.log(data);
-
+        console.log(data)
         if (data.code === 403) {
             navigate('/login')
+        } else if (data.notif.length > 0) {
+            console.log('204')
+            navigate('/admin/speakers')
         } else {
             setFirstname(data[0]['firstname'])
             setSurname(data[0]['surname'])
@@ -152,8 +171,19 @@ const SpeakerPageEdit = () => {
 
     function handleChange(e) {
 
-        setFile(URL.createObjectURL(e.target.files[0]));
-        setAvatar(e.target.files[0])
+        if (e.target.files.length > 0) {
+            if (checkImgSize(e.target.files[0].size)) {
+                setFile(URL.createObjectURL(e.target.files[0]));
+                setAvatar(e.target.files[0])
+                setShowBlock('none')
+            } else {
+                setShowBlock('block')
+
+            }
+        }
+
+        // setFile(URL.createObjectURL(e.target.files[0]));
+        // setAvatar(e.target.files[0])
 
     }
     return (
@@ -161,7 +191,10 @@ const SpeakerPageEdit = () => {
             <Header />
             <main className="main">
                 <div className="container--personal-card">
+                    <AdminMenu />
+                    <ImgBlockError status={showBlock} />
                     <div className="personal_card">
+
                         <div className="personal_card__img-box">
 
                             <input className="img_event__input--hidden" id="fileBtn" type="file" name="file" onChange={handleChange} />
@@ -280,6 +313,11 @@ const SpeakerPageEdit = () => {
                                     </button>
                                 </div>
                             </form>
+                            <div className="personal_card__block_submit">
+                                <button className="personal_card__btn btn btn--del" onClick={submitFuncDel} type="submit">
+                                    Удалить
+                                </button>
+                            </div>
 
                         </div>
                     </div>

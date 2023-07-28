@@ -1,3 +1,32 @@
+.showBlock {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--brand-color);
+    color: #fff;
+    padding: 10px 11px;
+    border-radius: 4px;
+}
+
+.showBlock__heading {
+    color: tomato;
+    text-align: center;
+    font-weight: 700;
+}
+
+.showBlock_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.showBlock__link {
+    color: #fff;
+
+}
+
+
 .main {
     position: relative;
 }
