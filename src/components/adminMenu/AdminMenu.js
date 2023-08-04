@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import homeIcon from "./../../img/icons/admin/webpagehome_85808.svg";
 import peopleIcon from "./../../img/icons/admin/people_group_icon_188185.svg";
+import reportIcon from "./../../img/icons/admin/report-svgrepo-com.svg";
 
 import changeIcon from "./../../img/icons/admin/1486564391-compose_81525.svg";
 import offIcon from "./../../img/icons/admin/1486564389-lock-red_81516.svg";
@@ -33,6 +34,13 @@ const AdminMenu = () => {
             {" "}
             <img src={peopleIcon} className="subnav-list__icon"></img>
             Пользователи
+          </NavLink>
+        </li>
+        <li className="subnav-list__element">
+          <NavLink className="subnav-list__link" to={`/admin/reports`}>
+            {" "}
+            <img src={reportIcon} className="subnav-list__icon"></img>
+            Отчетность
           </NavLink>
         </li>
       </ul>

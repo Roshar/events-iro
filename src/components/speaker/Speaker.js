@@ -24,7 +24,7 @@ const Speaker = ({ id }) => {
 
     const getSpeaker = async () => {
         const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/speaker/${id}`, checkAdminRole())
-        console.log(data)
+
         if (data.code === 403) {
             navigate('/login')
         } else if (data.code === 204) {

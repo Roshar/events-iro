@@ -7,6 +7,8 @@ import Header from "../../components/header/Header";
 import AdminMenu from "../../components/adminMenu/AdminMenu";
 import checkAdminRole from './../../utils/sendHeaders';
 import getCookie from './../../utils/getCookies'
+import setSuccess from '../../utils/setSucces'
+import setError from '../../utils/setError'
 
 
 const EventPageEdit = () => {
@@ -14,6 +16,7 @@ const EventPageEdit = () => {
   const navigate = useNavigate()
   const { id } = useParams();
 
+  const [showCenter, setShowCenter] = useState(false)
   const [notification, setNotification] = useState({})
   const [event, setEvent] = useState([]);
   const [catList, setCatList] = useState([]);
@@ -25,6 +28,8 @@ const EventPageEdit = () => {
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [orgId, setOrgId] = useState("");
+  const [centerId, setCenterId] = useState("");
+  const [centerList, setCenterList] = useState([]);
   const [dateEvent, setDateEvent] = useState("");
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
@@ -49,6 +54,7 @@ const EventPageEdit = () => {
   const desc_i = document.getElementById('description');
   const cat_i = document.getElementById('category_id');
   const org_i = document.getElementById('organization_id');
+
   const date_i = document.getElementById('date_event');
   const time_i = document.getElementById('time_event');
   const location_i = document.getElementById('location');
@@ -58,25 +64,6 @@ const EventPageEdit = () => {
 
   const checkError = () => {
     return document.querySelectorAll('.error');
-  }
-
-  const setError = (el, msg) => {
-    const inputControl = el.parentElement;
-    const errorDisplay = inputControl.querySelector('.notif');
-
-    errorDisplay.innerText = msg;
-    inputControl.classList.add('error');
-    inputControl.classList.remove('success-i')
-
-  }
-
-  const setSuccess = el => {
-    const inputControl = el.parentElement;
-    const errorDisplay = inputControl.querySelector('.notif');
-
-    errorDisplay.innerText = '';
-    inputControl.classList.add('success-i');
-    inputControl.classList.remove('error')
   }
 
   const validateInputs = () => {
@@ -151,6 +138,7 @@ const EventPageEdit = () => {
     } else {
       setSuccess(speakers);
     }
+
 
   }
 
@@ -253,6 +241,7 @@ const EventPageEdit = () => {
       formData.append('description', description)
       formData.append('category_id', categoryId)
       formData.append('organization_id', orgId)
+      formData.append('center_id', centerId)
       formData.append('date_event', dateEvent)
       formData.append('date_time', time)
       formData.append('location', location)
@@ -281,10 +270,6 @@ const EventPageEdit = () => {
       alert('Заполните все поля!')
     }
 
-
-
-
-
   }
 
 
@@ -302,11 +287,13 @@ const EventPageEdit = () => {
       setCatList(response.data.list);
       setOrganizationsList(response.data.listOrg);
       setSpeakersList(response.data.speakersList);
+      setCenterList(response.data.centers);
       setTitle(response.data.events[0].title);
       setDescription(response.data.events[0].description);
       setCategoryId(response.data.events[0].category_id);
       setCategoryId(response.data.events[0].category_id);
       setOrgId(response.data.events[0].organization_id);
+      setCenterId(response.data.events[0].center_id);
       setDateEvent(response.data.events[0].date_event);
       setTime(response.data.events[0].time_event);
       setLocation(response.data.events[0].location);
@@ -314,6 +301,9 @@ const EventPageEdit = () => {
       setParNumber(response.data.events[0].participants_number);
       setStatusReg(response.data.events[0].event_status);
       setPublished(response.data.events[0].published);
+      if (response.data.events[0].center_id) {
+        setShowCenter(true)
+      }
 
       getAllSpeakers(
         response.data.speakersList,
@@ -330,6 +320,59 @@ const EventPageEdit = () => {
     getEventPageEdit()
 
   }, []);
+
+  const handleCahngeForOrg = (e) => {
+
+
+    setOrgId(e.target.value)
+    if (e.target.value == 2) {
+      if (centerId === null) {
+        setCenterId(1)
+      }
+      setShowCenter(true)
+    } else {
+      setCenterId('')
+      setShowCenter(false)
+    }
+
+  }
+
+  const showCenterFunc = (showstatus) => {
+    if (showstatus) {
+      return <div className="admin_event__form-control">
+        <label className="admin_event__label" htmlFor="center_id">
+          {" "}
+          Центр:{" "}
+        </label>
+        <select
+          className="admin_event__select"
+          name="center_id"
+          id="center_id"
+          onChange={e => setCenterId(e.target.value)}
+        >
+          {centerList.map((el) => {
+            return (
+              <option
+                className="admin_event__option"
+                key={el.id}
+                value={el.id}
+                selected={el.id == centerId}
+              >
+                {" "}
+                {el.name}{" "}
+              </option>
+            );
+          })}
+
+
+        </select>
+        <span className="notif" id="danger-position"> </span>
+      </div>
+    } else {
+      console.log('Не предусмотрено')
+
+    }
+  }
 
 
   function handleChange(e) {
@@ -418,7 +461,7 @@ const EventPageEdit = () => {
                   className="admin_event__select"
                   name="organization_id"
                   id="organization_id"
-                  onChange={e => setOrgId(e.target.value)}
+                  onChange={handleCahngeForOrg}
                 >
                   {organizationsList.map((el) => {
                     return (
@@ -436,6 +479,11 @@ const EventPageEdit = () => {
                 </select>
                 <span className="notif" id="danger-position"> </span>
               </div>
+
+              {showCenterFunc(showCenter)}
+
+
+
 
               <div className="admin_event__form-control">
                 <label className="admin_event__label" htmlFor="date_event">

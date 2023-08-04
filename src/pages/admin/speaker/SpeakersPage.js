@@ -24,7 +24,6 @@ const SpeakersPage = () => {
 
     const getSpeakerPage = async () => {
         const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/speakers`, checkAdminRole());
-        console.log(data);
         if (data.code === 403) {
             navigate('/login')
         } else {
@@ -98,9 +97,9 @@ const SpeakersPage = () => {
                             <tbody>
                                 {speakerList.map((elem) => {
                                     return (
-                                        <tr>
-                                            <th scope="row">{++counter}</th>
-                                            <td className="enrollers__table-td" key={elem.id}>
+                                        <tr key={elem.id}>
+                                            <td scope="row">{++counter}</td>
+                                            <td className="enrollers__table-td" >
                                                 <NavLink
                                                     className="enrollers__link"
                                                     to={`/admin/speaker/${elem.id}`}

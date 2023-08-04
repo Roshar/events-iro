@@ -19,15 +19,18 @@ const EventPageAdd = () => {
 
     const [catList, setCatList] = useState([]);
     const [organizationsList, setOrganizationsList] = useState([]);
+    const [centerList, setCenterList] = useState([]);
     const [speakersListStable, setSpeakersListStable] = useState([]);
     const [speakersList, setSpeakersList] = useState([]);
     const [speakersCurrent, setSpeakersCurrent] = useState([]);
+    const [isValid, setIsValid] = useState(true);
+    const [organizationId, setOrganizationId] = useState("");
+    const [centerId, setCenterId] = useState("");
 
     const [event, setEvent] = useState({
         title: "",
         description: "",
         category_id: "",
-        organization_id: "",
         dateEvent: "",
         date_event: "",
         time_event: "",
@@ -105,18 +108,6 @@ const EventPageAdd = () => {
             speakersList.push(newList[0])
             setSpeakersList(speakersList)
 
-
-            // const newCurrent = speakersCurrent.filter((el) => {
-            //     return el['speakers_id'] !== speakerId
-            // })
-            // const newFillter = speakersList.filter((e) => {
-            //     return e['id'] === speakerId
-            // })
-
-            // speakersCurrent.push(newFillter[0])
-
-            // setSpeakersCurrent(newCurrent)
-            // setSpeakersList(speakersCurrent)
 
         }
 
@@ -228,6 +219,9 @@ const EventPageAdd = () => {
             try {
                 const formData = new FormData()
                 formData.append('event', JSON.stringify(event))
+                formData.append('organizationId', JSON.stringify(organizationId))
+                formData.append('centerId', JSON.stringify(centerId))
+
                 formData.append('file', file.data)
 
                 const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/event/add`, formData, {
@@ -238,7 +232,7 @@ const EventPageAdd = () => {
                 });
 
                 navigate(`/admin`)
-                console.log(data);
+
                 data.display = 'vissible'
                 data.displayText = 'X'
                 localStorage.setItem('update', JSON.stringify(data))
@@ -268,6 +262,7 @@ const EventPageAdd = () => {
                 response.data.speakers
             );
             setOrganizationsList(response.data.organizations)
+            setCenterList(response.data.centers)
             setCatList(response.data.cat)
         }
     }
@@ -282,6 +277,24 @@ const EventPageAdd = () => {
 
         setEvent(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
+    }
+
+    const handleCahngeForCenter = (e) => {
+        setCenterId(e.target.value)
+    }
+
+    const handleCahngeForOrg = (e) => {
+
+        setOrganizationId(e.target.value)
+        if (e.target.value == 2) {
+            if (centerId === '') {
+                setCenterId(1)
+            }
+            setIsValid(false)
+        } else {
+            setCenterId('')
+            setIsValid(true)
+        }
     }
 
 
@@ -376,7 +389,7 @@ const EventPageAdd = () => {
                                 className="admin_event__select"
                                 name="organization_id"
                                 id="organization_id"
-                                onChange={handleChange}
+                                onChange={handleCahngeForOrg}
                             >
                                 <option
                                     className="admin_event__option"
@@ -385,6 +398,35 @@ const EventPageAdd = () => {
                                     не выбрано
                                 </option>
                                 {organizationsList.map((el) => {
+                                    return (
+                                        <option
+                                            className="admin_event__option"
+                                            key={el.id}
+                                            value={el.id}
+
+                                        >
+                                            {" "}
+                                            {el.name}{" "}
+                                        </option>
+                                    );
+                                })}
+                            </select>
+                            <span className="notif" id="danger-position"></span>
+                        </div>
+
+                        <div className="admin_event__form-control " style={{ display: !isValid ? "block" : "none" }}>
+                            <label className="admin_event__label" htmlFor="center_id">
+                                {" "}
+                                <span className="register__required"></span> Структурное подразделение: <span className="little_description">(Необязательное значение)</span>{" "}
+                            </label>
+                            <select
+                                className="admin_event__select"
+                                name="center_id"
+                                id="center_id"
+                                onChange={handleCahngeForCenter}
+                            >
+
+                                {centerList.map((el) => {
                                     return (
                                         <option
                                             className="admin_event__option"

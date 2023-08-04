@@ -10,7 +10,7 @@ const Notification = ({ msg, status, display, id, displayText }) => {
 
     localStorage.removeItem(id);
 
-    console.log(displayText)
+
     const changeMsg = (e) => {
         setShow('none')
     }

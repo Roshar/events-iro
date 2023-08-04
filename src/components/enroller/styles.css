@@ -1,0 +1,65 @@
+.personal_card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 2px solid rgba(255, 216, 0, .3);
+    row-gap: 15px;
+    padding: 30px;
+}
+
+.personal_card__img-box {
+    position: relative;
+    border-radius: 10px;
+}
+
+.personal_card__icon_edit {
+    position: absolute;
+    right: 15px;
+    bottom: 4px;
+    max-width: 64px;
+    box-shadow: 2px 2px 2px 1px rgba(23, 33, 140, 0.2);
+    cursor: pointer;
+}
+
+.personal_card__img-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+.personal_card__img {
+    max-width: 350px;
+    border-radius: 5px;
+}
+
+.personal_card__main_info {
+    display: flex;
+
+    flex-direction: column;
+    text-align: center;
+    row-gap: 10px;
+}
+
+.perosnal_card__main_fio {
+
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--brand-color);
+}
+
+
+
+
+.personal_card__main_position {
+    color: #7d7b7b;
+    font-size: 14px;
+}
+
+.personal_card__main_company {}
+
+.personal_card__main_company--small {
+    font-size: 12px;
+}

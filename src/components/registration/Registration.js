@@ -19,6 +19,7 @@ const Registration = ({ id, title, areaList }) => {
         email: "",
         phone: "",
         company: "",
+        experience: "",
         position: "",
         area_id: ""
     })
@@ -38,6 +39,7 @@ const Registration = ({ id, title, areaList }) => {
     const email = document.getElementById("email_i");
     const phone_i = document.getElementById("phone_i");
     const company_i = document.getElementById("company_i");
+    const experience_i = document.getElementById("experience_i");
     const position = document.getElementById("position");
     const area_id = document.getElementById("area_id");
 
@@ -76,6 +78,7 @@ const Registration = ({ id, title, areaList }) => {
         const emailVal = email.value.trim();
         const phoneVal = phone_i.value.trim();
         const companyVal = company_i.value.trim();
+        const experienceVal = experience_i.value.trim();
         const positionVal = position.value.trim();
         const areaSelectVal = area_id.value;
 
@@ -116,6 +119,14 @@ const Registration = ({ id, title, areaList }) => {
         } else {
             setSuccess(company_i)
         }
+
+        if (experienceVal === '') {
+            setError(company_i, 'Поле необходимо заполнить')
+        } else {
+            setSuccess(company_i)
+        }
+
+
 
         if (areaSelectVal === '') {
             setError(area_id, 'Необходимо выбрать город/район')
@@ -234,6 +245,16 @@ const Registration = ({ id, title, areaList }) => {
                             aria-describedby="danger-company" aria-required="true" required onChange={handleChange} />
                         <span className="notif" id="danger-company"></span>
                     </div>
+
+
+                    <div className="register__block">
+                        <label className="register__label" htmlFor="experience_i" id="experience_l" >
+                            <span className="register__required">*</span>  Стаж: </label>
+                        <input className="register__input" id="experience_i" type="text" name="experience" aria-labelledby="experience_i"
+                            aria-describedby="danger-company" aria-required="true" required onChange={handleChange} />
+                        <span className="notif" id="danger-experience"></span>
+                    </div>
+
 
 
                     <div className="register__block">

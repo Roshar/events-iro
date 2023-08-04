@@ -8,6 +8,10 @@ import ImgBlockError from "../../../components/imgBlockError/ImgBlockError";
 import uploadIcon from './../../../img/icons/412975601606261173.svg'
 import getCookie from './../../../utils/getCookies'
 import AdminMenu from "../../../components/adminMenu/AdminMenu";
+import Modal from "../../../components/modal/Modal";
+import setError from "./../../../utils/setError"
+import setSuccess from "./../../../utils/setSucces"
+
 
 
 const SpeakerPageEdit = () => {
@@ -26,30 +30,18 @@ const SpeakerPageEdit = () => {
     const [avatar, setAvatar] = useState('')
     const [file, setFile] = useState('');
 
+
     const checkError = () => {
         return document.querySelectorAll('.error');
     }
 
-    const setError = (el, msg) => {
-        const inputControl = el.parentElement;
-        const errorDisplay = inputControl.querySelector('.notif');
-        errorDisplay.innerText = msg;
-        inputControl.classList.add('error');
-        inputControl.classList.remove('success-i')
-    }
 
     const firstname_i = document.getElementById('firstname')
     const surname_i = document.getElementById('surname')
     const position_i = document.getElementById('position')
     const company_i = document.getElementById('company')
 
-    const setSuccess = el => {
-        const inputControl = el.parentElement;
-        const errorDisplay = inputControl.querySelector('.notif');
-        errorDisplay.innerText = '';
-        inputControl.classList.add('success-i');
-        inputControl.classList.remove('error')
-    }
+
 
     const validateInputs = () => {
 
@@ -124,6 +116,8 @@ const SpeakerPageEdit = () => {
         }
 
     }
+
+
     const submitFuncDel = async (e) => {
         e.preventDefault();
         const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/speaker/delete/${id}`, checkAdminRole())
@@ -139,16 +133,17 @@ const SpeakerPageEdit = () => {
         }
 
     }
+
     const imgClick = () => {
         document.querySelector('#fileBtn').click();
     }
 
     const getSpeakerPageEdit = async () => {
         const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/speaker/edit/${id}`, checkAdminRole())
-        console.log(data)
+
         if (data.code === 403) {
             navigate('/login')
-        } else if (data.notif.length > 0) {
+        } else if (data.notif && data.notif.length > 0) {
             console.log('204')
             navigate('/admin/speakers')
         } else {
@@ -182,17 +177,18 @@ const SpeakerPageEdit = () => {
             }
         }
 
-        // setFile(URL.createObjectURL(e.target.files[0]));
-        // setAvatar(e.target.files[0])
-
     }
     return (
         <>
+
             <Header />
+
             <main className="main">
                 <div className="container--personal-card">
+
                     <AdminMenu />
                     <ImgBlockError status={showBlock} />
+
                     <div className="personal_card">
 
                         <div className="personal_card__img-box">
@@ -322,7 +318,7 @@ const SpeakerPageEdit = () => {
                         </div>
                     </div>
                 </div>
-
+                {/* <Modal msg="Вы уверены, что хотите удалить пользователя?" yes="Да, удалить!" no="Отмена" status={status} /> */}
             </main>
         </>
     );

@@ -1,0 +1,80 @@
+.report {
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+
+}
+
+
+.report__filter_group {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.report__block {
+    background-color: #ffffff;
+    padding: 15px 14px;
+    border-radius: 5px;
+}
+
+.btn--no-active {
+    background-color: rgba(255, 223, 56, .4);
+    color: #ccc;
+}
+
+.report__tbl-header {
+    text-align: center;
+}
+
+.report__tbl {
+    max-width: 60%;
+}
+
+.report__tbl_td {
+    text-align: left;
+    padding: 5px;
+}
+
+th.report__tbl_td {
+    width: 40%;
+}
+
+.card_list {
+    display: flex;
+    column-gap: 20px;
+    justify-content: space-between;
+}
+
+.report__description {
+    font-size: 13px;
+    text-align: center;
+    color: #8e8e8e;
+    display: block;
+
+}
+
+.report__container {
+    display: flex;
+    column-gap: 20px;
+    row-gap: 30px;
+    justify-content: space-between;
+}
+
+.report__heading {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 10px;
+    padding-bottom: 0;
+}
+
+.report__select {
+    width: 100%;
+}
+
+.report__form {
+    display: flex;
+    flex-direction: column;
+    max-width: 250px;
+}

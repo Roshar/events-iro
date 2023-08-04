@@ -15,7 +15,7 @@ import AdminMenu from "../../../components/adminMenu/AdminMenu";
 
 
 
-const SpeakerPageAdd = ({ id }) => {
+const SpeakerPageAdd = () => {
     const navigate = useNavigate()
 
 
@@ -81,11 +81,13 @@ const SpeakerPageAdd = ({ id }) => {
     }
 
     const getSpeakerPageAdd = async () => {
-        const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/speaker/add`, checkAdminRole())
+
+        const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/speaker`, checkAdminRole())
+        console.log(data);
         if (data.code === 403) {
             navigate('/login')
         } else {
-            setGenderList(data[0])
+            setGenderList(data)
         }
         setFile(`${process.env.REACT_APP_BASE_IMG_URL}/avatars/${file}`)
     }

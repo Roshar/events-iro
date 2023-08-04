@@ -18,6 +18,9 @@ import SpeakersPage from './pages/admin/speaker/SpeakersPage';
 import SpeakerPage from './pages/admin/speaker/SpeakerPage';
 import SpeakerPageEdit from './pages/admin/speaker/SpeakerPageEdit';
 import SpeakerPageAdd from './pages/admin/speaker/SpeakerPageAdd';
+import EnrollersPage from './pages/admin/users/EnrollersPage';
+import EnrollerPage from './pages/admin/users/EnrollerPage';
+import ReportPage from './pages/admin/report/ReportPage';
 
 function App() {
   return (
@@ -34,12 +37,21 @@ function App() {
           <Route path="/admin/event/add" element={<EventPageAdd />} />
           <Route path="/admin" element={<HomeAdminPage />} />
 
+          <Route path="/admin/speakers" element={<SpeakersPage />} />
+          <Route path="/admin/speaker" element={<SpeakerPageAdd />} />
           <Route path="/admin/speaker/:id" element={<SpeakerPage />} />
           <Route path="/admin/speaker/edit/:id" element={<SpeakerPageEdit />} />
           <Route path="/admin/speaker/delete/:id" element={<SpeakerPageEdit />} />
-          <Route path="/admin/speaker/add" element={<SpeakerPageAdd />} />
+          <Route path="/admin/enroller/:id" element={<EnrollerPage />} />
+          <Route path="/admin/enrollers/" element={<EnrollersPage />} />
+          <Route path="/admin/enroller/delete/:id" element={<EnrollerPage />} />
+          <Route path="/admin/reports" element={<ReportPage />} />
+          <Route path="/admin/report/events" element={<ReportPage />} />
+          <Route path="/admin/report/enrollers" element={<ReportPage />} />
 
-          <Route path="/admin/speakers" element={<SpeakersPage />} />
+
+
+
 
 
 
