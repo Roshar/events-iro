@@ -60,7 +60,7 @@ const SpeakersPage = () => {
                         </div>
                         <NavLink
                             className="new_event__link"
-                            to={`/admin/speaker/add`}
+                            to={`/admin/speaker/create`}
                         > Добавить нового спикера </NavLink>
                     </div>
                     <article className="enrollers">

@@ -28,6 +28,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/events/cat/:id" element={<Home />} />
           <Route path="/event/:id" element={<EventPage />} />
           <Route path="/register/:id" element={<RegisterPage />} />
           <Route path="/registered/:id" element={<RegisteredPage />} />
@@ -38,7 +39,7 @@ function App() {
           <Route path="/admin" element={<HomeAdminPage />} />
 
           <Route path="/admin/speakers" element={<SpeakersPage />} />
-          <Route path="/admin/speaker" element={<SpeakerPageAdd />} />
+          <Route path="/admin/speaker/create" element={<SpeakerPageAdd />} />
           <Route path="/admin/speaker/:id" element={<SpeakerPage />} />
           <Route path="/admin/speaker/edit/:id" element={<SpeakerPageEdit />} />
           <Route path="/admin/speaker/delete/:id" element={<SpeakerPageEdit />} />
@@ -48,6 +49,7 @@ function App() {
           <Route path="/admin/reports" element={<ReportPage />} />
           <Route path="/admin/report/events" element={<ReportPage />} />
           <Route path="/admin/report/enrollers" element={<ReportPage />} />
+          <Route path="/admin/report/enrollers_list " element={<ReportPage />} />
 
 
 

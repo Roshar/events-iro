@@ -56,17 +56,10 @@ const EnrollersPage = () => {
                 <AdminMenu />
                 <div className="new_event">
                     <div className="new_event__icon">
-                        <NavLink
-                            className="new_event__link"
-                            to={`/admin/speaker/create`}
-                        >  <img src={add} alt="" />
-                        </NavLink>
+
 
                     </div>
-                    <NavLink
-                        className="new_event__link"
-                        to={`/admin/speaker/add`}
-                    > Добавить нового спикера </NavLink>
+
                 </div>
                 <article className="enrollers">
                     <table className="enrollers__table">

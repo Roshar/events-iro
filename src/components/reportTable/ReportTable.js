@@ -2,38 +2,31 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, NavLink, useNavigate } from "react-router-dom";
 
+import ExcelIcon from './../../img/icons/272697_excel_icon.svg'
+
 
 import checkAdminRole from '../../utils/sendHeaders'
 import getCookie from './../../utils/getCookies'
 
 import * as XLSX from 'xlsx'
 
-const Report = (
+const ReportTable = (
     { setIDNotification,
         setVissibleStatus,
         setVissibleNotifText,
         setVissibleNotif,
         setNotificationMsg,
-        title,
         centers,
         organizations,
         categories,
-        type,
-        statText,
-        excelDocText
     }) => {
-
-
-
-
 
     const handleOnExport = () => {
         let wb = XLSX.utils.book_new(),
-            ws = XLSX.utils.json_to_sheet(reportStatData)
-        XLSX.utils.book_append_sheet(wb, ws, "document");
-        XLSX.writeFile(wb, `${excelDocText}.xlsx`)
+            ws = XLSX.utils.json_to_sheet(enrollers)
+        XLSX.utils.book_append_sheet(wb, ws, "Список");
+        XLSX.writeFile(wb, "Список участников.xlsx")
     }
-
 
     const monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентабрь", "Октябрь", "Ноябрь", "Декабрь"
     ];
@@ -51,13 +44,14 @@ const Report = (
     const [resCen, setResCen] = useState("не указано")
     const [resAmount, setResAmount] = useState("не указано")
     const [resActual, setResActual] = useState("не указано")
+    const [enrollers, setEnrollers] = useState([])
 
 
 
     const [active, setActive] = useState(false)
     const [disabledStatus, setDisabledStatus] = useState(true)
-    const [disabledCenters, setDisabledCenters] = useState(true)
     const [disabledStatusExcel, setDisabledStatusExcel] = useState(true)
+    const [disabledCenters, setDisabledCenters] = useState(true)
     const [btnClass, setBtnClass] = useState('personal_card__btn btn btn--no-active')
     const [btnClassExcel, setBtnClassExcel] = useState('btn btn--excel--no-active')
 
@@ -70,67 +64,25 @@ const Report = (
     const [categoryId, setCategoryId] = useState("all")
     const [actual, setActual] = useState(2)
 
-    const getOrg = (arr, idx) => {
-        const res = arr.filter((e) => {
-            return e['id'] == idx
-        })
-        return (res.length > 0) ? res[0]['name'] : "не указано"
-    }
-
-    const getCat = (arr, idx) => {
-        const res = arr.filter((e) => {
-            return e['id'] == idx
-        })
-        return (res.length > 0) ? res[0]['cat_name'] : "не указано"
-    }
-
-    const getCenter = (arr, idx) => {
-        const res = arr.filter((e) => {
-            return e['id'] == idx
-        })
-        return (res.length > 0) ? res[0]['name'] : "не указано"
-    }
-
-    const getMonth = (month, idx) => {
-        return (idx !== "не указано") ? monthNames[resMonth - 1] : idx
-    }
-
-    const getActual = (idx) => {
-        return (parseInt(idx) == 2) ? 'Прошедние' : 'Планируются'
-    }
-
-
-
-    const reportStatData = [
-        {
-            Год: year,
-            Месяц: resMonth,
-            Категория: getCat(categories, resCat),
-            Организатор: getOrg(organizations, resOrg),
-            "Статус мероприятия": getActual(resActual),
-            "Структурное подразделение:": getCenter(centers, resCen),
-            "Количество": ""
-
-        }
-    ]
-
     const actualList = [
 
         {
             id: 1,
-            name: "Планируются"
+            name: "Планируют участие"
         },
         {
             id: 2,
-            name: "Прошедние"
+            name: "Приняли участие"
         }
     ]
 
+    let ind = 0;
 
 
 
-
-
+    const getActual = (idx) => {
+        return (parseInt(idx) == 2) ? 'Прошедние' : 'Планируются'
+    }
 
 
     const handleChangeYear = (e) => {
@@ -192,22 +144,17 @@ const Report = (
 
             const cookies = getCookie()
 
+            setEnrollers([])
 
-            const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/report/${type}`, formData, {
+
+            const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/report/enrollers_list`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': 'Bearer ' + cookies['token_statipkro'],
                 }
             });
 
-            // console.log(data)
-
-            if (data.result.count > 0) {
-                setDisabledStatusExcel(false)
-                setBtnClassExcel('btn btn--excel')
-                reportStatData[0]["Количество"] = data.result.count
-                console.log(reportStatData)
-            }
+            console.log(data)
 
 
             if (data.code === 403) {
@@ -222,6 +169,11 @@ const Report = (
                 setResCen(data.result.centerId)
                 setResAmount(data.result.count)
                 setResActual(data.result.actual)
+                setEnrollers(data.result.enrollers)
+                if (data.result.enrollers.length > 0) {
+                    setDisabledStatusExcel(false)
+                    setBtnClassExcel('btn btn--excel')
+                }
 
                 const notification = JSON.parse(localStorage.getItem('update'))
 
@@ -259,7 +211,7 @@ const Report = (
                 <div className="report__filter_group">
 
                     <h2 className="report__heading">
-                        {title}
+                        Отчет №3 «Список зарегистрировавшихся»
                     </h2>
                     <span className="report__description">Каждый фильтр представляет собой критерий отбора данных</span>
 
@@ -531,7 +483,7 @@ const Report = (
                     <div className="report__tbl-header">
 
                         {result !== false ?
-                            <><h2>Статистика по {statText} за {year} год</h2>
+                            <><h2>Статистика участников за {year} год</h2>
                                 <span className="report__description">Данные сформированы по выбранным критериям </span></>
                             :
                             <h2></h2>
@@ -539,41 +491,43 @@ const Report = (
 
                     </div>
 
-                    {result !== false ?
-                        <table className="report__tbl">
-                            <tbody>
-                                <tr className="report__tbl_tr">
-                                    <th className="report__tbl_td">Год:</th>
-                                    <td className="report__tbl_td">{resYear}</td>
-                                </tr>
-                                <tr className="report__tbl_tr">
-                                    <th className="report__tbl_td">Месяц:</th>
-                                    <td className="report__tbl_td">{getMonth(month, resMonth)}</td>
-                                </tr>
-                                <tr className="report__tbl_tr">
-                                    <th className="report__tbl_td">Категория:</th>
-                                    <td className="report__tbl_td">{getCat(categories, resCat)}</td>
-                                </tr>
-                                <tr className="report__tbl_tr">
-                                    <th className="report__tbl_td">Организатор:</th>
-                                    <td className="report__tbl_td">
-                                        {
-                                            getOrg(organizations, resOrg)
-                                        }</td>
-                                </tr>
-                                <tr className="report__tbl_tr">
-                                    <th className="report__tbl_td"> Статус мероприятия:</th>
-                                    <td className="report__tbl_td">{getActual(resActual)}</td>
-                                </tr>
 
+                    {result !== false ?
+                        <table width="100%" className="report__tbl report__tbl--full">
+
+                            <thead>
                                 <tr className="report__tbl_tr">
-                                    <th className="report__tbl_td"> Структурное подразделение:</th>
-                                    <td className="report__tbl_td">{getCenter(centers, resCen)}</td>
+                                    <th width="5%" className="report__tbl_td">№:</th>
+                                    <th width="20%" className="report__tbl_td ">ФИО:</th>
+                                    <th width="20%" className="report__tbl_td">Район:</th>
+                                    <th width="20%" className="report__tbl_td">Место работы:</th>
+                                    <th width="15%" className="report__tbl_td">Должность:</th>
+                                    <th className="report__tbl_td">Стаж работы:</th>
+                                    <th className="report__tbl_td">Адрес эл.почты:</th>
+                                    <th className="report__tbl_td">Номер телефона:</th>
+                                    <th className="report__tbl_td">Дата регистрации:</th>
                                 </tr>
-                                <tr className="report__tbl_tr">
-                                    <th className="report__tbl_td"> ИТОГО:</th>
-                                    <td className="report__tbl_td"> {resAmount}</td>
-                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {
+                                    enrollers.map((e) => {
+
+                                        return (
+                                            <tr className="report__tbl_tr">
+                                                <td className="report__tbl_td">{++ind} </td>
+                                                <td className="report__tbl_td">{e.Фамилия}  {e.Имя} {e.Отчество} </td>
+                                                <td className="report__tbl_td">{e['город/район']} </td>
+                                                <td className="report__tbl_td">{e['Место работы']} </td>
+                                                <td className="report__tbl_td">{e['Должность']} </td>
+                                                <td className="report__tbl_td">{e['Стаж']} </td>
+                                                <td className="report__tbl_td">{e['Эл. адрес']} </td>
+                                                <td className="report__tbl_td">{e['Телефон']} </td>
+                                                <td className="report__tbl_td">{e['Дата регистрации']} </td>
+                                            </tr>
+                                        )
+                                    })
+                                }
                             </tbody>
 
                         </table>
@@ -585,12 +539,11 @@ const Report = (
                         <button className={btnClass} onClick={submitEvents} disabled={disabledStatus} type="submit">
                             Сгененрировать
                         </button>
-
                     </div>
+
                     <button onClick={handleOnExport} disabled={disabledStatusExcel} className={btnClassExcel}>
 
                         Экспорт в таблицу</button>
-
 
 
                 </div>
@@ -602,4 +555,4 @@ const Report = (
     );
 }
 
-export default Report;
+export default ReportTable;

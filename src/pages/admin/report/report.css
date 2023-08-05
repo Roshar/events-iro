@@ -24,6 +24,11 @@
     color: #ccc;
 }
 
+.btn--excel--no-active {
+    background-color: #8ac2a4;
+    color: #ccc;
+}
+
 .report__tbl-header {
     text-align: center;
 }
@@ -32,14 +37,27 @@
     max-width: 60%;
 }
 
+.report__tbl--full {
+    max-width: 100%;
+    font-size: 11px;
+}
+
 .report__tbl_td {
     text-align: left;
     padding: 5px;
 }
 
-th.report__tbl_td {
-    width: 40%;
+th.col-2 {
+    width: 20%;
 }
+
+th.col-2 {
+    width: 30%;
+}
+
+/* th.report__tbl_td {
+    width: 40%;
+} */
 
 .card_list {
     display: flex;
@@ -54,6 +72,7 @@ th.report__tbl_td {
     display: block;
 
 }
+
 
 .report__container {
     display: flex;

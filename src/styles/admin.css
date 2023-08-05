@@ -106,23 +106,30 @@
     text-align: center;
 }
 
+
 .enrollers {
     margin-bottom: 30px;
     position: relative;
+    background-color: #fff;
+    padding: 7px;
+    ;
+    border-radius: 5px;
 }
 
 .enrollers__table {
     width: 100%;
+    border: 1px solid #9b9b9b;
 }
 
 table,
 th,
 td {
-    border: 1px solid #484343;
+    border: 1px solid #9b9b9b;
+    ;
 }
 
 tr:hover {
-    background-color: #e5e5e4;
+    background-color: #efefef;
 }
 
 table {

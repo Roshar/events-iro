@@ -6,13 +6,55 @@ import InputSearch from "../components/filter/inputSearch/InputSearch";
 import Header from "./../components/header/Header";
 import { events } from "../helpers/eventListActual";
 import { eventsLast } from "../helpers/eventListLast";
+import getMonthList from "../utils/listMonth";
+
+
 
 const Home = () => {
   const [APIDataSoon, setAPIDataSoon] = useState([]);
   const [APIDataLast, setAPIDataLast] = useState([]);
+  const [catValue, setCatValue] = useState('')
+  const [monthValue, setMonthValue] = useState('')
+  const [yearValue, setYear] = useState(new Date().getFullYear())
+
+
+  const params = {}
+
+  const handleYear = (e) => {
+    setYear(e.target.value)
+    params.year = e.target.value
+    params.month = monthValue
+    params.category = catValue
+    axios.get(`${process.env.REACT_APP_BASE_URL}/events/cat/${JSON.stringify(params)}`).then((response) => {
+    });
+  }
+
+  const handleMonth = (e) => {
+    setMonthValue(e.target.value)
+    params.year = yearValue
+    params.month = e.target.value
+    params.category = catValue
+    axios.get(`${process.env.REACT_APP_BASE_URL}/events/cat/${JSON.stringify(params)}`).then((response) => {
+    });
+  }
+
+  const handleChange = (value) => {
+    setCatValue(value)
+    params.year = yearValue
+    params.month = monthValue
+    params.category = value
+    axios.get(`${process.env.REACT_APP_BASE_URL}/events/cat/${JSON.stringify(params)}`).then((response) => {
+    });
+
+  }
+
+
+
+
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [selectOption, setSelectOption] = useState("");
+
   console.log(process.env.REACT_APP_BASE_URL);
 
   const state = useEffect(() => {
@@ -22,22 +64,9 @@ const Home = () => {
     });
   }, []);
 
-  const filterSelect = (category) => {
-    setSelectOption(category);
-    if (category !== "") {
-      const selectResult = APIDataSoon.filter((item) => {
-        if (item.id === parseInt(category)) {
-          return item;
-        }
-      });
-      console.log("before");
-      console.log(selectResult);
-      setFilteredResults(selectResult);
-      console.log("after");
-    } else {
-      setFilteredResults(APIDataSoon);
-    }
-  };
+
+
+
 
   const searchItems = (searchValue) => {
     setSearchInput(searchValue);
@@ -71,8 +100,30 @@ const Home = () => {
       <article className="filters">
         <div className="filters__wrapper">
           <div className="filters__header">
-            <SelectFilter func={filterSelect} />
-            <InputSearch val={searchItems} />
+
+
+
+            <select name="year" id="year" className="filters__select" onChange={handleYear}>
+              <option value="2023" className="filters__option">2023</option>
+              <option value="2022" className="filters__option">2022</option>
+            </select>
+
+            <select name="month" id="month_id" className="filters__select" onChange={handleMonth}>
+              <option value="" className="filters__option">Выбрать категорию</option>
+              {
+                getMonthList.map((el) => {
+                  return (
+                    <option key={el.id} value={el.id} className="filters__option">{el.name}</option>
+                  )
+                })
+              }
+            </select>
+
+            <SelectFilter onChange={handleChange} />
+
+
+
+
           </div>
         </div>
       </article>
@@ -90,7 +141,7 @@ const Home = () => {
                     category_name={event.cat_name}
                     statusText={event.status}
                     title={event.title}
-                    // img={event.img}
+
                     img={`${process.env.REACT_APP_BASE_IMG_URL}/event_images/${event.picture_name}`}
                     date_event={event.date_event}
                   />
@@ -100,16 +151,8 @@ const Home = () => {
             }
 
 
-
-            {/* {searchInput.length > 1 || selectOption.length > 0
-              ? filteredResults.map((elem) => {
-                return elem.title;
-              })
-              : APIData.map((elem) => {
-                return elem.title;
-              })} */}
           </div>
-          {/* {APIData.length === 0} */}
+
         </div>
 
         <h2 className="home-content__title">Прошедшие мероприятия</h2>
@@ -123,7 +166,7 @@ const Home = () => {
                   category_name={event.cat_name}
                   statusText={event.status}
                   title={event.title}
-                  // img={event.img}
+
                   img={`${process.env.REACT_APP_BASE_IMG_URL}/event_images/${event.picture_name}`}
                   date_event={event.date_event}
                   status_event="last"

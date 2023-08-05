@@ -9,6 +9,7 @@ import checkAdminRole from '../../../utils/sendHeaders'
 import axios from "axios";
 import { useParams, NavLink, useNavigate } from "react-router-dom";
 import './report.css'
+import ReportTable from "../../../components/reportTable/ReportTable";
 
 
 
@@ -106,6 +107,7 @@ const ReportPage = () => {
                         centers={centers}
                         type="events"
                         statText="мероприятиям"
+                        excelDocText="Мероприятия"
                     />
 
                     <Report
@@ -120,6 +122,21 @@ const ReportPage = () => {
                         centers={centers}
                         type="enrollers"
                         statText="участникам"
+                        excelDocText="Участники"
+                    />
+
+                    <ReportTable
+                        setNotificationMsg={setNotificationMsg}
+                        setVissibleNotif={setVissibleNotif}
+                        setVissibleNotifText={setVissibleNotifText}
+                        setVissibleStatus={setVissibleStatus}
+                        setIDNotification={setIDNotification}
+
+                        categories={categories}
+                        organizations={organizations}
+                        centers={centers}
+
+
                     />
 
 

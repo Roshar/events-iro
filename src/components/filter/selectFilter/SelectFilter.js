@@ -1,13 +1,24 @@
 
 
-
+import React, { useState, useEffect } from "react";
 import './../style.css';
 
-const SelectFilter = ({ func }) => {
+const SelectFilter = ({ onChange }) => {
+
+    const [category, setCategory] = useState("")
+
+    const handleCategory = (event) => {
+        onChange(event.target.value) // callback-функция
+    }
+
+    // const handleCategory = (e) => {
+    //     setCategory(e.target.value)
+    //     console.log(e.target.value)
+    // }
 
     return (
 
-        <select name="category" id="category_id" className="filters__select" onChange={(e) => func(e.target.value)}>
+        <select name="category" id="category_id" className="filters__select" onChange={handleCategory}>
             <option value="" className="filters__option">Выбрать категорию</option>
             <option value="1" className="filters__option">Семинар</option>
             <option value="2" className="filters__option">Конференция</option>
