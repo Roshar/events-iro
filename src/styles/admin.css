@@ -121,6 +121,10 @@
     border: 1px solid #9b9b9b;
 }
 
+.enrollers__table--users {
+    font-size: 11px;
+}
+
 table,
 th,
 td {

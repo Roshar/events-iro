@@ -4,8 +4,8 @@ import axios from 'axios';
 import './styles.css';
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
+
 
 
 const Registration = ({ id, title, areaList }) => {
@@ -147,8 +147,10 @@ const Registration = ({ id, title, areaList }) => {
             try {
                 const resObj = await axios.post(`${process.env.REACT_APP_BASE_URL}/register`, event)
                 resObj.event_id = id;
+
+                console.log(resObj)
                 if (resObj.data.errorIsRow === 1) {
-                    console.log(resObj.data.msg)
+
                     setMessageNot(resObj.data.msg)
                 } else {
                     setEvent(resObj);
@@ -168,18 +170,7 @@ const Registration = ({ id, title, areaList }) => {
 
     return (
         <div className="registration">
-            < ToastContainer
-                position="top-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="dark"
-            />
+
             <div className="container">
                 <div className="registration_content__title">
                     <h1 className="title-2">

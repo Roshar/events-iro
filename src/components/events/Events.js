@@ -13,18 +13,24 @@ const Events = ({
   const classValue = {
     statusStyle: "event-card__registration event-card__registration--opened",
     imgStyle: "event-card__img ",
+    catBox: "event-card__category-box ",
+
   };
+
+
 
   if (status_event === "last") {
     classValue.statusStyle =
       "event-card__registration event-card__registration--close";
     classValue.imgStyle = "event-card__img event-card__img--last";
+    classValue.imgStyle = "event-card__img event-card__img--last";
+    classValue.catBox = "event-card__category-box--last";
   }
 
   return (
     <div className="event-card">
       <div className="event-card__header">
-        <div className="event-card__category-box">
+        <div className={classValue.catBox}>
           <p className="event-card__category-title">{category_name}</p>
         </div>
         <NavLink className="event-card__link" to={`event/${id}`}>

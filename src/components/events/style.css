@@ -11,6 +11,12 @@
 
 }
 
+.moreList {
+    margin: 25px 0;
+
+    text-align: center;
+}
+
 .event-card__header {
     width: 100%;
     display: block;
@@ -24,6 +30,16 @@
     left: 5px;
     background-color: #0051a2;
     border-radius: 7px;
+    z-index: 2;
+}
+
+.event-card__category-box--last {
+    position: absolute;
+    bottom: 10px;
+    left: 5px;
+    background-color: #616161;
+    border-radius: 7px;
+    z-index: 2;
 }
 
 .event-card__category-title {
@@ -36,8 +52,10 @@
 
 .event-card__img {
     width: 100%;
+    position: relative;
     height: 157px;
     object-fit: cover;
+    z-index: 1;
 }
 
 .event-card__img--last {

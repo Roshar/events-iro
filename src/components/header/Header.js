@@ -1,9 +1,52 @@
+
+import { useParams, NavLink, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+
+import axios from "axios";
+import checkAdminRole from './../../utils/sendHeaders'
+import cookies from './../../utils/setCookies'
 import logo from './img/logo.png';
 import './style.css';
-import { useParams, NavLink } from 'react-router-dom'
 
 
 const Header = () => {
+
+    const [role, setRole] = useState("")
+    const [link, setLink] = useState("")
+
+    const navigate = useNavigate()
+
+    const getRole = async () => {
+        const response = await
+            axios.get(`${process.env.REACT_APP_BASE_URL}/checkRole`, checkAdminRole())
+        if (response.data.code === 403) {
+            setRole("Войти")
+            setLink("/login")
+        } else if (response.data.code === 200) {
+            setRole("Выйти")
+            setLink("/logout")
+        }
+    }
+
+
+    const handleLink = (e) => {
+        if (e.target.id === "/logout") {
+
+            document.cookie = "token_statipkro=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+            navigate("/login")
+
+        }
+    }
+
+    useEffect(() => {
+
+        getRole()
+
+    }, [])
+
+
+
     return (
         <header className="header">
             <div className="container">
@@ -26,8 +69,8 @@ const Header = () => {
 
                         </li>
                         <li className="menu-top__item">
-                            <NavLink to='/login' className="menu-list__link" >
-                                Войти
+                            <NavLink onClick={handleLink} id={link} to={link} className="menu-list__link" >
+                                {role}
                             </NavLink>
 
                         </li>

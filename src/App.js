@@ -21,6 +21,7 @@ import SpeakerPageAdd from './pages/admin/speaker/SpeakerPageAdd';
 import EnrollersPage from './pages/admin/users/EnrollersPage';
 import EnrollerPage from './pages/admin/users/EnrollerPage';
 import ReportPage from './pages/admin/report/ReportPage';
+import Header from './components/header/Header';
 
 function App() {
   return (
@@ -28,15 +29,19 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/events/cat/:id" element={<Home />} />
+          <Route path="/events/cat/:filters" element={<Home />} />
+          <Route path="/events/cat/last/:filters" element={<Home />} />
           <Route path="/event/:id" element={<EventPage />} />
           <Route path="/register/:id" element={<RegisterPage />} />
           <Route path="/registered/:id" element={<RegisteredPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/logout" element={<LoginPage />} />
           {/* Admin routes */}
           <Route path="/admin/event/edit/:id" element={<EventPageEdit />} />
           <Route path="/admin/event/add" element={<EventPageAdd />} />
           <Route path="/admin" element={<HomeAdminPage />} />
+          <Route path="/checkRole" element={<Header />} />
+
 
           <Route path="/admin/speakers" element={<SpeakersPage />} />
           <Route path="/admin/speaker/create" element={<SpeakerPageAdd />} />

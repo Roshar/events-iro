@@ -49,6 +49,12 @@ body {
   line-height: 1.3em;
 }
 
+.main__header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .notif {
   font-size: 11px;
 }
@@ -58,8 +64,7 @@ body {
 }
 
 .home-content__title {
-  max-width: 1230px;
-  margin: 0 auto;
+
   padding: 0 9px;
   font-size: 2em;
   font-weight: 700;

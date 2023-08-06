@@ -132,7 +132,7 @@ const SpeakerPageAdd = () => {
 
 
             const cookies = getCookie()
-            const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/speaker/add`, formData, {
+            const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/speaker/create`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': 'Bearer ' + cookies['token_statipkro'],

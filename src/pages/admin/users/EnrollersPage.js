@@ -62,7 +62,7 @@ const EnrollersPage = () => {
 
                 </div>
                 <article className="enrollers">
-                    <table className="enrollers__table">
+                    <table className="enrollers__table enrollers__table--users">
                         <thead>
                             <tr>
                                 <th className="enrollers__table-tr" scope="col">
