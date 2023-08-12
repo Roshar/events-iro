@@ -12,6 +12,7 @@ import './style.css';
 const Header = () => {
 
     const [role, setRole] = useState("")
+    const [linkText, setLinkText] = useState("")
     const [link, setLink] = useState("")
 
     const navigate = useNavigate()
@@ -20,19 +21,24 @@ const Header = () => {
         const response = await
             axios.get(`${process.env.REACT_APP_BASE_URL}/checkRole`, checkAdminRole())
         if (response.data.code === 403) {
-            setRole("Войти")
+            setRole(false)
+            setLinkText("Войти")
             setLink("/login")
         } else if (response.data.code === 200) {
-            setRole("Выйти")
+
+            setRole(true)
+            setLinkText("Выйти")
             setLink("/logout")
         }
     }
 
 
     const handleLink = (e) => {
-        if (e.target.id === "/logout") {
 
-            document.cookie = "token_statipkro=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        console.log('sdsds')
+        if (e.target.id === "/logout") {
+            console.log('logout')
+            document.cookie = "token_statipkro=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/admin;";
 
             navigate("/login")
 
@@ -61,16 +67,20 @@ const Header = () => {
 
                     </a>
                     <ul className="header__menu-top menu-top list-reset">
+                        {role === true ?
+                            <li className="menu-top__item">
+                                <NavLink to='/admin/main' className="menu-list__link" >
+                                    Панель администратора
+                                </NavLink>
+                            </li> : ""}
                         <li className="menu-top__item">
                             <NavLink to='/#' className="menu-list__link" >
                                 Помощь
                             </NavLink>
-
-
                         </li>
                         <li className="menu-top__item">
                             <NavLink onClick={handleLink} id={link} to={link} className="menu-list__link" >
-                                {role}
+                                {linkText}
                             </NavLink>
 
                         </li>

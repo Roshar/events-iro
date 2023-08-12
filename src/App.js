@@ -22,6 +22,7 @@ import EnrollersPage from './pages/admin/users/EnrollersPage';
 import EnrollerPage from './pages/admin/users/EnrollerPage';
 import ReportPage from './pages/admin/report/ReportPage';
 import Header from './components/header/Header';
+import EventEnrollers from './pages/admin/EventEnrollers';
 
 function App() {
   return (
@@ -39,11 +40,13 @@ function App() {
           {/* Admin routes */}
           <Route path="/admin/event/edit/:id" element={<EventPageEdit />} />
           <Route path="/admin/event/add" element={<EventPageAdd />} />
-          <Route path="/admin" element={<HomeAdminPage />} />
+          <Route path="/admin/event/show_enrollers/:id" element={<EventEnrollers />} />
+          <Route path="/admin/main/" element={<HomeAdminPage />} />
           <Route path="/checkRole" element={<Header />} />
 
 
-          <Route path="/admin/speakers" element={<SpeakersPage />} />
+          <Route path="/admin/speakers/" element={<SpeakersPage />} />
+
           <Route path="/admin/speaker/create" element={<SpeakerPageAdd />} />
           <Route path="/admin/speaker/:id" element={<SpeakerPage />} />
           <Route path="/admin/speaker/edit/:id" element={<SpeakerPageEdit />} />

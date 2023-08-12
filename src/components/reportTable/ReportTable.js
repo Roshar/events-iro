@@ -33,8 +33,6 @@ const ReportTable = (
 
     const navigate = useNavigate()
 
-
-
     const [result, setResult] = useState(false)
     const [resYear, setResYear] = useState("")
 
@@ -47,14 +45,12 @@ const ReportTable = (
     const [enrollers, setEnrollers] = useState([])
 
 
-
     const [active, setActive] = useState(false)
     const [disabledStatus, setDisabledStatus] = useState(true)
     const [disabledStatusExcel, setDisabledStatusExcel] = useState(true)
     const [disabledCenters, setDisabledCenters] = useState(true)
     const [btnClass, setBtnClass] = useState('personal_card__btn btn btn--no-active')
     const [btnClassExcel, setBtnClassExcel] = useState('btn btn--excel--no-active')
-
 
 
     const [year, setYear] = useState('2023')
@@ -65,7 +61,6 @@ const ReportTable = (
     const [actual, setActual] = useState(2)
 
     const actualList = [
-
         {
             id: 1,
             name: "Планируют участие"

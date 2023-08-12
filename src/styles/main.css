@@ -35,6 +35,18 @@ body {
   padding: 0 30px;
 }
 
+textarea:focus,
+input:focus,
+input[type="submit"]:focus {
+  outline: 1px solid var(--brand-color);
+}
+
+
+input[type="submit"] {
+  border: none;
+}
+
+
 .title-2 {
   font-size: 48px;
   margin: 0;

@@ -7,6 +7,7 @@ import checkAdminRole from '../../../utils/sendHeaders'
 import add from './../../../img/icons/plus-round-line-icon.svg'
 import AdminMenu from "../../../components/adminMenu/AdminMenu";
 import Notification from "../../../components/notification/Notification";
+import API from "../../../API/api";
 
 
 const SpeakersPage = () => {
@@ -22,8 +23,53 @@ const SpeakersPage = () => {
     const [speakerList, setSpeakerList] = useState([]);
     let counter = 0;
 
+    const [currentPage, setCurrentPage] = useState(1)
+    const [lastIndex1, setLastIndex1] = useState(1)
+    const [firstIndex1, setFirstIndex1] = useState(0)
+    const recordsPerPage = 5;
+
+
+    const moreInfo = async (e) => {
+
+        const curP = currentPage;
+        const lastP = lastIndex1;
+        const firP = firstIndex1;
+
+        setCurrentPage(currentPage + 1)
+        setLastIndex1(currentPage * recordsPerPage)
+        setFirstIndex1(lastIndex1 - recordsPerPage)
+
+        const lastIndex = (currentPage + 1) * recordsPerPage;
+        const firstIndex = lastIndex - recordsPerPage;
+
+        const params = {
+            firstIndex,
+            lastIndex
+        }
+
+        const { data } = await API.get(`/admin/speakers/${JSON.stringify(params)}`, checkAdminRole());
+        if (data.code === 403) {
+            navigate(`/login`)
+        } else {
+
+            let result = Array.from(new Set([...speakerList, ...data]));
+            setSpeakerList(result);
+        }
+
+
+    }
+
+
+
     const getSpeakerPage = async () => {
-        const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/speakers`, checkAdminRole());
+
+        const params = {
+            firstIndex: firstIndex1,
+            lastIndex: lastIndex1
+
+        }
+
+        const { data } = await API.get(`/admin/speakers/${JSON.stringify(params)}`, checkAdminRole());
         if (data.code === 403) {
             navigate('/login')
         } else {
@@ -129,6 +175,12 @@ const SpeakersPage = () => {
                                     );
                                 })}
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    {/* <td colspan="8"> Страница: 1, 2, 3</td> */}
+                                    <td className="enrollers__table-tr_moreLoad" colSpan="8"> <button className="btn btn--moreLoad" onClick={moreInfo}>Загрузить еще... </button> </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </article>
                 </div>

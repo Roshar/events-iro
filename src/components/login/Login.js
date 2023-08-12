@@ -10,6 +10,8 @@ import Notification from '../notification/Notification';
 import checkAdminRole from './../../utils/sendHeaders'
 import getCookies from "../../utils/getCookies";
 import setCookies from "../../utils/setCookies";
+import setSuccess from "../../utils/setSucces";
+import setError from "../../utils/setError";
 
 
 const Login = () => {
@@ -44,24 +46,6 @@ const Login = () => {
         return document.querySelectorAll('.error');
     }
 
-    const setError = (el, msg) => {
-        const inputControl = el.parentElement;
-        const errorDisplay = inputControl.querySelector('.notif');
-
-        errorDisplay.innerText = msg;
-        inputControl.classList.add('error');
-        inputControl.classList.remove('success-i')
-
-    }
-
-    const setSuccess = el => {
-        const inputControl = el.parentElement;
-        const errorDisplay = inputControl.querySelector('.notif');
-
-        errorDisplay.innerText = '';
-        inputControl.classList.add('success-i');
-        inputControl.classList.remove('error')
-    }
 
 
     const validateInputs = () => {
@@ -93,7 +77,7 @@ const Login = () => {
             try {
                 const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/login`, event);
                 if (data.token) {
-                    navigate('/admin')
+                    navigate('/admin/main')
                     data.display = 'vissible'
                     data.displayText = 'X'
 

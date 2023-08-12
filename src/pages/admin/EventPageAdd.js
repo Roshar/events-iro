@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API from "../../API/api";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import fileImg from '../../img/icons/upload-to-cloud-svgrepo-com.svg'
@@ -6,6 +7,8 @@ import fileImg from '../../img/icons/upload-to-cloud-svgrepo-com.svg'
 import Header from "../../components/header/Header";
 import AdminMenu from "../../components/adminMenu/AdminMenu";
 import checkAdminRole from './../../utils/sendHeaders'
+import setSuccess from "../../utils/setSucces";
+import setError from "../../utils/setError";
 
 
 
@@ -51,25 +54,6 @@ const EventPageAdd = () => {
         return document.querySelectorAll('.error');
     }
 
-    const setError = (el, msg) => {
-        const inputControl = el.parentElement;
-        const errorDisplay = inputControl.querySelector('.notif');
-
-        errorDisplay.innerText = msg;
-        inputControl.classList.add('error');
-        inputControl.classList.remove('success-i')
-
-    }
-
-    const setSuccess = el => {
-        const inputControl = el.parentElement;
-        const errorDisplay = inputControl.querySelector('.notif');
-
-        errorDisplay.innerText = '';
-        inputControl.classList.add('success-i');
-        inputControl.classList.remove('error')
-    }
-
     const changeSpeakersList = (e) => {
         e.preventDefault();
 
@@ -108,10 +92,7 @@ const EventPageAdd = () => {
             speakersList.push(newList[0])
             setSpeakersList(speakersList)
 
-
         }
-
-
 
     }
 
@@ -125,7 +106,6 @@ const EventPageAdd = () => {
     const target_i = document.getElementById('target_audience');
     const par_i = document.getElementById('participants_number');
     const speakers = document.getElementById('current_speakers');
-
 
 
     const validateInputs = () => {
@@ -213,7 +193,6 @@ const EventPageAdd = () => {
         validateInputs()
         const errorCount = checkError()
 
-
         if (errorCount.length < 1) {
 
             try {
@@ -224,7 +203,7 @@ const EventPageAdd = () => {
 
                 formData.append('file', file.data)
 
-                const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/event/add`, formData, {
+                const { data } = await API.post(`/admin/event/add`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Authorization': 'Bearer ' + localStorage.getItem('token_statipkro'),
@@ -232,11 +211,9 @@ const EventPageAdd = () => {
                 });
 
                 navigate(`/admin`)
-
                 data.display = 'vissible'
                 data.displayText = 'X'
                 localStorage.setItem('update', JSON.stringify(data))
-
 
             } catch (err) {
                 console.log(err.message)
@@ -251,7 +228,7 @@ const EventPageAdd = () => {
 
     const getEventPageAdd = async () => {
         const response = await
-            axios.get(`${process.env.REACT_APP_BASE_URL}/admin/event/add`, checkAdminRole())
+            API.get(`/admin/event/add`, checkAdminRole())
         if (response.data.code === 403) {
             navigate('/login')
         } else {

@@ -6,6 +6,7 @@ import AdminMenu from "../../components/adminMenu/AdminMenu";
 import Notification from "../../components/notification/Notification";
 import add from './../../img/icons/plus-round-line-icon.svg'
 import checkAdminRole from './../../utils/sendHeaders'
+import API from "../../API/api";
 
 
 const Main = () => {
@@ -17,25 +18,64 @@ const Main = () => {
   const [vissibleStatus, setVissibleStatus] = useState('')
   const [IDNotification, setIDNotification] = useState('')
 
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const [lastIndex1, setLastIndex1] = useState(1)
+  const [firstIndex1, setFirstIndex1] = useState(0)
+  const recordsPerPage = 5;
+
+
   let counter = 0;
 
+  const moreEvents = async (e) => {
+
+    const curP = currentPage;
+    const lastP = lastIndex1;
+    const firP = firstIndex1;
+
+    setCurrentPage(currentPage + 1)
+    setLastIndex1(currentPage * recordsPerPage)
+    setFirstIndex1(lastIndex1 - recordsPerPage)
+
+
+    const lastIndex = (currentPage + 1) * recordsPerPage;
+    const firstIndex = lastIndex - recordsPerPage;
+
+    const params = {
+      firstIndex,
+      lastIndex
+
+    }
+    const { data } = await API.get(`/admin/main/${JSON.stringify(params)}`, checkAdminRole())
+    if (data.code === 403) {
+      navigate(`/login`)
+    } else {
+
+      let result = Array.from(new Set([...events, ...data]));
+      setEvents(result);
+    }
+
+
+  }
+
+
   const getAdminPage = async () => {
+    const params = {
+      firstIndex: firstIndex1,
+      lastIndex: lastIndex1
+
+    }
     try {
-      const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/`, checkAdminRole())
+      const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/main/${JSON.stringify(params)}`, checkAdminRole())
       if (data.code === 403) {
         navigate(`/login`)
       } else {
         setEvents(data);
       }
 
-      console.log(data)
     } catch (e) {
       console.log(`dfdfdfd ${e.message}`)
     }
-
-
-
-
 
   }
 
@@ -44,8 +84,6 @@ const Main = () => {
     getAdminPage()
 
     const notification = JSON.parse(localStorage.getItem('update'))
-
-
 
     if (notification) {
       setNotificationMsg(notification.msg)
@@ -60,8 +98,6 @@ const Main = () => {
   const setStatus = (status) => {
     return (status === 1) ? 'да' : 'нет'
   }
-
-
 
   return (
     <>
@@ -93,7 +129,7 @@ const Main = () => {
 
             <table className="enrollers__table">
               <thead>
-                <tr>
+                <tr >
                   <th className="enrollers__table-tr" scope="col">
                     №
                   </th>
@@ -118,7 +154,7 @@ const Main = () => {
                     Дата публикации{" "}
                   </th>
                   <th className="enrollers__table-tr" scope="col">
-                    Автор
+                    Список зарегистрировавшихся
                   </th>
                   <th className="enrollers__table-tr" scope="col">
                     Операции
@@ -131,9 +167,9 @@ const Main = () => {
               <tbody>
                 {events.map((elem) => {
                   return (
-                    <tr>
+                    <tr key={elem.id_uniq}>
                       <th scope="row">{++counter}</th>
-                      <td className="enrollers__table-td" key={elem.id}>
+                      <td className="enrollers__table-td" key={elem.id_uniq}>
                         <NavLink
                           className="enrollers__link"
                           to={`/admin/event/edit/${elem.id_uniq}`}
@@ -144,7 +180,15 @@ const Main = () => {
                       <td className="enrollers__table-td">{elem.cat_name}</td>
                       <td className="enrollers__table-td">{elem.date_event}</td>
                       <td className="enrollers__table-td">{elem.dc}</td>
-                      <td className="enrollers__table-td">{elem.author}</td>
+                      <td className="enrollers__table-td">
+                        <NavLink
+                          className="enrollers__link" style={{ 'display': 'block' }}
+                          to={`/admin/event/show_enrollers/${elem.id_uniq}`}
+                        >
+                          Открыть
+
+                        </NavLink>
+                      </td>
                       <td className="enrollers__table-td">
 
                         <NavLink
@@ -168,10 +212,16 @@ const Main = () => {
                   );
                 })}
               </tbody>
+              <tfoot>
+                <tr>
+                  {/* <td colspan="8"> Страница: 1, 2, 3</td> */}
+                  <td className="enrollers__table-tr_moreLoad" colSpan="8"> <button className="btn btn--moreLoad" onClick={moreEvents}>Загрузить еще... </button> </td>
+                </tr>
+              </tfoot>
             </table>
           </article>
         </div>
-      </main>
+      </main >
     </>
   );
 };

@@ -12,7 +12,7 @@ const AdminMenu = () => {
     <aside className="aside">
       <ul className="aside__subnav subnav-list list-reset">
         <li className="subnav-list__element">
-          <NavLink className="subnav-list__link" to={`/admin`}>
+          <NavLink className="subnav-list__link" to={`/admin/main`}>
             {" "}
             <img
               src={homeIcon}

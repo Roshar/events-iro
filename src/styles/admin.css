@@ -48,6 +48,12 @@
     background: tomato;
 }
 
+.btn--moreLoad {
+    padding: 5px 7px;
+    color: #fff;
+    background: #0051a2;
+}
+
 .new_event {
     display: flex;
     column-gap: 10px;
@@ -166,6 +172,11 @@ table {
 }
 
 .enrollers__table-tr {
+    text-align: center;
+    padding: 5px;
+}
+
+.enrollers__table-tr_moreLoad {
     text-align: center;
     padding: 5px;
 }

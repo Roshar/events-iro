@@ -4,6 +4,12 @@ import axios from 'axios';
 import './styles.css';
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import Notification from '../notification/Notification';
+import API from '../../API/api';
+
+import setError from '../../utils/setError';
+import setSuccess from '../../utils/setSucces';
+
 
 
 
@@ -11,6 +17,12 @@ import { useNavigate } from 'react-router-dom';
 const Registration = ({ id, title, areaList }) => {
     const navigate = useNavigate()
 
+
+    const [notificationMsg, setNotificationMsg] = useState('')
+    const [vissibleNotif, setVissibleNotif] = useState('none')
+    const [vissibleNotifText, setVissibleNotifText] = useState('')
+    const [vissibleStatus, setVissibleStatus] = useState('')
+    const [IDNotification, setIDNotification] = useState('')
     const [event, setEvent] = useState({
         event_id: id,
         surname: "",
@@ -31,7 +43,6 @@ const Registration = ({ id, title, areaList }) => {
 
     const handleChange = (e) => {
         setEvent(prev => ({ ...prev, [e.target.name]: e.target.value }))
-
     }
 
     const name_i = document.getElementById("name_i");
@@ -46,25 +57,6 @@ const Registration = ({ id, title, areaList }) => {
 
     const checkError = () => {
         return document.querySelectorAll('.error');
-    }
-
-    const setError = (el, msg) => {
-        const inputControl = el.parentElement;
-        const errorDisplay = inputControl.querySelector('.notif');
-
-        errorDisplay.innerText = msg;
-        inputControl.classList.add('error');
-        inputControl.classList.remove('success')
-
-    }
-
-    const setSuccess = el => {
-        const inputControl = el.parentElement;
-        const errorDisplay = inputControl.querySelector('.notif');
-
-        errorDisplay.innerText = '';
-        inputControl.classList.add('success');
-        inputControl.classList.remove('error')
     }
 
     const isValidEmail = email => {
@@ -121,9 +113,9 @@ const Registration = ({ id, title, areaList }) => {
         }
 
         if (experienceVal === '') {
-            setError(company_i, 'Поле необходимо заполнить')
+            setError(experience_i, 'Поле необходимо заполнить')
         } else {
-            setSuccess(company_i)
+            setSuccess(experience_i)
         }
 
 
@@ -139,27 +131,32 @@ const Registration = ({ id, title, areaList }) => {
 
 
     const onClick = async (e) => {
+
+
+
+
         e.preventDefault()
+
         validateInputs()
         const errorCount = checkError()
 
         if (errorCount.length < 1) {
             try {
-                const resObj = await axios.post(`${process.env.REACT_APP_BASE_URL}/register`, event)
+                const resObj = await API.post(`/register`, event)
+
+
                 resObj.event_id = id;
-
-                console.log(resObj)
                 if (resObj.data.errorIsRow === 1) {
-
                     setMessageNot(resObj.data.msg)
-                } else {
-                    setEvent(resObj);
-                    navigate(`/registered/${resObj.data.user_id_link}`)
-                    localStorage.setItem(resObj.data.user_id_link, JSON.stringify(resObj))
+                    return
                 }
 
+                setEvent(resObj);
+                navigate(`/registered/${resObj.data.user_id_link}`)
+                localStorage.setItem(resObj.data.user_id_link, JSON.stringify(resObj))
+
             } catch (err) {
-                console.log(err.message)
+                console.log(err)
             }
         }
 
@@ -172,6 +169,9 @@ const Registration = ({ id, title, areaList }) => {
         <div className="registration">
 
             <div className="container">
+
+                {/* <Notification msg={notificationMsg} display={vissibleNotif} displayText={vissibleNotifText} status={vissibleStatus} id={IDNotification} /> */}
+
                 <div className="registration_content__title">
                     <h1 className="title-2">
                         Регистрация
@@ -179,7 +179,6 @@ const Registration = ({ id, title, areaList }) => {
                     <h1 className="title-3">
                         {title}
                     </h1>
-
                 </div>
 
                 <div className="registration__form register">
@@ -247,7 +246,6 @@ const Registration = ({ id, title, areaList }) => {
                     </div>
 
 
-
                     <div className="register__block">
                         <label className="register__label" htmlFor="position_i" id="position_l" >
                             <span className="register__required">*</span>  Должность: </label>
@@ -273,15 +271,14 @@ const Registration = ({ id, title, areaList }) => {
                         <span className="notif" id="danger-position"></span>
                     </div>
 
-                    <button className="register__btn btn" type='submit' onClick={onClick}>Зарегистрироваться</button>
+                    <input className="register__btn btn" tabIndex={-1} type='submit' onClick={onClick} value="Зарегистрироваться" />
+
 
                     <div className="message">
-                        {/* <h3 className="message__title">Спасибо!</h3> */}
+
                         <p className="message__text">{messageNot}</p>
                     </div>
                 </div>
-
-
 
 
             </div>
