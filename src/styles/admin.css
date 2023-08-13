@@ -122,6 +122,19 @@
     border-radius: 5px;
 }
 
+.enrollers__title {
+    text-align: center;
+    font-size: 22px;
+    color: var(--brand-color);
+}
+
+.enrollers__container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    grid-row: 1;
+}
+
 .enrollers__table {
     width: 100%;
     border: 1px solid #9b9b9b;

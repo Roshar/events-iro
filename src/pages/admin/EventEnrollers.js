@@ -15,7 +15,7 @@ const EventEnrollers = () => {
 
     const params = useParams()
     const id = params.id
-    console.log(id)
+
     const navigate = useNavigate()
 
     const [notificationMsg, setNotificationMsg] = useState('')
@@ -25,6 +25,7 @@ const EventEnrollers = () => {
     const [IDNotification, setIDNotification] = useState('')
 
     const [userList, setUserList] = useState([])
+    const [eventTitle, setEventTitle] = useState([])
     let counter = 0;
 
     const getEnrollersPage = async () => {
@@ -33,7 +34,43 @@ const EventEnrollers = () => {
             navigate('/login')
         } else {
             console.log(data)
-            setUserList(data)
+            setUserList(data['enrollers'])
+            setEventTitle(data['title'])
+        }
+    }
+
+    const deleteEnrolles = async (e) => {
+        // /admin/enroller/delete/${elem['uniq_serial_for_link']}
+        e.preventDefault();
+        document.getElementById(e.target.id).disabled = true
+
+        const { data } = await API.get(`/admin/enroller/delete/${e.target.id}`, checkAdminRole());
+        if (data.code === 403) {
+            navigate('/login')
+        } else {
+
+            console.log(data)
+
+            data.display = 'vissible'
+            data.displayText = 'X'
+            localStorage.setItem('update', JSON.stringify(data))
+
+            navigate(`/admin/event/show_enrollers/${id}`)
+
+            const notification = JSON.parse(localStorage.getItem('update'))
+
+            if (notification) {
+                setNotificationMsg(notification.msg)
+                setVissibleNotif(notification.display)
+                setVissibleNotifText(notification.displayText)
+                setVissibleStatus(notification.status)
+                setIDNotification('update')
+            }
+
+            getEnrollersPage()
+
+
+
         }
     }
 
@@ -55,93 +92,116 @@ const EventEnrollers = () => {
             <div className="container">
                 <Notification msg={notificationMsg} display={vissibleNotif} displayText={vissibleNotifText} status={vissibleStatus} id={IDNotification} />
                 <AdminMenu />
+
                 <div className="new_event">
                     <div className="new_event__icon">
-
-
                     </div>
-
                 </div>
+
                 <article className="enrollers">
-                    <table className="enrollers__table enrollers__table--users">
-                        <thead>
-                            <tr>
-                                <th className="enrollers__table-tr" scope="col">
-                                    №
-                                </th>
-                                <th
-                                    className="enrollers__table-tr table-tr-first"
-                                    scope="col"
-                                >
-                                    ФИО
-                                </th>
 
-                                <th className="enrollers__table-tr" scope="col">
-                                    {" "}
-                                    Должность
-                                </th>
-                                <th
-                                    className="enrollers__table-tr table-tr-second"
-                                    scope="col"
-                                >
-                                    Место работы
-                                </th>
-                                <th
-                                    className="enrollers__table-tr table-tr-second"
-                                    scope="col"
-                                >
-                                    Телефон
-                                </th>
-                                <th className="enrollers__table-tr" scope="col">
-                                    {" "}
-                                    Мероприятие
-                                </th>
+                    <h2 className="enrollers__title"> {eventTitle}</h2>
+
+                    {userList.length > 0 ?
+
+                        <div className="enrollers__container">
+                            <div className="enrollers__btn_box">
+                                <button className="btn btn--download" >Скачать список зарегистрировавшихся</button>
+                            </div>
 
 
-                                <th className="enrollers__table-tr" scope="col">
-                                    Операции
-                                </th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {userList.map((elem) => {
-                                return (
-                                    <tr key={elem.id}>
-                                        <td scope="row">{++counter}</td>
-                                        <td className="enrollers__table-td" >
-                                            <NavLink
-                                                className="enrollers__link"
-                                                to={`/admin/enroller/${elem['uniq_serial_for_link']}`}
-                                            >
-                                                {elem.surname} {elem.firstname} {elem.patronymic}
-                                            </NavLink>
-                                        </td>
-                                        <td className="enrollers__table-td">{elem.position}</td>
-                                        <td className="enrollers__table-td">{elem.company}</td>
-                                        <td className="enrollers__table-td">{elem.phone}</td>
-                                        <td className="enrollers__table-td">{elem.title}</td>
-                                        <td className="enrollers__table-td">
+                            <table className="enrollers__table enrollers__table--users">
+                                <thead>
+                                    <tr>
+                                        <th className="enrollers__table-tr" scope="col">
+                                            №
+                                        </th>
+                                        <th
+                                            className="enrollers__table-tr table-tr-first"
+                                            scope="col"
+                                        >
+                                            ФИО
+                                        </th>
 
-                                            {/* <NavLink
-                                                className="enrollers__link"
-                                                to={`/admin/enroller/edit/${elem.id}`}
-                                            >
-                                                Изменить
-                                            </NavLink> */}
+                                        <th
+                                            className="enrollers__table-tr table-tr-first"
+                                            scope="col"
+                                        >
+                                            Район
+                                        </th>
 
-                                            <NavLink
-                                                className="enrollers__link"
-                                                to={`/admin/enroller/${elem['uniq_serial_for_link']}`}
-                                            >
-                                                Посмотреть
-                                            </NavLink>{" "}
-                                        </td>
+
+                                        <th
+                                            className="enrollers__table-tr table-tr-second"
+                                            scope="col"
+                                        >
+                                            Место работы
+                                        </th>
+
+                                        <th className="enrollers__table-tr" scope="col">
+                                            {" "}
+                                            Должность
+                                        </th>
+
+                                        <th className="enrollers__table-tr" scope="col">
+                                            {" "}
+                                            Стаж работы
+                                        </th>
+
+                                        <th className="enrollers__table-tr" scope="col">
+                                            {" "}
+                                            Адрес эл. почты
+                                        </th>
+                                        <th
+                                            className="enrollers__table-tr table-tr-second"
+                                            scope="col"
+                                        >
+                                            Телефон
+                                        </th>
+
+                                        <th className="enrollers__table-tr" scope="col">
+                                            Операции
+                                        </th>
+
                                     </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
+                                </thead>
+                                <tbody>
+                                    {userList.map((elem) => {
+                                        return (
+                                            <tr key={elem.id}>
+                                                <td scope="row">{++counter}</td>
+                                                <td className="enrollers__table-td" >
+                                                    <NavLink
+                                                        className="enrollers__link"
+                                                        to={`/admin/enroller/${elem['uniq_serial_for_link']}`}
+                                                    >
+                                                        {elem.surname} {elem.firstname} {elem.patronymic}
+                                                    </NavLink>
+                                                </td>
+                                                <td className="enrollers__table-td">{elem.title_area}</td>
+                                                <td className="enrollers__table-td">{elem.company}</td>
+                                                <td className="enrollers__table-td">{elem.position}</td>
+                                                <td className="enrollers__table-td">{elem.experience}</td>
+                                                <td className="enrollers__table-td">{elem.email}</td>
+                                                <td className="enrollers__table-td">{elem.phone}</td>
+
+                                                <td className="enrollers__table-td">
+                                                    <button className='btn--admin-del  ' id={elem['uniq_serial_for_link']} onClick={deleteEnrolles} type="button" > Удалить </button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
+
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        : <h2 style={{ "textAlign": "center" }}> Нет пользователей</h2>
+                    }
+
                 </article>
             </div>
         </main>

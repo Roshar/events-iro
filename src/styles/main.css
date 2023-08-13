@@ -149,6 +149,12 @@ input[type="submit"] {
   color: #fff;
 }
 
+.btn--download {
+  background-color: var(--brand-color);
+  color: #fff;
+  padding: 7px 13px;
+}
+
 
 
 
