@@ -9,6 +9,7 @@ import checkAdminRole from '../../utils/sendHeaders'
 import add from './../../img/icons/plus-round-line-icon.svg'
 import AdminMenu from "../../components/adminMenu/AdminMenu";
 import Notification from "../../components/notification/Notification";
+import * as XLSX from 'xlsx'
 import API from "../../API/api";
 
 const EventEnrollers = () => {
@@ -26,6 +27,19 @@ const EventEnrollers = () => {
 
     const [userList, setUserList] = useState([])
     const [eventTitle, setEventTitle] = useState([])
+
+
+    const handleOnExport = () => {
+        let wb = XLSX.utils.book_new(),
+            ws = XLSX.utils.json_to_sheet(userList)
+        XLSX.utils.book_append_sheet(wb, ws, "document");
+        XLSX.writeFile(wb, `enrollers.xlsx`)
+    }
+
+
+
+
+
     let counter = 0;
 
     const getEnrollersPage = async () => {
@@ -106,7 +120,7 @@ const EventEnrollers = () => {
 
                         <div className="enrollers__container">
                             <div className="enrollers__btn_box">
-                                <button className="btn btn--download" >Скачать список зарегистрировавшихся</button>
+                                <button className="btn btn--download" onClick={handleOnExport} >Скачать список зарегистрировавшихся</button>
                             </div>
 
 

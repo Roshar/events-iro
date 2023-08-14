@@ -100,9 +100,9 @@ const Report = (
     }
 
 
-
     const reportStatData = [
         {
+
             Год: year,
             Месяц: resMonth,
             Категория: getCat(categories, resCat),
@@ -110,6 +110,7 @@ const Report = (
             "Статус мероприятия": getActual(resActual),
             "Структурное подразделение:": getCenter(centers, resCen),
             "Количество": ""
+
 
         }
     ]
@@ -125,12 +126,6 @@ const Report = (
             name: "Прошедние"
         }
     ]
-
-
-
-
-
-
 
 
     const handleChangeYear = (e) => {
