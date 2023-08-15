@@ -24,14 +24,22 @@ const EventEnrollers = () => {
     const [vissibleNotifText, setVissibleNotifText] = useState('')
     const [vissibleStatus, setVissibleStatus] = useState('')
     const [IDNotification, setIDNotification] = useState('')
-
     const [userList, setUserList] = useState([])
+    const [userListExcel, setUserListExcel] = useState([])
     const [eventTitle, setEventTitle] = useState([])
 
 
-    const handleOnExport = () => {
+    const handleOnExport = async () => {
+        const { data } = await API.get(`/admin/event/show_enrollers_for_excel/${id}/`, checkAdminRole());
+        if (data.code === 403) {
+            navigate('/login')
+        } else {
+            console.log(data)
+            setUserListExcel(data)
+        }
+
         let wb = XLSX.utils.book_new(),
-            ws = XLSX.utils.json_to_sheet(userList)
+            ws = XLSX.utils.json_to_sheet(userListExcel)
         XLSX.utils.book_append_sheet(wb, ws, "document");
         XLSX.writeFile(wb, `enrollers.xlsx`)
     }

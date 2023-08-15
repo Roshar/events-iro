@@ -205,6 +205,11 @@ table {
     column-gap: 5px;
 }
 
+.admin_event__form_radio_box {
+    display: flex;
+    column-gap: 10px;
+}
+
 
 
 /* EDIT EVENT*/

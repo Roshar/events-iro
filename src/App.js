@@ -41,6 +41,7 @@ function App() {
           <Route path="/admin/event/edit/:id" element={<EventPageEdit />} />
           <Route path="/admin/event/add" element={<EventPageAdd />} />
           <Route path="/admin/event/show_enrollers/:id" element={<EventEnrollers />} />
+          <Route path="/admin/event/show_enrollers_for_excel/:id" element={<EventEnrollers />} />
           <Route path="/admin/main/" element={<HomeAdminPage />} />
           <Route path="/checkRole" element={<Header />} />
 

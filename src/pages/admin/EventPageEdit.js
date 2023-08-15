@@ -19,6 +19,7 @@ const EventPageEdit = () => {
   const [showCenter, setShowCenter] = useState(false)
   const [notification, setNotification] = useState({})
   const [event, setEvent] = useState([]);
+  const [limitVal, setLimitVal] = useState("");
   const [catList, setCatList] = useState([]);
   const [organizationsList, setOrganizationsList] = useState([]);
   const [speakersList, setSpeakersList] = useState([]);
@@ -183,47 +184,6 @@ const EventPageEdit = () => {
 
 
 
-    //   const res2 = filterSpeakers.filter((e) => {
-    //     return e['id'] !== speakerId
-    //   })
-
-    //   console.log('общий список')
-    //   console.log(res2)
-
-    //   setFilterSpeakers(res2)
-
-    //   const res = speakersList.filter((e) => {
-    //     return e['id'] === speakerId
-    //   })
-
-    //   speakersCurrent.push(res[0]);
-    //   setSpeakersCurrent(speakersCurrent)
-
-
-    // } else if (category === "assigned") {
-
-    //   const res = speakersCurrent.filter((el) => {
-
-    //     if (el["speakers_id"] === speakerId) {
-    //       return speakerId !== el["speakers_id"];
-    //     }
-
-    //   });
-    //   console.log('назначенный список')
-    //   console.log(res)
-
-
-    //   setSpeakersCurrent(res);
-
-    //   const res2 = speakersList.filter((e) => {
-    //     return e['id'] === speakerId
-    //   })
-    //   filterSpeakers.push(res2[0])
-    //   setFilterSpeakers(filterSpeakers)
-
-    // }
-
-    // getAllSpeakers();
   };
 
   const submitFunc = async (e) => {
@@ -260,7 +220,7 @@ const EventPageEdit = () => {
           'Authorization': 'Bearer ' + cookies['token_statipkro'],
         }
       });
-      navigate(`/admin`)
+      navigate(`/admin/main`)
 
       data.display = 'vissible'
       data.displayText = 'X'
@@ -277,6 +237,29 @@ const EventPageEdit = () => {
     document.querySelector('#fileBtn').click();
   }
 
+
+  const checkLimitVal2 = () => {
+    if (limitVal == "true") {
+      return (
+        <div className="admin_event__form_radio_box" >
+          <input type="radio" id="contactChoice1" name="limit" onChange={handleChange} checked='checked' value="true" />
+          <label for="contactChoice1">Да</label>
+
+          <input type="radio" id="contactChoice2" name="limit" onChange={handleChange} value="false" />
+          <label for="contactChoice2">Нет</label>
+        </div>
+      )
+    } else {
+      return (<div className="admin_event__form_radio_box" >
+        <input type="radio" id="contactChoice1" name="limit" onChange={handleChange} value="true" />
+        <label for="contactChoice1">Да</label>
+
+        <input type="radio" id="contactChoice2" name="limit" onChange={handleChange} checked='checked' value="false" />
+        <label for="contactChoice2">Нет</label>
+      </div>)
+    }
+  }
+
   const getEventPageEdit = async () => {
     const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/event/edit/${id}`, checkAdminRole())
 
@@ -284,11 +267,13 @@ const EventPageEdit = () => {
       navigate('/login')
     } else {
       setEvent(response.data.events);
+
       setCatList(response.data.list);
       setOrganizationsList(response.data.listOrg);
       setSpeakersList(response.data.speakersList);
       setCenterList(response.data.centers);
       setTitle(response.data.events[0].title);
+      setLimitVal(response.data.events[0].limit_enrollers);
       setDescription(response.data.events[0].description);
       setCategoryId(response.data.events[0].category_id);
       setCategoryId(response.data.events[0].category_id);
@@ -320,6 +305,8 @@ const EventPageEdit = () => {
     getEventPageEdit()
 
   }, []);
+
+  console.log(limitVal)
 
   const handleCahngeForOrg = (e) => {
 
@@ -480,10 +467,8 @@ const EventPageEdit = () => {
                 <span className="notif" id="danger-position"> </span>
               </div>
 
+
               {showCenterFunc(showCenter)}
-
-
-
 
               <div className="admin_event__form-control">
                 <label className="admin_event__label" htmlFor="date_event">
@@ -563,6 +548,16 @@ const EventPageEdit = () => {
                   value={parNumber}
                 />
                 <span className="notif" id="danger-position"> </span>
+              </div>
+
+              <div className="admin_event__form-control">
+                <p>Ограничить количество регистраций пользователей на мероприятие?</p>
+
+                {checkLimitVal2()}
+
+
+
+                <span className="notif" id="danger-position"></span>
               </div>
 
               <div className="admin_event__form-control">

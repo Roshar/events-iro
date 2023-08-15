@@ -9,6 +9,7 @@ import AdminMenu from "../../components/adminMenu/AdminMenu";
 import checkAdminRole from './../../utils/sendHeaders'
 import setSuccess from "../../utils/setSucces";
 import setError from "../../utils/setError";
+import getCookie from "../../utils/getCookies";
 
 
 
@@ -42,7 +43,8 @@ const EventPageAdd = () => {
         participants_number: "",
         event_status: "",
         published: "",
-        speakers: speakersCurrent
+        speakers: speakersCurrent,
+        limit: 'false',
     })
 
     const [file, setFile] = useState({
@@ -186,7 +188,6 @@ const EventPageAdd = () => {
 
     }
 
-
     const submitFunc1 = async (e) => {
 
         e.preventDefault()
@@ -196,6 +197,8 @@ const EventPageAdd = () => {
         if (errorCount.length < 1) {
 
             try {
+
+                const cookies = getCookie()
                 const formData = new FormData()
                 formData.append('event', JSON.stringify(event))
                 formData.append('organizationId', JSON.stringify(organizationId))
@@ -206,11 +209,11 @@ const EventPageAdd = () => {
                 const { data } = await API.post(`/admin/event/add`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        'Authorization': 'Bearer ' + localStorage.getItem('token_statipkro'),
+                        'Authorization': 'Bearer ' + cookies['token_statipkro'],
                     }
                 });
 
-                navigate(`/admin`)
+                navigate(`/admin/main`)
                 data.display = 'vissible'
                 data.displayText = 'X'
                 localStorage.setItem('update', JSON.stringify(data))
@@ -498,6 +501,21 @@ const EventPageAdd = () => {
                             />
                             <span className="notif" id="danger-position"></span>
                         </div>
+
+                        <div className="admin_event__form-control">
+                            <p>Ограничить количество регистраций пользователей на мероприятие?</p>
+
+                            <div className="admin_event__form_radio_box" >
+                                <input type="radio" id="contactChoice1" name="limit" onChange={handleChange} value="true" />
+                                <label for="contactChoice1">Да</label>
+
+                                <input type="radio" id="contactChoice2" name="limit" onChange={handleChange} checked="checked" value="false" />
+                                <label for="contactChoice2">Нет</label>
+                            </div>
+
+                            <span className="notif" id="danger-position"></span>
+                        </div>
+
 
                         <div className="admin_event__form-control">
 
