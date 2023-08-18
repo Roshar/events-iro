@@ -9,6 +9,7 @@ import checkAdminRole from './../../utils/sendHeaders';
 import getCookie from './../../utils/getCookies'
 import setSuccess from '../../utils/setSucces'
 import setError from '../../utils/setError'
+import isNumber from "../../utils/isNumber";
 
 
 const EventPageEdit = () => {
@@ -130,7 +131,11 @@ const EventPageEdit = () => {
 
     if (parVal === '') {
       setError(par_i, 'Поле необходимо заполнить');
-    } else {
+    }
+    else if (!isNumber(parseInt(parVal))) {
+      setError(par_i, 'Введите число');
+    }
+    else {
       setSuccess(par_i);
     }
 

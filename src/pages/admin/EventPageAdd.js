@@ -10,7 +10,7 @@ import checkAdminRole from './../../utils/sendHeaders'
 import setSuccess from "../../utils/setSucces";
 import setError from "../../utils/setError";
 import getCookie from "../../utils/getCookies";
-
+import isNumber from "../../utils/isNumber";
 
 
 const EventPageAdd = () => {
@@ -110,8 +110,10 @@ const EventPageAdd = () => {
     const speakers = document.getElementById('current_speakers');
 
 
-    const validateInputs = () => {
 
+
+
+    const validateInputs = () => {
 
         const titleVal = title_i.value.trim();
         const desckVal = desc_i.value.trim();
@@ -122,9 +124,6 @@ const EventPageAdd = () => {
         const locationVal = location_i.value.trim();
         const targetVal = target_i.value;
         const parVal = par_i.value;
-
-
-
 
         if (titleVal === '') {
             setError(title_i, 'Поле необходимо заполнить')
@@ -176,7 +175,12 @@ const EventPageAdd = () => {
 
         if (parVal === '') {
             setError(par_i, 'Поле необходимо заполнить');
-        } else {
+
+        }
+        else if (!isNumber(parseInt(parVal))) {
+            setError(par_i, 'Введите число');
+        }
+        else {
             setSuccess(par_i);
         }
 
@@ -185,8 +189,8 @@ const EventPageAdd = () => {
         } else {
             setSuccess(speakers);
         }
-
     }
+
 
     const submitFunc1 = async (e) => {
 
@@ -197,7 +201,6 @@ const EventPageAdd = () => {
         if (errorCount.length < 1) {
 
             try {
-
                 const cookies = getCookie()
                 const formData = new FormData()
                 formData.append('event', JSON.stringify(event))
@@ -205,6 +208,9 @@ const EventPageAdd = () => {
                 formData.append('centerId', JSON.stringify(centerId))
 
                 formData.append('file', file.data)
+
+
+                console.log(formData)
 
                 const { data } = await API.post(`/admin/event/add`, formData, {
                     headers: {
@@ -223,7 +229,6 @@ const EventPageAdd = () => {
             }
         }
     }
-
 
     const imgClick = () => {
         document.querySelector('#fileBtn').click();
@@ -246,7 +251,6 @@ const EventPageAdd = () => {
             setCatList(response.data.cat)
         }
     }
-
 
     useEffect(() => {
         getEventPageAdd()
@@ -276,7 +280,6 @@ const EventPageAdd = () => {
             setIsValid(true)
         }
     }
-
 
     function handleChangeImage(e) {
         const img = {
@@ -507,10 +510,10 @@ const EventPageAdd = () => {
 
                             <div className="admin_event__form_radio_box" >
                                 <input type="radio" id="contactChoice1" name="limit" onChange={handleChange} value="true" />
-                                <label for="contactChoice1">Да</label>
+                                <label htmlFor="contactChoice1">Да</label>
 
                                 <input type="radio" id="contactChoice2" name="limit" onChange={handleChange} checked="checked" value="false" />
-                                <label for="contactChoice2">Нет</label>
+                                <label htmlFor="contactChoice2">Нет</label>
                             </div>
 
                             <span className="notif" id="danger-position"></span>
