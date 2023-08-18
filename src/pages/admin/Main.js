@@ -133,10 +133,7 @@ const Main = () => {
                   <th className="enrollers__table-tr" scope="col">
                     №
                   </th>
-                  <th
-                    className="enrollers__table-tr table-tr-first"
-                    scope="col"
-                  >
+                  <th className="enrollers__table-tr table-tr-first" scope="col">
                     Наименование мероприятия
                   </th>
                   <th
@@ -159,6 +156,10 @@ const Main = () => {
                   <th className="enrollers__table-tr" scope="col">
                     Операции
                   </th>
+                  <th className="enrollers__table-tr" scope="col">
+                    Опубликовано
+                  </th>
+
                   <th className="enrollers__table-tr" scope="col">
                     Опубликовано
                   </th>
