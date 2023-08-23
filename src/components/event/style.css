@@ -49,10 +49,30 @@ event__register--close .event__register:hover {
   cursor: pointer;
 }
 
-.event__date,
-.event__members {
+.event__date {
   color: white;
 }
+
+.color_white {
+  color: white;
+}
+
+.event__part,
+.event__members {
+  text-decoration: underline;
+}
+
+
+
+.event__second_info_box {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 8px;
+  background-color: rgba(0, 81, 162, .4);
+  border-radius: 4px;
+  row-gap: 5px;
+}
+
 
 .event__date {
   font-size: 18px;

@@ -1,11 +1,25 @@
 import { useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 
-const EventHeader = ({ id, status, date, hour, enrollers, picture_name }) => {
+const EventHeader = ({ id, status, date, hour, enrollers, picture_name, participants_number }) => {
 
     const [img, setImg] = useState(picture_name)
 
-    console.log(img);
+
+
+    const par_number = (num) => {
+
+        if (participants_number !== null) {
+            return (
+                <div>
+                    <span className="event__part color_white">Рассчитано на количество человек:</span>  <span className="color_white">{participants_number}</span>
+                </div>
+            )
+        }
+
+    }
+
+
     const setBtnStatus = (status) => {
         if (status === 1) {
             return <NavLink
@@ -39,7 +53,13 @@ const EventHeader = ({ id, status, date, hour, enrollers, picture_name }) => {
 
                     {setBtnStatus(status)}
 
-                    <span className="event__members">Количество участников: {enrollers.amount}</span>
+                    <div className="event__second_info_box">
+                        <div> <span className="event__members color_white">Количество участников:</span>   <span className="color_white">{enrollers.amount}</span> </div>
+
+                        {par_number()}
+                    </div>
+
+
 
                 </div>
             </div>

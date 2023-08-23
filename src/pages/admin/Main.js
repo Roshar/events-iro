@@ -160,9 +160,6 @@ const Main = () => {
                     Опубликовано
                   </th>
 
-                  <th className="enrollers__table-tr" scope="col">
-                    Опубликовано
-                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -209,6 +206,7 @@ const Main = () => {
                       <td className="enrollers__table-td">
                         {setStatus(elem.published)}
                       </td>
+
                     </tr>
                   );
                 })}

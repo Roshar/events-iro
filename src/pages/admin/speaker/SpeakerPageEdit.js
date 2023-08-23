@@ -93,11 +93,15 @@ const SpeakerPageEdit = () => {
             formData.append('position', position)
             formData.append('company', company)
             formData.append('gender_id', genderId)
-            formData.append('avatar', avatar)
+
+
+            console.log(avatar)
 
             formData.append('file', avatar)
 
             const cookies = getCookie()
+
+
 
             const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/speaker/edit/${id}`, formData, {
                 headers: {
@@ -171,9 +175,10 @@ const SpeakerPageEdit = () => {
                 setFile(URL.createObjectURL(e.target.files[0]));
                 setAvatar(e.target.files[0])
                 setShowBlock('none')
+
+                console.log(e.target.files[0])
             } else {
                 setShowBlock('block')
-
             }
         }
 
@@ -192,16 +197,13 @@ const SpeakerPageEdit = () => {
                     <div className="personal_card">
 
                         <div className="personal_card__img-box">
-
-                            <input className="img_event__input--hidden" id="fileBtn" type="file" name="file" onChange={handleChange} />
-
                             <img src={file} alt="" className="personal_card__img" />
                             <img src={uploadIcon} className="personal_card__icon_edit" alt="" onClick={imgClick} />
                         </div>
 
                         <div className="personal_card__main_info">
-                            <form action="" className="personal_card__form">
-
+                            <form action="" name="test" className="personal_card__form">
+                                <input className="img_event__input--hidden" id="fileBtn" type="file" form="test" name="file" onChange={handleChange} accept=".jpg, .jpeg, .png" />
                                 <div className="personal_card__block">
                                     <label className="personal_card__label" htmlFor="surname">
                                         Фамилия:

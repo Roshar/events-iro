@@ -11,7 +11,7 @@ const Event = ({ id, date, hour, participants_number, description, speakers, eve
 
   return (
     <section className="event">
-      <EventHeader picture_name={picture_name} status={event_status} id={id} date={date} hour={hour} enrollers={enrollers} />
+      <EventHeader picture_name={picture_name} status={event_status} id={id} date={date} hour={hour} enrollers={enrollers} participants_number={participants_number} />
       <div className="event__body">
         <div className="container">
           <h2 className="event-content__title">Описание мероприятия</h2>

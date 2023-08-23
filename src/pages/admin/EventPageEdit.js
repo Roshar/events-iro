@@ -248,19 +248,19 @@ const EventPageEdit = () => {
       return (
         <div className="admin_event__form_radio_box" >
           <input type="radio" id="contactChoice1" name="limit" onChange={handleChange} checked='checked' value="true" />
-          <label for="contactChoice1">Да</label>
+          <label htmlFor="contactChoice1">Да</label>
 
           <input type="radio" id="contactChoice2" name="limit" onChange={handleChange} value="false" />
-          <label for="contactChoice2">Нет</label>
+          <label htmlFor="contactChoice2">Нет</label>
         </div>
       )
     } else {
       return (<div className="admin_event__form_radio_box" >
         <input type="radio" id="contactChoice1" name="limit" onChange={handleChange} value="true" />
-        <label for="contactChoice1">Да</label>
+        <label htmlFor="contactChoice1">Да</label>
 
         <input type="radio" id="contactChoice2" name="limit" onChange={handleChange} checked='checked' value="false" />
-        <label for="contactChoice2">Нет</label>
+        <label htmlFor="contactChoice2">Нет</label>
       </div>)
     }
   }
@@ -311,7 +311,21 @@ const EventPageEdit = () => {
 
   }, []);
 
-  console.log(limitVal)
+
+  const submitFuncDel = async () => {
+
+    try {
+      const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/event/delete/${id}`, checkAdminRole());
+      navigate(`/admin/main`)
+
+      data.display = 'vissible'
+      data.displayText = 'X'
+      localStorage.setItem('update', JSON.stringify(data))
+    } catch (e) {
+
+    }
+    console.log(id)
+  }
 
   const handleCahngeForOrg = (e) => {
 
@@ -708,8 +722,16 @@ const EventPageEdit = () => {
                 <button className="admin_event__submit btn" onClick={submitFunc} type="submit">
                   Обновить
                 </button>
+
               </div>
+
             </form>
+            <div className="admin_event__form-control-submit">
+              <button className="admin_event__submit btn btn--del" onClick={submitFuncDel} type="button">
+                Удалить
+              </button>
+
+            </div>
           </div>
         </div>
       </main>
