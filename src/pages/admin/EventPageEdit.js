@@ -10,6 +10,7 @@ import getCookie from './../../utils/getCookies'
 import setSuccess from '../../utils/setSucces'
 import setError from '../../utils/setError'
 import isNumber from "../../utils/isNumber";
+import { Editor } from '@tinymce/tinymce-react'
 
 
 const EventPageEdit = () => {
@@ -39,6 +40,10 @@ const EventPageEdit = () => {
   const [parNumber, setParNumber] = useState("");
   const [published, setPublished] = useState("");
   const [statusReg, setStatusReg] = useState("");
+
+
+  const [value, setValue] = useState("dededede");
+
   const [file, setFile] = useState({
     preview: fileImg,
     data: ''
@@ -53,7 +58,7 @@ const EventPageEdit = () => {
   };
 
   const title_i = document.getElementById('title');
-  const desc_i = document.getElementById('description');
+
   const cat_i = document.getElementById('category_id');
   const org_i = document.getElementById('organization_id');
 
@@ -71,7 +76,7 @@ const EventPageEdit = () => {
   const validateInputs = () => {
 
     const titleVal = title_i.value.trim();
-    const desckVal = desc_i.value.trim();
+
     const catVal = cat_i.value;
     const orgVal = org_i.value;
     const dateVal = date_i.value;
@@ -87,11 +92,7 @@ const EventPageEdit = () => {
       setSuccess(title_i)
     }
 
-    if (desckVal === '') {
-      setError(desc_i, 'Поле необходимо заполнить')
-    } else {
-      setSuccess(desc_i)
-    }
+
 
     if (catVal === '') {
       setError(cat_i, 'Необходимо выбрать категорию')
@@ -419,7 +420,34 @@ const EventPageEdit = () => {
                 <label className="admin_event__label" htmlFor="description">
                   Краткое описание:
                 </label>
-                <textarea
+
+
+                <Editor apiKey="tflhb0owjc0s8nvwh6vo921njnkkpkovw164woye9far8si9"
+                  onEditorChange={(newValue, editor) => {
+                    setValue(newValue);
+                    setDescription(editor.getContent({ format: 'text' }))
+                  }}
+
+                  initialValue={description}
+                  value={value}
+
+                  onInit={(evt, editor) => {
+                    setDescription(editor.getContent({ format: 'text' }))
+                  }}
+                  id="description"
+                  name="description"
+                  className="admin_event__area"
+
+
+                  init={{
+                    height: 500,
+                    menubar: false,
+                    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage  tableofcontents footnotes mergetags autocorrect typography inlinecss',
+                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                  }}
+                />
+                {/* <textarea
                   className="admin_event__area"
                   type="text"
                   id="description"
@@ -427,7 +455,7 @@ const EventPageEdit = () => {
                   rows="9"
                   onChange={e => setDescription(e.target.value)}
                   value={description}
-                />
+                /> */}
                 <span className="notif" id="danger-position"> </span>
               </div>
 

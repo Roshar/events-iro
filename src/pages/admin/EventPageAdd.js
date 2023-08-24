@@ -11,6 +11,7 @@ import setSuccess from "../../utils/setSucces";
 import setError from "../../utils/setError";
 import getCookie from "../../utils/getCookies";
 import isNumber from "../../utils/isNumber";
+import { Editor } from '@tinymce/tinymce-react'
 
 
 const EventPageAdd = () => {
@@ -30,10 +31,13 @@ const EventPageAdd = () => {
     const [isValid, setIsValid] = useState(true);
     const [organizationId, setOrganizationId] = useState("");
     const [centerId, setCenterId] = useState("");
+    const [description, setDescription] = useState("");
+    const [value, setValue] = useState("dededede");
+
+
 
     const [event, setEvent] = useState({
         title: "",
-        description: "",
         category_id: "",
         dateEvent: "",
         date_event: "",
@@ -97,6 +101,8 @@ const EventPageAdd = () => {
         }
 
     }
+
+
 
     const title_i = document.getElementById('title');
     const desc_i = document.getElementById('description');
@@ -194,7 +200,9 @@ const EventPageAdd = () => {
 
     const submitFunc1 = async (e) => {
 
-        e.preventDefault()
+
+        var myContent =
+            e.preventDefault()
         validateInputs()
         const errorCount = checkError()
 
@@ -204,13 +212,11 @@ const EventPageAdd = () => {
                 const cookies = getCookie()
                 const formData = new FormData()
                 formData.append('event', JSON.stringify(event))
+                formData.append('description', JSON.stringify(description))
                 formData.append('organizationId', JSON.stringify(organizationId))
                 formData.append('centerId', JSON.stringify(centerId))
 
                 formData.append('file', file.data)
-
-
-                console.log(formData)
 
                 const { data } = await API.post(`/admin/event/add`, formData, {
                     headers: {
@@ -263,6 +269,10 @@ const EventPageAdd = () => {
 
     }
 
+    const handleChangeText = (e) => {
+        setDescription(e)
+    }
+
     const handleCahngeForCenter = (e) => {
         setCenterId(e.target.value)
     }
@@ -294,6 +304,7 @@ const EventPageAdd = () => {
 
         <main className="main main--admin">
             <AdminMenu />
+
             <div className="container">
                 <div className="admin_event">
 
@@ -315,11 +326,38 @@ const EventPageAdd = () => {
                         </div>
 
                         <div className="admin_event__form-control">
+
                             <label className="admin_event__label" htmlFor="description">
                                 <span className="register__required">*</span> Краткое описание:
                             </label>
 
-                            <textarea
+                            <Editor apiKey="tflhb0owjc0s8nvwh6vo921njnkkpkovw164woye9far8si9"
+                                onEditorChange={(newValue, editor) => {
+                                    setValue(newValue);
+                                    setDescription(editor.getContent({ format: 'text' }))
+                                }}
+
+                                initialValue="Описание мероприятия"
+                                value={value}
+
+                                onInit={(evt, editor) => {
+                                    setDescription(editor.getContent({ format: 'text' }))
+                                }}
+                                id="description"
+                                name="description"
+                                className="admin_event__area"
+
+
+                                init={{
+                                    height: 500,
+                                    menubar: false,
+                                    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage  tableofcontents footnotes mergetags autocorrect typography inlinecss',
+                                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                                }}
+                            />
+
+                            {/* <textarea
                                 className="admin_event__area"
                                 type="text"
                                 id="description"
@@ -327,7 +365,7 @@ const EventPageAdd = () => {
                                 rows="9"
                                 onChange={handleChange}
 
-                            />
+                            /> */}
                             <span className="notif" id="danger-position"></span>
                         </div>
 

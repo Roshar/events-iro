@@ -216,7 +216,15 @@ table {
 
 .admin_event {
     margin-bottom: 30px;
+    padding-top: 20px;
+    background-color: #fff;
+    border-radius: 10px;
 }
+
+.tox-statusbar {
+    display: none !important;
+}
+
 
 .admin_event__form {
     max-width: 900px;

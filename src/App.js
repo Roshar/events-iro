@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Footer from './components/footer/Footer'
 
+
 import Home from './pages/Home';
 import EventPage from './pages/EventPage'
 import RegisterPage from './pages/RegisterPage'
@@ -27,6 +28,7 @@ import EventEnrollers from './pages/admin/EventEnrollers';
 function App() {
   return (
     <div className="App">
+
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
