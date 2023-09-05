@@ -7,6 +7,16 @@
   font-size: 60px;
 }
 
+.event__additional_file {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.event__additional_file_icon {
+  max-width: 40px;
+}
+
 /* .event__header {
   background: url("../../img/event_bg.jpg") no-repeat center center fixed;
   background-size: cover;

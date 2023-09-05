@@ -40,6 +40,7 @@ const EventPageEdit = () => {
   const [parNumber, setParNumber] = useState("");
   const [published, setPublished] = useState("");
   const [statusReg, setStatusReg] = useState("");
+  const [additionalLink, setAdditionalLink] = useState("");
 
 
   const [value, setValue] = useState("");
@@ -215,6 +216,7 @@ const EventPageEdit = () => {
       formData.append('participants_number', parNumber)
       formData.append('event_status', statusReg)
       formData.append('published', published)
+      formData.append('additional_link', additionalLink)
       formData.append('speakersCurrent', JSON.stringify(speakersCurrent))
 
       formData.append('file', file.data)
@@ -293,6 +295,7 @@ const EventPageEdit = () => {
       setTarget(response.data.events[0].target_audience);
       setParNumber(response.data.events[0].participants_number);
       setStatusReg(response.data.events[0].event_status);
+      setAdditionalLink(response.data.events[0].additional_link);
       setPublished(response.data.events[0].published);
       if (response.data.events[0].center_id) {
         setShowCenter(true)
@@ -746,6 +749,24 @@ const EventPageEdit = () => {
                   <img className='img_event__box' onClick={imgClick} src={file.preview} />
                 </div>
 
+              </div>
+
+              <div className="admin_event__form-control">
+                <label className="admin_event__label" htmlFor="additional_link">
+                  <span className="register__required"></span>  Ссылка на дополнительные материалы:
+                </label>
+
+
+                <input
+                  className="admin_event__input"
+                  type="text"
+                  id="additional_link"
+                  name="additional_link"
+                  onChange={e => setAdditionalLink(e.target.value)}
+                  value={additionalLink}
+
+                />
+                <span className="notif" id="danger-position"></span>
               </div>
 
               <div className="admin_event__form-control-submit">

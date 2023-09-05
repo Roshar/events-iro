@@ -49,6 +49,7 @@ const EventPageAdd = () => {
         published: "",
         speakers: speakersCurrent,
         limit: 'false',
+        additional_link: ""
     })
 
     const [file, setFile] = useState({
@@ -690,13 +691,30 @@ const EventPageAdd = () => {
                         <div className="admin_event__form-control">
                             <div className="admin_event__img img_event">
                                 <div className="img_event__text">
-                                    <h2>Добавить изображение:</h2>
+                                    <h2>Добавить фоновое изображение:</h2>
                                     <input className="img_event__input" id="fileBtn" type="file" name="file" onChange={handleChangeImage} />
                                     <span className="img_event__span">Если не добавить изображение, фон будет выбран по умолчанию</span>
                                 </div>
                                 <img className='img_event__box' onClick={imgClick} src={file.preview} />
                             </div>
 
+                        </div>
+
+
+
+                        <div className="admin_event__form-control">
+                            <label className="admin_event__label" htmlFor="additional_link">
+                                <span className="register__required"></span>  Ссылка на дополнительные материалы:
+                            </label>
+                            <input
+                                className="admin_event__input"
+                                type="text"
+                                id="additional_link"
+                                name="additional_link"
+                                onChange={handleChange}
+
+                            />
+                            <span className="notif" id="danger-position"></span>
                         </div>
 
                         <div className="admin_event__form-control-submit">

@@ -5,10 +5,11 @@ import calendar from "./../../img/icons/full_info/calendar-line-icon.svg";
 import time from "./../../img/icons/full_info/clock-line-icon.svg";
 import location from "./../../img/icons/full_info/accurate-icon.svg";
 import people from "./../../img/icons/full_info/business-communication-icon.svg";
+import addfile from "./../../img/icons/folder-svgrepo-com.svg"
 import EventHeader from './../../components/eventHeader/EventHeader'
 import parse from 'html-react-parser'
 
-const Event = ({ id, date, hour, participants_number, description, speakers, event_status, location1, target_audience, enrollers, picture_name }) => {
+const Event = ({ id, date, hour, participants_number, description, speakers, event_status, location1, target_audience, enrollers, picture_name, additional_link }) => {
 
   return (
     <section className="event">
@@ -19,6 +20,14 @@ const Event = ({ id, date, hour, participants_number, description, speakers, eve
           <section className="event__description">
             {description ? parse(description) : ""}
           </section>
+
+          {additional_link ? <section className="event__additional_file">
+            <a href={additional_link}><img className="event__additional_file_icon" src={addfile} alt="" /> </a> <a href={additional_link}>Материалы с мероприятия</a>
+          </section> :
+            ""}
+
+
+
 
           <h2 className="event-content__title">Спикеры</h2>
           <section className="event__speakers speaker">
