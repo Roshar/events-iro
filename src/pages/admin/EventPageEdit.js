@@ -42,7 +42,7 @@ const EventPageEdit = () => {
   const [statusReg, setStatusReg] = useState("");
 
 
-  const [value, setValue] = useState("dededede");
+  const [value, setValue] = useState("");
 
   const [file, setFile] = useState({
     preview: fileImg,
@@ -272,6 +272,8 @@ const EventPageEdit = () => {
     if (response.data.code === 403) {
       navigate('/login')
     } else {
+
+      console.log(response.data.events[0].description)
       setEvent(response.data.events);
 
       setCatList(response.data.list);
@@ -425,23 +427,23 @@ const EventPageEdit = () => {
                 <Editor apiKey="tflhb0owjc0s8nvwh6vo921njnkkpkovw164woye9far8si9"
                   onEditorChange={(newValue, editor) => {
                     setValue(newValue);
-                    setDescription(editor.getContent({ format: 'text' }))
+                    setDescription(editor.getContent({ format: 'html' }))
                   }}
 
-                  initialValue={description}
-                  value={value}
 
-                  onInit={(evt, editor) => {
-                    setDescription(editor.getContent({ format: 'text' }))
-                  }}
-                  id="description"
+                  value={description}
+
+                  // onInit={(evt, editor) => {
+                  //   setDescription(editor.getContent({ format: 'html' }))
+                  // }}
+
                   name="description"
                   className="admin_event__area"
 
 
                   init={{
                     height: 500,
-                    menubar: false,
+                    menubar: true,
                     plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage  tableofcontents footnotes mergetags autocorrect typography inlinecss',
                     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'

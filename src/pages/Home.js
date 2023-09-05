@@ -221,6 +221,12 @@ const Home = () => {
       <main className="main">
         <h1 className="visually-hidden">Мероприятия</h1>
         <div className="container">
+          <div className="old_version">
+            <a className="old_version_link" href="https://statipkro.ru/" target="_blank"> Старая версия сайта </a>
+
+          </div>
+        </div>
+        <div className="container">
           <div className="main__header">
             <h2 className="home-content__title">Скоро</h2>
             <article className="filters">

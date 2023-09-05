@@ -6,6 +6,7 @@ import time from "./../../img/icons/full_info/clock-line-icon.svg";
 import location from "./../../img/icons/full_info/accurate-icon.svg";
 import people from "./../../img/icons/full_info/business-communication-icon.svg";
 import EventHeader from './../../components/eventHeader/EventHeader'
+import parse from 'html-react-parser'
 
 const Event = ({ id, date, hour, participants_number, description, speakers, event_status, location1, target_audience, enrollers, picture_name }) => {
 
@@ -16,7 +17,7 @@ const Event = ({ id, date, hour, participants_number, description, speakers, eve
         <div className="container">
           <h2 className="event-content__title">Описание мероприятия</h2>
           <section className="event__description">
-            {description}
+            {description ? parse(description) : ""}
           </section>
 
           <h2 className="event-content__title">Спикеры</h2>

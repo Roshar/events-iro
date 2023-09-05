@@ -23,6 +23,17 @@ body {
   flex-direction: column;
 }
 
+.old_version {
+  display: block;
+  text-align: right;
+}
+
+.old_version_link {
+  color: #0051a2;
+  text-decoration: underline !important;
+
+}
+
 .container {
   max-width: 1360px;
   margin: 0 auto;

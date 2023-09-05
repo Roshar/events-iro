@@ -334,14 +334,14 @@ const EventPageAdd = () => {
                             <Editor apiKey="tflhb0owjc0s8nvwh6vo921njnkkpkovw164woye9far8si9"
                                 onEditorChange={(newValue, editor) => {
                                     setValue(newValue);
-                                    setDescription(editor.getContent({ format: 'text' }))
+                                    setDescription(editor.getContent({ format: 'html' }))
                                 }}
 
                                 initialValue="Описание мероприятия"
                                 value={value}
 
                                 onInit={(evt, editor) => {
-                                    setDescription(editor.getContent({ format: 'text' }))
+                                    setDescription(editor.getContent({ format: 'html' }))
                                 }}
                                 id="description"
                                 name="description"
