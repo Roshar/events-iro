@@ -61,6 +61,7 @@ event__register--close .event__register:hover {
 
 .event__date {
   color: white;
+  text-shadow: #080707 1px 0 10px;
 }
 
 .color_white {
@@ -89,9 +90,18 @@ event__register--close .event__register:hover {
 }
 
 
-.speaker__item,
+
 .speaker__list {
   display: flex;
+  column-gap: 20px;
+  row-gap: 20px;
+  flex-wrap: wrap;
+
+}
+
+.speaker__item {
+  display: flex;
+  max-width: 30%;
   column-gap: 20px;
 }
 
@@ -112,7 +122,7 @@ event__register--close .event__register:hover {
 }
 
 .speaker__text {
-  max-width: 30%;
+  max-width: 100%;
 }
 
 .speaker__name {
