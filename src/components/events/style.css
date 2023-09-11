@@ -6,15 +6,50 @@
     min-width: 288px;
     border-radius: 5px;
     box-shadow: 0 0 5px 1px rgba(0, 0, 0, .1);
-    height: 337px;
+    height: 367px;
     justify-content: space-around;
 
 }
 
+.event-card__body_head {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, .06667);
+}
+
+.event-card__org {
+    padding-top: 10px;
+    font-size: 10px;
+    position: relative;
+
+}
+
+.event-card__org::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .06667);
+}
+
+
 .moreList {
     margin: 25px 0;
-
     text-align: center;
+}
+
+
+.moreList span {
+    border-bottom: 1px solid rgba(0, 0, 0, .6);
+    cursor: pointer;
+}
+
+.moreList span:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, .9);
+    color: #000;
+    cursor: pointer;
 }
 
 .event-card__header {
@@ -86,6 +121,7 @@
     font-weight: 700;
     line-height: 24px;
     color: #000;
+    /* color: var(--brand-color); */
 }
 
 .event-card__body {
@@ -98,9 +134,9 @@
 }
 
 .event-card__registration {
-    margin-top: auto;
+
     margin-bottom: 5px;
-    padding: 15px 20px 0;
+    padding: 16px 20px 0;
     font-size: 14px;
     border-top: 1px solid rgba(0, 0, 0, .06667);
 }

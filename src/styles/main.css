@@ -31,7 +31,10 @@ body {
 .old_version_link {
   color: #0051a2;
   text-decoration: underline !important;
+}
 
+.filters__header select {
+  max-width: 140px;
 }
 
 .container {
@@ -112,6 +115,11 @@ input[type="submit"] {
   column-gap: 20px;
 }
 
+.event__organization_title {
+  font-size: 21px;
+  text-decoration: underline;
+}
+
 .notification {
   display: flex;
   flex-direction: column;
@@ -187,5 +195,12 @@ input[type="submit"] {
     box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
     height: 337px;
     justify-content: space-between;
+  }
+}
+
+@media (max-width: 857px) {
+  .main__header {
+    display: flex;
+    flex-direction: column;
   }
 }

@@ -9,10 +9,10 @@ import { eventsLast } from "../helpers/eventListLast";
 import getMonthList from "../utils/listMonth";
 
 
-
 const Home = () => {
   const [APIDataSoon, setAPIDataSoon] = useState([]);
   const [APIDataLast, setAPIDataLast] = useState([]);
+  const [orgList, setOrgList] = useState([]);
 
 
   let [offset, setOffset] = useState(0)
@@ -20,14 +20,17 @@ const Home = () => {
 
   let [offsetLast, setOffsetLast] = useState(0)
   let [limitLast, setLimitLast] = useState(0)
+  let [orgName, setOrgName] = useState('')
+  let [orgNameLast, setOrgNameLast] = useState('')
   const [catValue, setCatValue] = useState('')
   const [monthValue, setMonthValue] = useState('')
+  const [orgValue, setOrgValue] = useState('')
   const [yearValue, setYear] = useState(new Date().getFullYear())
 
   const [catValueLast, setCatValueLast] = useState('')
   const [monthValueLast, setMonthValueLast] = useState('')
+  const [orgValueLast, setOrgValueLast] = useState('')
   const [yearValueLast, setYearLast] = useState(new Date().getFullYear())
-
 
   const params = {}
   const paramsLast = {}
@@ -38,10 +41,27 @@ const Home = () => {
     params.year = e.target.value
     params.month = monthValue
     params.category = catValue
+    params.org = orgValue
     params.offset = 0
     params.limit = limit
     axios.get(`${process.env.REACT_APP_BASE_URL}/events/cat/${JSON.stringify(params)}`).then((response) => {
       setAPIDataSoon(response.data.soon);
+    });
+  }
+
+  const handleOrg = (e) => {
+    setOrgValue(e.target.value)
+    setOffset(0)
+    setOrgName('')
+    params.year = yearValue
+    params.month = monthValue
+    params.category = catValue
+    params.org = e.target.value
+    params.offset = 0
+    params.limit = 4
+    axios.get(`${process.env.REACT_APP_BASE_URL}/events/cat/${JSON.stringify(params)}`).then((response) => {
+      setAPIDataSoon(response.data.soon);
+      response.data.orgReult ? setOrgName(response.data.orgReult[0]['name']) : setOrgName('')
     });
   }
 
@@ -51,6 +71,7 @@ const Home = () => {
     params.year = yearValue
     params.month = e.target.value
     params.category = catValue
+    params.org = orgValue
     params.offset = 0
     params.limit = 4
     axios.get(`${process.env.REACT_APP_BASE_URL}/events/cat/${JSON.stringify(params)}`).then((response) => {
@@ -64,6 +85,7 @@ const Home = () => {
     params.year = yearValue
     params.month = monthValue
     params.category = value
+    params.org = orgValue
     params.offset = 0
     params.limit = 4
     axios.get(`${process.env.REACT_APP_BASE_URL}/events/cat/${JSON.stringify(params)}`).then((response) => {
@@ -77,10 +99,27 @@ const Home = () => {
     paramsLast.year = yearValueLast
     paramsLast.month = e.target.value
     paramsLast.category = catValueLast
+    paramsLast.org = orgValueLast
     paramsLast.offset = 0
     paramsLast.limit = 4
     axios.get(`${process.env.REACT_APP_BASE_URL}/events/cat/last/${JSON.stringify(paramsLast)}`).then((response) => {
       setAPIDataLast(response.data.last);
+    });
+  }
+
+  const handleOrgLast = (e) => {
+    setOrgValueLast(e.target.value)
+    setOffset(0)
+    setOrgNameLast('')
+    paramsLast.year = yearValue
+    paramsLast.month = monthValue
+    paramsLast.category = catValue
+    paramsLast.org = e.target.value
+    paramsLast.offset = 0
+    paramsLast.limit = 4
+    axios.get(`${process.env.REACT_APP_BASE_URL}/events/cat/last/${JSON.stringify(paramsLast)}`).then((response) => {
+      setAPIDataLast(response.data.last);
+      response.data.orgReult ? setOrgNameLast(response.data.orgReult[0]['name']) : setOrgNameLast('')
     });
   }
 
@@ -90,6 +129,7 @@ const Home = () => {
     paramsLast.year = e.target.value
     paramsLast.month = monthValueLast
     paramsLast.category = catValueLast
+    paramsLast.org = orgValueLast
     paramsLast.offset = 0
     paramsLast.limit = 4
 
@@ -104,6 +144,7 @@ const Home = () => {
     paramsLast.year = yearValueLast
     paramsLast.month = monthValueLast
     paramsLast.category = value
+    paramsLast.org = orgValueLast
     paramsLast.offset = 0
     paramsLast.limit = 4
     axios.get(`${process.env.REACT_APP_BASE_URL}/events/cat/last/${JSON.stringify(paramsLast)}`).then((response) => {
@@ -112,15 +153,13 @@ const Home = () => {
 
   }
 
-
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_BASE_URL}/events`).then((response) => {
       setAPIDataSoon(response.data.soon);
       setAPIDataLast(response.data.last);
+      setOrgList(response.data.orgList);
     });
   }, []);
-
-
 
 
   const moreSoon = () => {
@@ -133,6 +172,7 @@ const Home = () => {
       params.year = yearValue
       params.month = monthValue
       params.category = catValue
+      params.org = orgValue
 
       axios.get(`${process.env.REACT_APP_BASE_URL}/events/cat/${JSON.stringify(params)}`).then((response) => {
         if (response.data.soon.length > 0) {
@@ -154,6 +194,7 @@ const Home = () => {
       params.year = yearValue
       params.month = monthValue
       params.category = catValue
+      params.org = orgValue
 
       axios.get(`${process.env.REACT_APP_BASE_URL}/events/cat/${JSON.stringify(params)}`).then((response) => {
         if (response.data.soon.length > 0) {
@@ -238,9 +279,20 @@ const Home = () => {
                   </select>
 
                   <select name="month" id="month_id" className="filters__select" onChange={handleMonth}>
-                    <option value="" className="filters__option">Выбрать месяц</option>
+                    <option value="" className="filters__option"> Месяц</option>
                     {
                       getMonthList.map((el) => {
+                        return (
+                          <option key={el.id} value={el.id} className="filters__option">{el.name}</option>
+                        )
+                      })
+                    }
+                  </select>
+
+                  <select name="org" id="org_id" className="filters__select" onChange={handleOrg}>
+                    <option value="" className="filters__option">Организация</option>
+                    {
+                      orgList.map((el) => {
                         return (
                           <option key={el.id} value={el.id} className="filters__option">{el.name}</option>
                         )
@@ -257,8 +309,14 @@ const Home = () => {
         </div>
 
 
+
+        <div className="events__container">
+          <h3 className="event__organization_title">{orgName}</h3>
+        </div>
         <div className="events">
+
           <div className="events__container">
+
             {
               APIDataSoon.length !== 0 ? APIDataSoon.map((event) => {
                 return (
@@ -283,12 +341,17 @@ const Home = () => {
           </div>
           <div className="moreList" onClick={moreSoon}> Загрузить еще</div>
 
+
+
+
         </div>
 
         <div className="container">
           <div className="main__header">
             <h2 className="home-content__title">Прошедшие мероприятия</h2>
+
             <article className="filters">
+
               <div className="filters__wrapper">
                 <div className="filters__header">
                   <select name="year" id="year" className="filters__select" onChange={handleYearLast}>
@@ -297,7 +360,7 @@ const Home = () => {
                   </select>
 
                   <select name="month" id="month_id" className="filters__select" onChange={handleMonthLast}>
-                    <option value="" className="filters__option">Выбрать месяц</option>
+                    <option value="" className="filters__option">Месяц</option>
                     {
                       getMonthList.map((el) => {
                         return (
@@ -307,11 +370,23 @@ const Home = () => {
                     }
                   </select>
 
+                  <select name="org" id="org_id" className="filters__select" onChange={handleOrgLast}>
+                    <option value="" className="filters__option">Организация</option>
+                    {
+                      orgList.map((el) => {
+                        return (
+                          <option key={el.id} value={el.id} className="filters__option">{el.name}</option>
+                        )
+                      })
+                    }
+                  </select>
                   <SelectFilter onChange={handleChangeLast} />
-
                 </div>
               </div>
             </article>
+          </div>
+          <div className="events__container">
+            <h3 className="event__organization_title">{orgNameLast}</h3>
           </div>
         </div>
 

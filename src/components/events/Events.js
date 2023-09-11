@@ -9,6 +9,7 @@ const Events = ({
   img,
   statusText,
   status_event,
+  org_name = ""
 }) => {
   const classValue = {
     statusStyle: "event-card__registration event-card__registration--opened",
@@ -16,7 +17,6 @@ const Events = ({
     catBox: "event-card__category-box ",
 
   };
-
 
 
   if (status_event === "last") {
@@ -39,11 +39,13 @@ const Events = ({
       </div>
       <div className="event-card__body">
         <span className="event-card__date">{date_event}</span>
+
         <NavLink className="event-card__title" to={`event/${id}`}>
           {title}
         </NavLink>
 
         <span className={classValue.statusStyle}>{statusText}</span>
+
       </div>
     </div>
   );

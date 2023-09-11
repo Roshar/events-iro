@@ -19,7 +19,7 @@ const SelectFilter = ({ onChange }) => {
     return (
 
         <select name="category" id="category_id" className="filters__select" onChange={handleCategory}>
-            <option value="" className="filters__option">Выбрать категорию</option>
+            <option value="" className="filters__option">Категория</option>
             <option value="1" className="filters__option">Семинар</option>
             <option value="2" className="filters__option">Конференция</option>
             <option value="3" className="filters__option">Лекция</option>
