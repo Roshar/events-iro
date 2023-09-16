@@ -332,7 +332,7 @@ const EventPageAdd = () => {
                                 <span className="register__required">*</span> Краткое описание:
                             </label>
 
-                            <Editor apiKey="tflhb0owjc0s8nvwh6vo921njnkkpkovw164woye9far8si9"
+                            {/* <Editor apiKey="tflhb0owjc0s8nvwh6vo921njnkkpkovw164woye9far8si9"
                                 onEditorChange={(newValue, editor) => {
                                     setValue(newValue);
                                     setDescription(editor.getContent({ format: 'html' }))
@@ -356,9 +356,9 @@ const EventPageAdd = () => {
                                     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
                                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                                 }}
-                            />
+                            /> */}
 
-                            {/* <textarea
+                            <textarea
                                 className="admin_event__area"
                                 type="text"
                                 id="description"
@@ -366,7 +366,7 @@ const EventPageAdd = () => {
                                 rows="9"
                                 onChange={handleChange}
 
-                            /> */}
+                            />
                             <span className="notif" id="danger-position"></span>
                         </div>
 

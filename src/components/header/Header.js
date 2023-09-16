@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import checkAdminRole from './../../utils/sendHeaders'
 import cookies from './../../utils/setCookies'
+import CookiesDelete from './../../utils/destroyCookies'
 import logo from './img/logo.png';
 import './style.css';
 
@@ -35,13 +36,9 @@ const Header = () => {
 
     const handleLink = (e) => {
 
-        console.log('sdsds')
         if (e.target.id === "/logout") {
-            console.log('logout')
-            document.cookie = "token_statipkro=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/admin;";
-
+            CookiesDelete()
             navigate("/login")
-
         }
     }
 
