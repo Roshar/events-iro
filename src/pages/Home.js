@@ -7,6 +7,7 @@ import Header from "./../components/header/Header";
 import { events } from "../helpers/eventListActual";
 import { eventsLast } from "../helpers/eventListLast";
 import getMonthList from "../utils/listMonth";
+import { NavLink } from "react-router-dom";
 
 const Home = () => {
   const [APIDataSoon, setAPIDataSoon] = useState([]);
@@ -328,14 +329,17 @@ const Home = () => {
         <h1 className="visually-hidden">Мероприятия</h1>
         <div className="container">
           <div className="old_version">
-            <a
+            {/* <a
               className="old_version_link"
               href="https://statipkro.ru/"
               target="_blank"
             >
               {" "}
               Старая версия сайта{" "}
-            </a>
+            </a> */}
+            <NavLink className="old_version_link" to={`/searchevent`}>
+              Поиск по названию мероприятия
+            </NavLink>
           </div>
         </div>
         <div className="container">
