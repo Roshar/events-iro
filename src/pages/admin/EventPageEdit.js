@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import fileImg from '../../img/icons/upload-to-cloud-svgrepo-com.svg'
+import fileImg from "../../img/icons/upload-to-cloud-svgrepo-com.svg";
 
 import Header from "../../components/header/Header";
 import AdminMenu from "../../components/adminMenu/AdminMenu";
-import checkAdminRole from './../../utils/sendHeaders';
-import getCookie from './../../utils/getCookies'
-import setSuccess from '../../utils/setSucces'
-import setError from '../../utils/setError'
+import checkAdminRole from "./../../utils/sendHeaders";
+import getCookie from "./../../utils/getCookies";
+import setSuccess from "../../utils/setSucces";
+import setError from "../../utils/setError";
 import isNumber from "../../utils/isNumber";
-import { Editor } from '@tinymce/tinymce-react'
-
+import { Editor } from "@tinymce/tinymce-react";
 
 const EventPageEdit = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { id } = useParams();
 
-  const [showCenter, setShowCenter] = useState(false)
-  const [notification, setNotification] = useState({})
+  const [showCenter, setShowCenter] = useState(false);
+  const [notification, setNotification] = useState({});
   const [event, setEvent] = useState([]);
   const [limitVal, setLimitVal] = useState("");
   const [catList, setCatList] = useState([]);
@@ -37,17 +35,17 @@ const EventPageEdit = () => {
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
   const [target, setTarget] = useState("");
+  const [picture, setPicture] = useState("");
   const [parNumber, setParNumber] = useState("");
   const [published, setPublished] = useState("");
   const [statusReg, setStatusReg] = useState("");
   const [additionalLink, setAdditionalLink] = useState("");
 
-
   const [value, setValue] = useState("");
 
   const [file, setFile] = useState({
     preview: fileImg,
-    data: ''
+    data: "",
   });
   const [speakersCurrent, setSpeakersCurrent] = useState([]);
 
@@ -58,24 +56,23 @@ const EventPageEdit = () => {
     setFilterSpeakers(res);
   };
 
-  const title_i = document.getElementById('title');
+  const title_i = document.getElementById("title");
 
-  const cat_i = document.getElementById('category_id');
-  const org_i = document.getElementById('organization_id');
+  const cat_i = document.getElementById("category_id");
+  const org_i = document.getElementById("organization_id");
 
-  const date_i = document.getElementById('date_event');
-  const time_i = document.getElementById('time_event');
-  const location_i = document.getElementById('location');
-  const target_i = document.getElementById('target_audience');
-  const par_i = document.getElementById('participants_number');
-  const speakers = document.getElementById('current_speakers');
+  const date_i = document.getElementById("date_event");
+  const time_i = document.getElementById("time_event");
+  const location_i = document.getElementById("location");
+  const target_i = document.getElementById("target_audience");
+  const par_i = document.getElementById("participants_number");
+  const speakers = document.getElementById("current_speakers");
 
   const checkError = () => {
-    return document.querySelectorAll('.error');
-  }
+    return document.querySelectorAll(".error");
+  };
 
   const validateInputs = () => {
-
     const titleVal = title_i.value.trim();
 
     const catVal = cat_i.value;
@@ -86,196 +83,161 @@ const EventPageEdit = () => {
     const targetVal = target_i.value;
     const parVal = par_i.value;
 
-
-    if (titleVal === '') {
-      setError(title_i, 'Поле необходимо заполнить')
+    if (titleVal === "") {
+      setError(title_i, "Поле необходимо заполнить");
     } else {
-      setSuccess(title_i)
+      setSuccess(title_i);
     }
 
-
-
-    if (catVal === '') {
-      setError(cat_i, 'Необходимо выбрать категорию')
+    if (catVal === "") {
+      setError(cat_i, "Необходимо выбрать категорию");
     } else {
-      setSuccess(cat_i)
+      setSuccess(cat_i);
     }
 
-    if (orgVal === '') {
-      setError(org_i, 'Поле необходимо заполнить');
+    if (orgVal === "") {
+      setError(org_i, "Поле необходимо заполнить");
     } else {
       setSuccess(org_i);
     }
 
-    if (dateVal === '') {
-      setError(date_i, 'Поле необходимо заполнить');
+    if (dateVal === "") {
+      setError(date_i, "Поле необходимо заполнить");
     } else {
       setSuccess(date_i);
     }
 
-    if (timeVal === '') {
-      setError(time_i, 'Поле необходимо заполнить');
+    if (timeVal === "") {
+      setError(time_i, "Поле необходимо заполнить");
     } else {
       setSuccess(time_i);
     }
 
-    if (locationVal === '') {
-      setError(location_i, 'Поле необходимо заполнить');
+    if (locationVal === "") {
+      setError(location_i, "Поле необходимо заполнить");
     } else {
       setSuccess(location_i);
     }
 
-    if (targetVal === '') {
-      setError(target_i, 'Поле необходимо заполнить');
+    if (targetVal === "") {
+      setError(target_i, "Поле необходимо заполнить");
     } else {
       setSuccess(target_i);
     }
 
-    if (parVal === '') {
-      setError(par_i, 'Поле необходимо заполнить');
-    }
-    else if (!isNumber(parseInt(parVal))) {
-      setError(par_i, 'Введите число');
-    }
-    else {
+    if (parVal === "") {
+      setError(par_i, "Поле необходимо заполнить");
+    } else if (!isNumber(parseInt(parVal))) {
+      setError(par_i, "Введите число");
+    } else {
       setSuccess(par_i);
     }
 
     if (speakersCurrent.length < 1) {
-      setError(speakers, 'Необходимо добавить хотя бы одного спикера ');
+      setError(speakers, "Необходимо добавить хотя бы одного спикера ");
     } else {
       setSuccess(speakers);
     }
-
-
-  }
+  };
 
   const changeSpeakers = (e) => {
-
     e.preventDefault();
 
     const speakerId = parseInt(e.target.getAttribute("data-speaker-id"));
     const category = e.target.id;
 
-    if (category === 'notAssigned') {
-
+    if (category === "notAssigned") {
       const newFillter = filterSpeakers.filter((el) => {
-        return el['id'] !== speakerId
-      })
+        return el["id"] !== speakerId;
+      });
 
       const newCurrent = speakersList.filter((e) => {
-        return e['id'] === speakerId
-      })
+        return e["id"] === speakerId;
+      });
 
-      newCurrent[0]['speakers_id'] = speakerId;
+      newCurrent[0]["speakers_id"] = speakerId;
 
-      speakersCurrent.push(newCurrent[0])
+      speakersCurrent.push(newCurrent[0]);
 
-      setFilterSpeakers(newFillter)
-
-    } else if (category === 'assigned') {
-
+      setFilterSpeakers(newFillter);
+    } else if (category === "assigned") {
       const newCurrent = speakersCurrent.filter((el) => {
-        return el['speakers_id'] !== speakerId
-      })
+        return el["speakers_id"] !== speakerId;
+      });
       const newFillter = speakersList.filter((e) => {
-        return e['id'] === speakerId
-      })
+        return e["id"] === speakerId;
+      });
 
-      filterSpeakers.push(newFillter[0])
+      filterSpeakers.push(newFillter[0]);
 
-      setSpeakersCurrent(newCurrent)
-      setFilterSpeakers(filterSpeakers)
-
+      setSpeakersCurrent(newCurrent);
+      setFilterSpeakers(filterSpeakers);
     }
-
-
-
   };
 
-  const submitFunc = async (e) => {
-    e.preventDefault()
-
-    validateInputs()
-
-    const errorCount = checkError()
-
-    if (errorCount.length < 1) {
-
-      const formData = new FormData()
-      formData.append('id', id)
-      formData.append('title', title)
-      formData.append('description', description)
-      formData.append('category_id', categoryId)
-      formData.append('organization_id', orgId)
-      formData.append('center_id', centerId)
-      formData.append('date_event', dateEvent)
-      formData.append('date_time', time)
-      formData.append('location', location)
-      formData.append('target_audience', target)
-      formData.append('participants_number', parNumber)
-      formData.append('event_status', statusReg)
-      formData.append('published', published)
-      formData.append('additional_link', additionalLink)
-      formData.append('speakersCurrent', JSON.stringify(speakersCurrent))
-
-      formData.append('file', file.data)
-      const cookies = getCookie()
-
-      const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/admin/event/edit/${id}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': 'Bearer ' + cookies['token_statipkro'],
-        }
-      });
-      navigate(`/admin/main`)
-
-      data.display = 'vissible'
-      data.displayText = 'X'
-      localStorage.setItem('update', JSON.stringify(data))
-
-    } else {
-      alert('Заполните все поля!')
-    }
-
-  }
-
-
   const imgClick = () => {
-    document.querySelector('#fileBtn').click();
-  }
-
+    document.querySelector("#fileBtn").click();
+  };
 
   const checkLimitVal2 = () => {
     if (limitVal == "true") {
       return (
-        <div className="admin_event__form_radio_box" >
-          <input type="radio" id="contactChoice1" name="limit" onChange={handleChange} checked='checked' value="true" />
+        <div className="admin_event__form_radio_box">
+          <input
+            type="radio"
+            id="contactChoice1"
+            name="limit"
+            onChange={handleChange}
+            checked="checked"
+            value="true"
+          />
           <label htmlFor="contactChoice1">Да</label>
 
-          <input type="radio" id="contactChoice2" name="limit" onChange={handleChange} value="false" />
+          <input
+            type="radio"
+            id="contactChoice2"
+            name="limit"
+            onChange={handleChange}
+            value="false"
+          />
           <label htmlFor="contactChoice2">Нет</label>
         </div>
-      )
+      );
     } else {
-      return (<div className="admin_event__form_radio_box" >
-        <input type="radio" id="contactChoice1" name="limit" onChange={handleChange} value="true" />
-        <label htmlFor="contactChoice1">Да</label>
+      return (
+        <div className="admin_event__form_radio_box">
+          <input
+            type="radio"
+            id="contactChoice1"
+            name="limit"
+            onChange={handleChange}
+            value="true"
+          />
+          <label htmlFor="contactChoice1">Да</label>
 
-        <input type="radio" id="contactChoice2" name="limit" onChange={handleChange} checked='checked' value="false" />
-        <label htmlFor="contactChoice2">Нет</label>
-      </div>)
+          <input
+            type="radio"
+            id="contactChoice2"
+            name="limit"
+            onChange={handleChange}
+            checked="checked"
+            value="false"
+          />
+          <label htmlFor="contactChoice2">Нет</label>
+        </div>
+      );
     }
-  }
+  };
 
   const getEventPageEdit = async () => {
-    const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/event/edit/${id}`, checkAdminRole())
+    const response = await axios.get(
+      `${process.env.REACT_APP_BASE_URL}/admin/event/edit/${id}`,
+      checkAdminRole()
+    );
 
     if (response.data.code === 403) {
-      navigate('/login')
+      navigate("/login");
     } else {
-
-      console.log(response.data.events[0].description)
       setEvent(response.data.events);
 
       setCatList(response.data.list);
@@ -297,8 +259,16 @@ const EventPageEdit = () => {
       setStatusReg(response.data.events[0].event_status);
       setAdditionalLink(response.data.events[0].additional_link);
       setPublished(response.data.events[0].published);
+      setPicture(response.data.events[0].picture_name);
+      setFile({
+        preview:
+          process.env.REACT_APP_BASE_URL +
+          "/img/event_images/" +
+          response.data.events[0].picture_name,
+        data: response.data.events[0].picture_name,
+      });
       if (response.data.events[0].center_id) {
-        setShowCenter(true)
+        setShowCenter(true);
       }
 
       getAllSpeakers(
@@ -308,90 +278,131 @@ const EventPageEdit = () => {
 
       setSpeakersCurrent(response.data.speakersForEvent);
     }
+  };
 
-  }
+  const submitFunc = async (e) => {
+    e.preventDefault();
+
+    validateInputs();
+
+    const errorCount = checkError();
+
+    if (errorCount.length < 1) {
+      const formData = new FormData();
+      formData.append("id", id);
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("category_id", categoryId);
+      formData.append("organization_id", orgId);
+      formData.append("center_id", centerId);
+      formData.append("date_event", dateEvent);
+      formData.append("date_time", time);
+      formData.append("location", location);
+      formData.append("target_audience", target);
+      formData.append("participants_number", parNumber);
+      formData.append("event_status", statusReg);
+      formData.append("published", published);
+      formData.append("additional_link", additionalLink);
+      formData.append("speakersCurrent", JSON.stringify(speakersCurrent));
+
+      formData.append("file", file.data);
+      const cookies = getCookie();
+
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/admin/event/edit/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: "Bearer " + cookies["token_statipkro"],
+          },
+        }
+      );
+      navigate(`/admin/main`);
+
+      data.display = "vissible";
+      data.displayText = "X";
+      localStorage.setItem("update", JSON.stringify(data));
+    } else {
+      alert("Заполните все поля!");
+    }
+  };
 
   useEffect(() => {
-
-    getEventPageEdit()
-
+    getEventPageEdit();
   }, []);
 
-
   const submitFuncDel = async () => {
-
     try {
-      const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/admin/event/delete/${id}`, checkAdminRole());
-      navigate(`/admin/main`)
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/admin/event/delete/${id}`,
+        checkAdminRole()
+      );
+      navigate(`/admin/main`);
 
-      data.display = 'vissible'
-      data.displayText = 'X'
-      localStorage.setItem('update', JSON.stringify(data))
-    } catch (e) {
-
-    }
-    console.log(id)
-  }
+      data.display = "vissible";
+      data.displayText = "X";
+      localStorage.setItem("update", JSON.stringify(data));
+    } catch (e) {}
+    console.log(id);
+  };
 
   const handleCahngeForOrg = (e) => {
-
-
-    setOrgId(e.target.value)
+    setOrgId(e.target.value);
     if (e.target.value == 2) {
       if (centerId === null) {
-        setCenterId(1)
+        setCenterId(1);
       }
-      setShowCenter(true)
+      setShowCenter(true);
     } else {
-      setCenterId('')
-      setShowCenter(false)
+      setCenterId("");
+      setShowCenter(false);
     }
-
-  }
+  };
 
   const showCenterFunc = (showstatus) => {
     if (showstatus) {
-      return <div className="admin_event__form-control">
-        <label className="admin_event__label" htmlFor="center_id">
-          {" "}
-          Центр:{" "}
-        </label>
-        <select
-          className="admin_event__select"
-          name="center_id"
-          id="center_id"
-          onChange={e => setCenterId(e.target.value)}
-        >
-          {centerList.map((el) => {
-            return (
-              <option
-                className="admin_event__option"
-                key={el.id}
-                value={el.id}
-                selected={el.id == centerId}
-              >
-                {" "}
-                {el.name}{" "}
-              </option>
-            );
-          })}
-
-
-        </select>
-        <span className="notif" id="danger-position"> </span>
-      </div>
+      return (
+        <div className="admin_event__form-control">
+          <label className="admin_event__label" htmlFor="center_id">
+            {" "}
+            Центр:{" "}
+          </label>
+          <select
+            className="admin_event__select"
+            name="center_id"
+            id="center_id"
+            onChange={(e) => setCenterId(e.target.value)}
+          >
+            {centerList.map((el) => {
+              return (
+                <option
+                  className="admin_event__option"
+                  key={el.id}
+                  value={el.id}
+                  selected={el.id == centerId}
+                >
+                  {" "}
+                  {el.name}{" "}
+                </option>
+              );
+            })}
+          </select>
+          <span className="notif" id="danger-position">
+            {" "}
+          </span>
+        </div>
+      );
     } else {
-      console.log('Не предусмотрено')
-
+      console.log("Не предусмотрено");
     }
-  }
-
+  };
 
   function handleChange(e) {
     const img = {
       preview: URL.createObjectURL(e.target.files[0]),
       data: e.target.files[0],
-    }
+    };
     setFile(img);
   }
 
@@ -403,9 +414,7 @@ const EventPageEdit = () => {
         <AdminMenu />
         <div className="container">
           <div className="admin_event">
-
             <form className="admin_event__form" encType="multipart/form-data">
-
               <div className="admin_event__form-control">
                 <label className="admin_event__label" htmlFor="title">
                   Наименование мероприятия:
@@ -415,17 +424,18 @@ const EventPageEdit = () => {
                   type="text"
                   id="title"
                   name="title"
-                  onChange={e => setTitle(e.target.value)}
+                  onChange={(e) => setTitle(e.target.value)}
                   value={title}
                 />
-                <span className="notif" id="danger-position"> </span>
+                <span className="notif" id="danger-position">
+                  {" "}
+                </span>
               </div>
 
               <div className="admin_event__form-control">
                 <label className="admin_event__label" htmlFor="description">
                   Краткое описание:
                 </label>
-
 
                 {/* <Editor apiKey="tflhb0owjc0s8nvwh6vo921njnkkpkovw164woye9far8si9"
                   onEditorChange={(newValue, editor) => {
@@ -458,10 +468,12 @@ const EventPageEdit = () => {
                   id="description"
                   name="description"
                   rows="9"
-                  onChange={e => setDescription(e.target.value)}
+                  onChange={(e) => setDescription(e.target.value)}
                   value={description}
                 />
-                <span className="notif" id="danger-position"> </span>
+                <span className="notif" id="danger-position">
+                  {" "}
+                </span>
               </div>
 
               <div className="admin_event__form-control">
@@ -472,7 +484,7 @@ const EventPageEdit = () => {
                   className="admin_event__select"
                   name="category_id"
                   id="category_id"
-                  onChange={e => setCategoryId(e.target.value)}
+                  onChange={(e) => setCategoryId(e.target.value)}
                 >
                   {catList.map((el) => {
                     return (
@@ -488,7 +500,9 @@ const EventPageEdit = () => {
                     );
                   })}
                 </select>
-                <span className="notif" id="danger-position"> </span>
+                <span className="notif" id="danger-position">
+                  {" "}
+                </span>
               </div>
 
               <div className="admin_event__form-control">
@@ -516,9 +530,10 @@ const EventPageEdit = () => {
                     );
                   })}
                 </select>
-                <span className="notif" id="danger-position"> </span>
+                <span className="notif" id="danger-position">
+                  {" "}
+                </span>
               </div>
-
 
               {showCenterFunc(showCenter)}
 
@@ -534,9 +549,11 @@ const EventPageEdit = () => {
                   value={dateEvent}
                   min="2023-01-01"
                   max="2024-12-31"
-                  onChange={e => setDateEvent(e.target.value)}
+                  onChange={(e) => setDateEvent(e.target.value)}
                 />
-                <span className="notif" id="danger-position"> </span>
+                <span className="notif" id="danger-position">
+                  {" "}
+                </span>
               </div>
 
               <div className="admin_event__form-control">
@@ -548,10 +565,12 @@ const EventPageEdit = () => {
                   type="time"
                   id="time_event"
                   name="time_event"
-                  onChange={e => setTime(e.target.value)}
+                  onChange={(e) => setTime(e.target.value)}
                   value={time}
                 />
-                <span className="notif" id="danger-position"> </span>
+                <span className="notif" id="danger-position">
+                  {" "}
+                </span>
               </div>
 
               <div className="admin_event__form-control">
@@ -563,10 +582,12 @@ const EventPageEdit = () => {
                   type="text"
                   id="location"
                   name="location"
-                  onChange={e => setLocation(e.target.value)}
+                  onChange={(e) => setLocation(e.target.value)}
                   value={location}
                 />
-                <span className="notif" id="danger-position"> </span>
+                <span className="notif" id="danger-position">
+                  {" "}
+                </span>
               </div>
 
               <div className="admin_event__form-control">
@@ -578,10 +599,12 @@ const EventPageEdit = () => {
                   type="text"
                   id="target_audience"
                   name="target_audience"
-                  onChange={e => setTarget(e.target.value)}
+                  onChange={(e) => setTarget(e.target.value)}
                   value={target}
                 />
-                <span className="notif" id="danger-position"> </span>
+                <span className="notif" id="danger-position">
+                  {" "}
+                </span>
               </div>
 
               <div className="admin_event__form-control">
@@ -596,33 +619,45 @@ const EventPageEdit = () => {
                   type="text"
                   id="participants_number"
                   name="participants_number"
-                  onChange={e => setParNumber(e.target.value)}
+                  onChange={(e) => setParNumber(e.target.value)}
                   value={parNumber}
                 />
-                <span className="notif" id="danger-position"> </span>
+                <span className="notif" id="danger-position">
+                  {" "}
+                </span>
               </div>
 
               <div className="admin_event__form-control">
-                <p>Ограничить количество регистраций пользователей на мероприятие?</p>
+                <p>
+                  Ограничить количество регистраций пользователей на
+                  мероприятие?
+                </p>
 
                 {checkLimitVal2()}
-
-
 
                 <span className="notif" id="danger-position"></span>
               </div>
 
               <div className="admin_event__form-control">
-
                 <div className="admin_event__list-wrapper">
                   <div className="admin_event__list-side">
-                    <label className="admin_event__label" htmlFor="event_status">
-                      Общий список спикеро <span className="little_description">( Выбрать спикера)</span> :{" "}
+                    <label
+                      className="admin_event__label"
+                      htmlFor="event_status"
+                    >
+                      Общий список спикеро{" "}
+                      <span className="little_description">
+                        ( Выбрать спикера)
+                      </span>{" "}
+                      :{" "}
                     </label>
                     <ul className="admin_event__list list-reset">
                       {filterSpeakers.map((el) => {
                         return (
-                          <li className="admin_event__item admin_event__item--active" key={el.id}>
+                          <li
+                            className="admin_event__item admin_event__item--active"
+                            key={el.id}
+                          >
                             <div className="admin_event__item-data">
                               {el.surname} {el.firstname}
                             </div>
@@ -642,19 +677,32 @@ const EventPageEdit = () => {
                     </ul>
                   </div>
                   <div className="admin_event__list-side">
-                    <label className="admin_event__label" htmlFor="event_status">
-                      Добавлены <span className="little_description">( спикеры, назначенные на мероприятия )</span>:  {" "}
+                    <label
+                      className="admin_event__label"
+                      htmlFor="event_status"
+                    >
+                      Добавлены{" "}
+                      <span className="little_description">
+                        ( спикеры, назначенные на мероприятия )
+                      </span>
+                      :{" "}
                     </label>
-                    <ul className="admin_event__list list-reset" id="current_speakers">
+                    <ul
+                      className="admin_event__list list-reset"
+                      id="current_speakers"
+                    >
                       {speakersCurrent.map((el) => {
                         return (
-                          <li className="admin_event__item admin_event__item--disable" key={el['speakers_id']}>
+                          <li
+                            className="admin_event__item admin_event__item--disable"
+                            key={el["speakers_id"]}
+                          >
                             <div className="admin_event__item-data">
                               {el.surname} {el.firstname}
                             </div>
                             <button
                               className="admin_event__btn btn btn--admin-del"
-                              data-speaker-id={el['speakers_id']}
+                              data-speaker-id={el["speakers_id"]}
                               type="button"
                               id="assigned"
                               onChange={handleChange}
@@ -666,7 +714,9 @@ const EventPageEdit = () => {
                         );
                       })}
                     </ul>
-                    <span className="notif" id="danger-position"> </span>
+                    <span className="notif" id="danger-position">
+                      {" "}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -674,14 +724,17 @@ const EventPageEdit = () => {
               <div className="admin_event__form-control">
                 <div className="admin_event__twice_element-container">
                   <div className="admin_event__twice_element">
-                    <label className="admin_event__label" htmlFor="event_status">
+                    <label
+                      className="admin_event__label"
+                      htmlFor="event_status"
+                    >
                       Статус публикации:{" "}
                     </label>
                     <select
                       className="admin_event__select"
                       name="event_status"
                       id="event_status"
-                      onChange={e => setStatusReg(e.target.value)}
+                      onChange={(e) => setStatusReg(e.target.value)}
                     >
                       <option
                         className="admin_event__option"
@@ -702,17 +755,19 @@ const EventPageEdit = () => {
                         Регистрация закрыта{" "}
                       </option>
                     </select>
-
                   </div>
                   <div className="admin_event__twice_element">
-                    <label className="admin_event__label" htmlFor="event_status">
+                    <label
+                      className="admin_event__label"
+                      htmlFor="event_status"
+                    >
                       Статус публикации:{" "}
                     </label>
                     <select
                       className="admin_event__select"
                       name="published"
                       id="published"
-                      onChange={e => setPublished(e.target.value)}
+                      onChange={(e) => setPublished(e.target.value)}
                     >
                       <option
                         className="admin_event__option"
@@ -733,55 +788,77 @@ const EventPageEdit = () => {
                         Снято с публикации{" "}
                       </option>
                     </select>
-
                   </div>
                 </div>
-
               </div>
 
               <div className="admin_event__form-control">
                 <div className="admin_event__img img_event">
                   <div className="img_event__text">
-                    <h2>Добавить изображение:</h2>
-                    <input className="img_event__input" id="fileBtn" type="file" name="file" onChange={handleChange} />
-                    <span className="img_event__span">Если не добавить изображение, фон будет выбран по умолчанию</span>
+                    <h2>Изменить изображение:</h2>
+                    <input
+                      className="img_event__input"
+                      id="fileBtn"
+                      type="file"
+                      name="file"
+                      onChange={handleChange}
+                    />
+                    <span className="img_event__span">
+                      {/* Если не добавить изображение, фон будет выбран по
+                      умолчанию */}
+                    </span>
+                    {/* <img
+                      src={
+                        process.env.REACT_APP_BASE_URL +
+                        "/img/event_images/" +
+                        picture
+                      }
+                      className="img_event__box_preview"
+                    /> */}
                   </div>
-                  <img className='img_event__box' onClick={imgClick} src={file.preview} />
+                  <img
+                    className="img_event__box"
+                    onClick={imgClick}
+                    src={file.preview}
+                  />
                 </div>
-
               </div>
 
               <div className="admin_event__form-control">
                 <label className="admin_event__label" htmlFor="additional_link">
-                  <span className="register__required"></span>  Ссылка на дополнительные материалы:
+                  <span className="register__required"></span> Ссылка на
+                  дополнительные материалы:
                 </label>
-
 
                 <input
                   className="admin_event__input"
                   type="text"
                   id="additional_link"
                   name="additional_link"
-                  onChange={e => setAdditionalLink(e.target.value)}
+                  onChange={(e) => setAdditionalLink(e.target.value)}
                   value={additionalLink}
-
                 />
                 <span className="notif" id="danger-position"></span>
               </div>
 
               <div className="admin_event__form-control-submit">
-                <button className="admin_event__submit btn" onClick={submitFunc} type="submit">
+                <button
+                  className="admin_event__submit btn"
+                  onClick={submitFunc}
+                  type="submit"
+                >
                   Обновить
                 </button>
-
               </div>
-
             </form>
             <div className="admin_event__form-control-submit">
-              <button className="admin_event__submit btn btn--del" onClick={submitFuncDel} type="button">
+              <button
+                className="admin_event__submit btn btn--del"
+                onClick={submitFuncDel}
+                type="button"
+              >
                 Удалить
               </button>
-
             </div>
           </div>
         </div>
