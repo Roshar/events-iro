@@ -56,6 +56,7 @@ const SpeakersPage = () => {
   };
 
   const getSpeakerPage = async () => {
+    console.log("getSpeakerPage");
     const params = {
       firstIndex: firstIndex1,
       lastIndex: lastIndex1,
@@ -71,6 +72,25 @@ const SpeakersPage = () => {
       setSpeakerList(data);
     }
   };
+
+  const handleSearch = async (e) => {
+    let q = JSON.stringify(e.target.value);
+    const response = await API.post(
+      `/admin/speakers/search`,
+      checkAdminRole(q)
+    );
+    if (response.data.code === 403) {
+      navigate("/login");
+    } else {
+      if (e.target.value.length > 0) {
+        setSpeakerList(response.data);
+      } else {
+        setSpeakerList([]);
+        getSpeakerPage();
+      }
+    }
+  };
+
   useEffect(() => {
     getSpeakerPage();
     const notification = JSON.parse(localStorage.getItem("update"));
@@ -95,6 +115,7 @@ const SpeakersPage = () => {
             status={vissibleStatus}
             id={IDNotification}
           />
+
           <AdminMenu />
           <div className="new_event">
             <div className="new_event__icon">
@@ -107,6 +128,12 @@ const SpeakersPage = () => {
               {" "}
               Добавить нового спикера{" "}
             </NavLink>
+            <input
+              type="text"
+              className="admin_event__input"
+              onChange={handleSearch}
+              placeholder="Введите фамилию спикера"
+            />
           </div>
           <article className="enrollers">
             <table className="enrollers__table">
