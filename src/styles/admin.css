@@ -269,6 +269,11 @@ table {
   width: 100%;
 }
 
+.admin_speaker__list {
+  height: 300px;
+  border: 1px solid red;
+}
+
 .admin_event__item {
   border-bottom: dotted 1px #484343;
   margin: 2px 0px;

@@ -26,6 +26,7 @@ const EventPageAdd = () => {
   const [centerList, setCenterList] = useState([]);
   const [speakersListStable, setSpeakersListStable] = useState([]);
   const [speakersList, setSpeakersList] = useState([]);
+  const [speakersListSearch, setSpeakersListSearch] = useState([]);
   const [speakersCurrent, setSpeakersCurrent] = useState([]);
   const [isValid, setIsValid] = useState(true);
   const [organizationId, setOrganizationId] = useState("");
@@ -237,6 +238,22 @@ const EventPageAdd = () => {
 
   const handleChange = (e) => {
     setEvent((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSearch = async (e) => {
+    console.log(e.target.value);
+    let q = JSON.stringify(e.target.value);
+    const response = await API.post(
+      `/admin/speakers/search`,
+      checkAdminRole(q)
+    );
+    if (response.data.code === 403) {
+      navigate("/login");
+    } else {
+      if (response.data.length > 0) {
+        setSpeakersList(response.data);
+      }
+    }
   };
 
   const handleChangeText = (e) => {
@@ -547,6 +564,12 @@ const EventPageAdd = () => {
                       спикеров:{" "}
                     </label>
 
+                    <input
+                      type="text"
+                      className="admin_event__input"
+                      onChange={handleSearch}
+                      placeholder="Введите фамилию спикера"
+                    />
                     <ul className="admin_event__list list-reset">
                       {speakersList.map((el) => {
                         return (
@@ -572,6 +595,12 @@ const EventPageAdd = () => {
                       })}
                     </ul>
                   </div>
+
+                  {/* <datalist id="admin_speaker__list">
+                    {speakersListSearch.map((el) => (
+                      <option key={el.id} value={el.surname} />
+                    ))} */}
+                  {/* </datalist> */}
 
                   <div className="admin_event__list-side">
                     <label
