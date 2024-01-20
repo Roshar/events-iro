@@ -1,3 +1,3 @@
-export default function setCookie(name, val, time = 3600) {
-    return document.cookie = `${name}=${val};max-age=${time}`
+export default function setCookie(name, val, time = 36000000) {
+  return (document.cookie = `${name}=${val};max-age=${time}`);
 }
